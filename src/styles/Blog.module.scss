@@ -1,4 +1,4 @@
-@use './variables' as *;
+@use 'stylekit/index.module.scss' as styles;
 
 .blog {
 	display: flex;
@@ -13,21 +13,21 @@
 	}
 
 	&__content {
-		max-width: $max-width--page-contents;
+		max-width: styles.$max-width--page-contents;
 	}
 
 	&__sidebar {
 		min-width: 400px;
 		position: sticky;
-		top: calc(80px + #{space(6)});
+		top: calc(var(--topbar-height) + #{styles.space(6)});
 
-		margin-left: space(9);
+		margin-left: styles.space(9);
 
 		> .category__title {
 			display: block;
-			margin-bottom: space(1);
-			font-size: $font-size--p-small;
-			font-weight: $font-weight--500;
+			margin-bottom: styles.space(1);
+			font-size: styles.$font-size--p-small;
+			font-weight: styles.$font-weight--500;
 			cursor: pointer;
 
 			animation: fadeInDown 0.3s ease-in-out;
@@ -36,22 +36,22 @@
 			&--active,
 			&:hover {
 				text-decoration: underline;
-				text-decoration-color: $color--primary;
+				text-decoration-color: styles.$color--primary;
 			}
 
 			&--active {
-				color: $color--primary;
+				color: styles.$color--primary;
 			}
 
 			&--sub {
-				font-size: $font-size--small;
-				font-weight: $font-weight--400;
+				font-size: styles.$font-size--small;
+				font-weight: styles.$font-weight--400;
 			}
 		}
 	}
 }
 
-@media (max-width: rem(1302)) {
+@media (max-width: styles.rem(1302)) {
 	.blog {
     display: block;
 		&__sidebar {
@@ -62,15 +62,15 @@
 
 // Margin utilities
 .margin-bottom--3 {
-  margin-bottom: space(3);
+  margin-bottom: styles.space(3);
 }
 
 .margin-bottom-imp--2 {
-  margin-bottom: space(2) !important;
+  margin-bottom: styles.space(2) !important;
 }
 
 .category__header {
-  font-weight: $font-weight--500;
+  font-weight: styles.$font-weight--500;
 }
 
 .category__title {

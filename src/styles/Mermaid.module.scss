@@ -1,4 +1,4 @@
-@use './variables' as *;
+@use 'stylekit/index.module.scss' as styles;
 
 .mermaid {
 	display: block;
@@ -9,9 +9,9 @@
 }
 
 .margin-top--1 {
-  margin-top: space(1);
+  margin-top: styles.space(1);
 }
 
 .margin-bottom--2 {
-  margin-bottom: space(2);
+  margin-bottom: styles.space(2);
 }

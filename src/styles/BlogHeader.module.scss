@@ -1,12 +1,12 @@
-@use './variables' as *;
+@use 'stylekit/index.module.scss' as stylekit;
 
 .blog-header {
-  line-height: $line-height--small;
+  line-height: stylekit.$line-height--small;
 }
 
 .blog-date {
   display: block;
-  margin-bottom: calc(#{space(8)} * 2);
-  color: $color--dark;
+  margin-bottom: calc(#{stylekit.space(8)} * 2);
+  color: stylekit.$color--dark;
   font-style: italic;
 }

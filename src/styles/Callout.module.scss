@@ -1,14 +1,14 @@
-@use './variables' as *;
+@use 'stylekit/index.module.scss' as styles;
 
 .callout {
   display: grid;
-  grid-template-columns: rem(40) 1fr;
+  grid-template-columns: styles.rem(40) 1fr;
   grid-gap: 20px;
 
-	background-color: $color--base-background;
-	padding: rem(20) rem(40);
+	background-color: styles.$color--base-background;
+	padding: styles.rem(20) styles.rem(40);
 
-	filter: $color--shadow;
+	filter: styles.$color--shadow;
 
 	&__icon {
 		height: 40px;
@@ -23,29 +23,29 @@
 	}
 
 	&--info {
-		border-color: $color--primary;
-		background-color: $color--primary-light;
-		color: $color--dark;
+		border-color: styles.$color--primary;
+		background-color: styles.$color--primary-light;
+		color: styles.$color--dark;
 
-		.callout__icon {
+		&__icon {
 			background-image: url('../assets/info.svg');
 		}
 	}
 
 	&--warning {
-		border-color: $color--primary-accent;
-		background-color: $color--primary-accent-light;
-		color: $color--dark;
+		border-color: styles.$color--primary-accent;
+		background-color: styles.$color--primary-accent-light;
+		color: styles.$color--dark;
 
-		.callout__icon {
+		> .callout__icon {
 			background-image: url('../assets/warning.svg');
 		}
 	}
 
 	&--error {
-		border-color: $color--error;
-		background-color: $color--error-light;
-		color: $color--dark;
+		border-color: styles.$color--error;
+		background-color: styles.$color--error-light;
+		color: styles.$color--dark;
 
 		.callout__icon {
 			background-image: url('../assets/error.svg');
@@ -53,9 +53,9 @@
 	}
 
 	&--success {
-		border-color: $color--secondary;
-		background-color: $color--secondary-light;
-		color: $color--dark;
+		border-color: styles.$color--secondary;
+		background-color: styles.$color--secondary-light;
+		color: styles.$color--dark;
 
 		.callout__icon {
 			background-image: url('../assets/success.svg');
@@ -63,16 +63,16 @@
 	}
 
 	&__wrapper {
-		font-family: $font-family--primary;
-		border-radius: $border-radius;
+		font-family: styles.$font-family--primary;
+		border-radius: styles.$border-radius;
 		margin-right: auto;
 	}
 }
 
 .margin-top--1 {
-  margin-top: space(1);
+  margin-top: styles.space(1);
 }
 
 .margin-bottom--2 {
-  margin-bottom: space(2);
+  margin-bottom: styles.space(2);
 }

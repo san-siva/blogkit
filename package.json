@@ -35,7 +35,8 @@
     "@react-spring/web": "^9.7.5",
     "mermaid": "^10.9.1",
     "prismjs": "^1.29.0",
-    "react-syntax-highlighter": "^15.5.0"
+    "react-syntax-highlighter": "^15.5.0",
+    "stylekit": "git+ssh://git@github.com/san-siva/stylekit.git#72090a53cf65f9ef434bb8e0ebcf6e7c027e92f6"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.1",

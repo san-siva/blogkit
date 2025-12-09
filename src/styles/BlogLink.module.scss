@@ -1,23 +1,23 @@
-@use './variables' as *;
+@use 'stylekit/index.module.scss' as stylekit;
 
 .blog-link {
 	display: block;
-	margin-top: space(4);
+	margin-top: stylekit.space(4);
 	cursor: pointer;
 	text-decoration: none !important;
-  font-weight: $font-weight--400;
+  font-weight: stylekit.$font-weight--400;
 
 	&__title {
-		margin-bottom: space(1);
+		margin-bottom: stylekit.space(1);
 	}
 
 	&__description {
-		margin-bottom: space(1);
+		margin-bottom: stylekit.space(1);
 	}
 
 	> p {
-		font-family: $font-family--secondary;
-		font-weight: $font-weight--400;
+		font-family: stylekit.$font-family--secondary;
+		font-weight: stylekit.$font-weight--400;
 	}
 
 	&__read-more {
@@ -27,17 +27,17 @@
 		justify-content: flex-start;
 
 		> p {
-			font-weight: $font-weight--500;
-			font-family: $font-family--primary;
-			font-size: $font-size--p-small;
-			margin-right: space(0);
+			font-weight: stylekit.$font-weight--500;
+			font-family: stylekit.$font-family--primary;
+			font-size: stylekit.$font-size--p-small;
+			margin-right: stylekit.space(0);
 		}
 	}
 
 	&:hover {
 		.blog-link__read-more {
 			> p {
-				color: $color--primary;
+				color: stylekit.$color--primary;
 			}
 		}
 	}
