@@ -1,0 +1,78 @@
+@use './variables' as *;
+
+.callout {
+  display: grid;
+  grid-template-columns: rem(40) 1fr;
+  grid-gap: 20px;
+
+	background-color: $color--base-background;
+	padding: rem(20) rem(40);
+
+	filter: $color--shadow;
+
+	&__icon {
+		height: 40px;
+		width: 40px;
+    align-self: center;
+
+		background-image: url('../assets/info.svg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 100%;
+	}
+
+	&--info {
+		border-color: $color--primary;
+		background-color: $color--primary-light;
+		color: $color--dark;
+
+		.callout__icon {
+			background-image: url('../assets/info.svg');
+		}
+	}
+
+	&--warning {
+		border-color: $color--primary-accent;
+		background-color: $color--primary-accent-light;
+		color: $color--dark;
+
+		.callout__icon {
+			background-image: url('../assets/warning.svg');
+		}
+	}
+
+	&--error {
+		border-color: $color--error;
+		background-color: $color--error-light;
+		color: $color--dark;
+
+		.callout__icon {
+			background-image: url('../assets/error.svg');
+		}
+	}
+
+	&--success {
+		border-color: $color--secondary;
+		background-color: $color--secondary-light;
+		color: $color--dark;
+
+		.callout__icon {
+			background-image: url('../assets/success.svg');
+		}
+	}
+
+	&__wrapper {
+		font-family: $font-family--primary;
+		border-radius: $border-radius;
+		margin-right: auto;
+	}
+}
+
+.margin-top--1 {
+  margin-top: space(1);
+}
+
+.margin-bottom--2 {
+  margin-bottom: space(2);
+}

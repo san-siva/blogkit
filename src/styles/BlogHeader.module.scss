@@ -1,0 +1,12 @@
+@use './variables' as *;
+
+.blog-header {
+  line-height: $line-height--small;
+}
+
+.blog-date {
+  display: block;
+  margin-bottom: calc(#{space(8)} * 2);
+  color: $color--dark;
+  font-style: italic;
+}

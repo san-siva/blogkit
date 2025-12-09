@@ -1,0 +1,32 @@
+@use './variables' as *;
+
+.blog-section {
+	&__title {
+		margin-bottom: space(2);
+	}
+}
+
+.blog-section .blog-section > .blog-section__title {
+	font-size: $font-size--h6;
+	margin-bottom: space(2);
+}
+
+.blog-section .blog-section > *:first-child {
+	margin-top: space(4);
+}
+
+.blog-section .blog-section:not(:last-child) {
+	margin-bottom: space(4);
+}
+
+.blog-section .blog-section:last-child {
+	margin-bottom: space(8);
+}
+
+.margin-bottom--6 {
+  margin-bottom: space(6);
+}
+
+.margin-bottom--9 {
+  margin-bottom: space(9);
+}
