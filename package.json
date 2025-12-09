@@ -2,9 +2,9 @@
   "name": "blogkit",
   "version": "1.0.0",
   "description": "A reusable blog component library for React/Next.js applications with code highlighting, diagrams, and rich content features",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
   "files": [
     "dist",
     "src"
