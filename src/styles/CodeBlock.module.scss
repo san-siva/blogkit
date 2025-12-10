@@ -58,8 +58,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: stylekit.rem(4) stylekit.rem(18);
+    padding-top: 0;
     padding-right: stylekit.space(0);
+    padding-bottom: stylekit.rem(4);
+    padding-left: stylekit.rem(18);
 
     &__title {
       font-size: stylekit.$font-size--small;
