@@ -6,6 +6,7 @@ export { default as CodeBlock } from './components/CodeBlock';
 export { default as Callout } from './components/Callout';
 export { default as Mermaid } from './components/Mermaid';
 export { default as BlogLink } from './components/BlogLink';
+export { default as Table } from './components/Table';
 
 // Types
 export type { ForwardedReference } from './components/Blog';
