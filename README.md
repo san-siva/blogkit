@@ -399,7 +399,7 @@ MIT
 
 ## Author
 
-Santhosh Siva
+Santhosh Siva - [santhoshsiva.dev](https://santhoshsiva.dev/)
 
 ## Changelog
 
