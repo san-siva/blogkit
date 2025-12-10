@@ -1,0 +1,56 @@
+@use 'stylekit/index.module.scss' as styles;
+
+.table {
+	width: 100%;
+	overflow: hidden;
+	overflow-x: auto;
+
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+
+	&__header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		border: 1px solid styles.$color--primary;
+
+		&__cell {
+			width: styles.rem(280);
+			padding: styles.rem(12) styles.rem(16);
+			font-size: styles.$font-size--small;
+			font-weight: styles.$font-weight--500;
+      font-family: styles.$font-family--code;
+			color: styles.$color--base;
+			background-color: styles.$color--primary;
+			border-bottom: 1px solid styles.$color--border;
+		}
+	}
+
+	&__row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		border: 1px solid styles.$color--border;
+    border-top: none;
+
+		&__cell {
+			width: styles.rem(280);
+			padding: styles.rem(12) styles.rem(16);
+			font-size: styles.$font-size--small;
+      font-family: styles.$font-family--code;
+			color: styles.$color--dark;
+		}
+	}
+}
+
+.margin-top--1 {
+  margin-top: styles.space(1);
+}
+
+.margin-bottom--2 {
+  margin-bottom: styles.space(2);
+}
