@@ -2,17 +2,29 @@
 
 A reusable, feature-rich blog component library for React and Next.js applications. Built with TypeScript and SCSS modules, BlogKit provides everything you need to create beautiful, interactive blog posts with code highlighting, diagrams, callouts, and more.
 
+## Showcase
+
+See BlogKit in action on [santhoshsiva.dev](https://santhoshsiva.dev):
+
+### Blog Post with Table of Contents
+![Blog post with sticky TOC sidebar](assets/screenshot-1.png)
+
+### Rich Content Components
+![Code blocks, callouts, and tables in action](assets/screenshot-2.png)
+
 ## Features
 
 - **Blog Layout with TOC**: Responsive blog layout with sticky table of contents sidebar
 - **Code Highlighting**: Syntax highlighting for multiple programming languages using Prism.js
 - **Mermaid Diagrams**: Render flowcharts, sequence diagrams, timelines, and more
 - **Callouts**: Info, warning, error, and success notification boxes
+- **Data Tables**: Flexible table component with dynamic column sizing
 - **Blog Sections**: Hierarchical section organization with auto-generated IDs
 - **Blog Links**: Animated link cards for blog navigation
-- **TypeScript Support**: Fully typed components
-- **SCSS Modules**: Scoped, customizable styles
-- **Next.js Optimized**: Works seamlessly with Next.js App Router
+- **TypeScript Support**: Fully typed components with ReactNode support
+- **SCSS Modules**: Scoped, customizable styles using stylekit
+- **Next.js Optimized**: Works seamlessly with Next.js 14, 15, and 16
+- **React 19 Ready**: Full support for React 18 and 19
 
 ## Installation
 
@@ -179,6 +191,33 @@ graph TD
 - `hasMarginUp`: boolean (optional) - Add top margin
 - `hasMarginDown`: boolean (optional) - Add bottom margin
 
+### Table
+
+Flexible data table component with dynamic column sizing.
+
+```tsx
+import { Table } from 'blogkit';
+
+<Table
+  headers={['Method', 'Description', 'Returns']}
+  rows={[
+    ['GET', 'Retrieves data', 'Response object'],
+    ['POST', 'Creates data', 'Created object'],
+    ['PUT', 'Updates data', 'Updated object'],
+  ]}
+  hasMarginUp={false}
+  hasMarginDown={true}
+/>
+```
+
+**Props:**
+- `headers`: ReactNode[] (optional) - Table header cells
+- `rows`: ReactNode[][] (optional) - Table data rows
+- `hasMarginUp`: boolean (optional) - Add top margin
+- `hasMarginDown`: boolean (optional) - Add bottom margin
+
+**Note:** Columns automatically size based on content length. Supports ReactNode for rich content in cells.
+
 ### BlogLink
 
 Animated link card component for blog navigation.
@@ -234,6 +273,7 @@ import {
   CodeBlock,
   Callout,
   Mermaid,
+  Table,
 } from 'blogkit';
 
 const code = `function fibonacci(n) {
@@ -281,6 +321,20 @@ export default function MyBlogPost() {
         <Mermaid
           code={diagram}
           id="recursion-flow"
+          hasMarginDown
+        />
+      </BlogSection>
+
+      <BlogSection title="Performance Comparison">
+        <p>Comparing recursive vs iterative approaches:</p>
+
+        <Table
+          headers={['Approach', 'Time Complexity', 'Space Complexity']}
+          rows={[
+            ['Recursive', 'O(2^n)', 'O(n)'],
+            ['Iterative', 'O(n)', 'O(1)'],
+            ['Memoized', 'O(n)', 'O(n)'],
+          ]}
           hasMarginDown
         />
       </BlogSection>
