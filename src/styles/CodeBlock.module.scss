@@ -32,7 +32,7 @@
 		padding-bottom: stylekit.rem(18);
 		padding-left: stylekit.rem(18);
 
-		width: calc(100% - #{stylekit.space(4)});
+		width: calc(100% - #{stylekit.rem(36)});
 		tab-size: 2;
 
 		> pre {
