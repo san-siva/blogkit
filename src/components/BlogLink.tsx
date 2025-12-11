@@ -60,10 +60,10 @@ const BlogLink = ({ title = '', desc = '', isInProgress = false }: Properties) =
 					strokeWidth="2"
 					strokeLinecap="round"
 					strokeLinejoin="round"
-					style={svgColor}
+					style={svgColor as any}
 				>
-					<animated.line x1="5" y1="12" y2="12" x2={lineEnd.x2}></animated.line>
-					<animated.polyline points={polyLine.points} />
+					<animated.line x1="5" y1="12" y2="12" x2={lineEnd.x2 as any}></animated.line>
+					<animated.polyline points={polyLine.points as any} />
 				</animated.svg>
 			</div>
 		</a>
