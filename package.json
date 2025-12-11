@@ -1,6 +1,6 @@
 {
   "name": "blogkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A reusable blog component library for React/Next.js applications with code highlighting, diagrams, and rich content features",
   "main": "src/index.ts",
   "module": "src/index.ts",
