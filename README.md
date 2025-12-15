@@ -1,4 +1,4 @@
-# BlogKit
+# Blogkit
 
 A reusable, feature-rich blog component library for React and Next.js applications. Built with TypeScript and SCSS modules, BlogKit provides everything you need to create beautiful, interactive blog posts with code highlighting, diagrams, callouts, and more.
 
