@@ -54,7 +54,7 @@ export default function MyBlogPost() {
 
 For detailed documentation, component APIs, live examples, and more:
 
-👉 **[Visit the Full Documentation](https://san-siva.github.io/blogkit/)**
+👉 **[Visit the Full Documentation](https://blogkit-c367c.web.app/)**
 
 The documentation includes:
 
