@@ -2,7 +2,7 @@
 
 A reusable, feature-rich blog component library for React and Next.js applications. Built with TypeScript and SCSS modules, BlogKit provides everything you need to create beautiful, interactive blog posts with code highlighting, diagrams, callouts, and more.
 
-**[📚 View Full Documentation](https://san-siva.github.io/blogkit/)** | **[🌐 See Live Demo on santhoshsiva.dev](https://santhoshsiva.dev)**
+**[📚 View Full Documentation](https://blogkit-c367c.web.app/)** | **[🌐 See Live Demo on santhoshsiva.dev](https://santhoshsiva.dev)**
 
 ## Key Features
 
