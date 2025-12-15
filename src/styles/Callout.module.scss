@@ -1,0 +1,78 @@
+@use 'stylekit/index.module.scss' as styles;
+
+.callout {
+  display: grid;
+  grid-template-columns: styles.rem(40) 1fr;
+  grid-gap: 20px;
+
+	background-color: styles.$color--base-background;
+	padding: styles.rem(20) styles.rem(40);
+
+	filter: styles.$color--shadow;
+
+	&__icon {
+		height: 40px;
+		width: 40px;
+    align-self: center;
+
+		background-image: url('../assets/info.svg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 100%;
+	}
+
+	&--info {
+		border-color: styles.$color--primary;
+		background-color: styles.$color--primary-light;
+		color: styles.$color--dark;
+
+		&__icon {
+			background-image: url('../assets/info.svg');
+		}
+	}
+
+	&--warning {
+		border-color: styles.$color--primary-accent;
+		background-color: styles.$color--primary-accent-light;
+		color: styles.$color--dark;
+
+		> .callout__icon {
+			background-image: url('../assets/warning.svg');
+		}
+	}
+
+	&--error {
+		border-color: styles.$color--error;
+		background-color: styles.$color--error-light;
+		color: styles.$color--dark;
+
+		.callout__icon {
+			background-image: url('../assets/error.svg');
+		}
+	}
+
+	&--success {
+		border-color: styles.$color--secondary;
+		background-color: styles.$color--secondary-light;
+		color: styles.$color--dark;
+
+		.callout__icon {
+			background-image: url('../assets/success.svg');
+		}
+	}
+
+	&__wrapper {
+		font-family: styles.$font-family--primary;
+		border-radius: styles.$border-radius;
+		margin-right: auto;
+	}
+}
+
+.margin-top--1 {
+  margin-top: styles.space(1);
+}
+
+.margin-bottom--2 {
+  margin-bottom: styles.space(2);
+}

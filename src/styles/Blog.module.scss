@@ -1,0 +1,78 @@
+@use 'stylekit/index.module.scss' as styles;
+
+.blog {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+	max-width: unset;
+	width: 100%;
+
+	> * {
+		max-width: unset;
+	}
+
+	&__content {
+		max-width: styles.$max-width--page-contents;
+	}
+
+	&__sidebar {
+		min-width: 400px;
+		position: sticky;
+		top: calc(var(--topbar-height) + #{styles.space(6)});
+
+		margin-left: styles.space(9);
+
+		> .category__title {
+			display: block;
+			margin-bottom: styles.space(1);
+			font-size: styles.$font-size--p-small;
+			font-weight: styles.$font-weight--500;
+			cursor: pointer;
+
+			animation: fadeInDown 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+
+			&--active,
+			&:hover {
+				text-decoration: underline;
+				text-decoration-color: styles.$color--primary;
+			}
+
+			&--active {
+				color: styles.$color--primary;
+			}
+
+			&--sub {
+				font-size: styles.$font-size--small;
+				font-weight: styles.$font-weight--400;
+			}
+		}
+	}
+}
+
+@media (max-width: styles.rem(1302)) {
+	.blog {
+    display: block;
+		&__sidebar {
+			display: none;
+		}
+	}
+}
+
+// Margin utilities
+.margin-bottom--3 {
+  margin-bottom: styles.space(3);
+}
+
+.margin-bottom-imp--2 {
+  margin-bottom: styles.space(2) !important;
+}
+
+.category__header {
+  font-weight: styles.$font-weight--500;
+}
+
+.category__title {
+  // Styles defined in &__sidebar > .category__title above
+}

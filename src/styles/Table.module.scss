@@ -1,0 +1,51 @@
+@use 'stylekit/index.module.scss' as styles;
+
+@mixin cell-base {
+	padding: styles.rem(12) styles.rem(16);
+	font-size: styles.$font-size--small;
+	font-family: styles.$font-family--code;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.table {
+	width: 100%;
+	overflow: hidden;
+	overflow-x: auto;
+	display: grid;
+	grid-auto-flow: row;
+  background-color: styles.$color--primary-light;
+  border-radius: styles.$border-radius;
+
+	&__header {
+		display: contents;
+
+		&__cell {
+			@include cell-base;
+			font-weight: styles.$font-weight--500;
+			color: styles.$color--base;
+			background-color: styles.$color--primary;
+		}
+	}
+
+	&__row {
+		display: contents;
+
+		&__cell {
+			@include cell-base;
+			color: styles.$color--dark;
+		}
+	}
+}
+
+.margin-top--1 {
+	margin-top: styles.space(1);
+}
+
+.margin-bottom--2 {
+	margin-bottom: styles.space(2);
+}

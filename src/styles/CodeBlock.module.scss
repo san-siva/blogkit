@@ -1,0 +1,102 @@
+@use 'stylekit/index.module.scss' as stylekit;
+
+.code-block {
+
+	code {
+		font-size: unset;
+    font-weight: unset;
+    background-color: unset;
+		padding: unset;
+	}
+
+	background-color: #282a36 !important;
+	filter: stylekit.$color--shadow-dark;
+	border-radius: stylekit.$border-radius;
+
+	&--margin-up {
+		margin-top: stylekit.space(1);
+	}
+
+	&--margin-down {
+		margin-bottom: stylekit.space(2);
+	}
+
+	&__wrapper {
+		font-family: stylekit.$font-family--code;
+		white-space: pre-wrap;
+
+		overflow-x: auto;
+
+		padding-top: 0px;
+		padding-right: stylekit.rem(18);
+		padding-bottom: stylekit.rem(18);
+		padding-left: stylekit.rem(18);
+
+		width: calc(100% - #{stylekit.rem(36)});
+		tab-size: 2;
+
+		> pre {
+			margin: 0;
+			padding: 0 !important;
+			overflow-y: hidden;
+			width: 100%;
+
+			> code,
+			> code > * {
+				font-family: stylekit.$font-family--code;
+				font-size: stylekit.$font-size--p-small;
+				font-weight: unset;
+				font-style: unset;
+				line-height: stylekit.$line-height--normal;
+				color: unset;
+        text-align: left !important;
+			}
+		}
+	}
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0;
+    padding-right: stylekit.space(0);
+    padding-bottom: stylekit.rem(4);
+    padding-left: stylekit.rem(18);
+
+    &__title {
+      font-size: stylekit.$font-size--small;
+      color: stylekit.$color--code;
+      text-transform: capitalize;
+    }
+
+    &__copy {
+      height: stylekit.rem(32);
+      width: stylekit.rem(32);
+      background-image: url('../assets/copy.svg');
+      background-size: stylekit.rem(14) stylekit.rem(14);
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: stylekit.$color--grey-dark;
+        border-radius: 100%;
+      }
+
+      &--active {
+        background-image: url('../assets/done_copying.svg');
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.margin-top--1 {
+  margin-top: stylekit.space(1);
+}
+
+.margin-bottom--2 {
+  margin-bottom: stylekit.space(2);
+}
