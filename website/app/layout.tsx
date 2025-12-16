@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Montserrat, Rubik } from 'next/font/google';
 
-import 'stylekit/globals.scss';
-import styles from 'stylekit/index.module.scss';
+import '@san-siva/stylekit/globals.scss';
+import styles from '@san-siva/stylekit/index.module.scss';
 
 const montserrat = Montserrat({
 	subsets: ['latin'],

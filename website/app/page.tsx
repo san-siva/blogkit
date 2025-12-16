@@ -1,24 +1,26 @@
+'use client';
+
 import type { NextPage } from 'next';
 
-import 'stylekit/index.module.scss';
+import '@san-siva/stylekit/index.module.scss';
 import styles from './page.module.scss';
 
-import { Blog } from 'blogkit';
-import { BlogHeader } from 'blogkit';
-import { BlogSection } from 'blogkit';
-import { Callout } from 'blogkit';
-import { CodeBlock } from 'blogkit';
-import { Mermaid } from 'blogkit';
-import { BlogLink } from 'blogkit';
-import { Table } from 'blogkit';
+import { Blog } from '@san-siva/blogkit';
+import { BlogHeader } from '@san-siva/blogkit';
+import { BlogSection } from '@san-siva/blogkit';
+import { Callout } from '@san-siva/blogkit';
+import { CodeBlock } from '@san-siva/blogkit';
+import { Mermaid } from '@san-siva/blogkit';
+import { BlogLink } from '@san-siva/blogkit';
+import { Table } from '@san-siva/blogkit';
 
 const CODE_EXAMPLES = {
-	installation: `npm install github:san-siva/blogkit
+	installation: `npm install @san-siva/blogkit @san-siva/stylekit
 # or
-yarn add github:san-siva/blogkit`,
+yarn add @san-siva/blogkit @san-siva/stylekit`,
 
-	quickStart: `import { Blog, BlogHeader, BlogSection } from 'blogkit';
-import 'stylekit/index.module.scss';
+	quickStart: `import { Blog, BlogHeader, BlogSection } from '@san-siva/blogkit';
+import '@san-siva/stylekit/index.module.scss';
 
 export default function MyBlog() {
   return (
