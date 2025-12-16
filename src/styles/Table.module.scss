@@ -1,4 +1,4 @@
-@use 'stylekit/index.module.scss' as styles;
+@use '@san-siva/stylekit/index.module.scss' as styles;
 
 @mixin cell-base {
 	padding: styles.rem(12) styles.rem(16);
