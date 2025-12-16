@@ -1,15 +1,15 @@
 {
   "name": "@san-siva/blogkit",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "description": "A reusable blog component library for React/Next.js applications with code highlighting, diagrams, and rich content features",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -18,7 +18,7 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && tsc --emitDeclarationOnly --outDir dist/types && cp -r src/assets dist/",
     "dev": "rollup -c -w"
   },
   "keywords": [
