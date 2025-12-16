@@ -1,6 +1,6 @@
 {
   "name": "@san-siva/blogkit",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A reusable blog component library for React/Next.js applications with code highlighting, diagrams, and rich content features",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -34,17 +34,16 @@
   "author": "Santhosh Siva",
   "license": "MIT",
   "peerDependencies": {
-    "next": ">=16.0.10",
-    "react": ">=19.0.0",
-    "react-dom": ">=19.0.0"
-  },
-  "dependencies": {
-    "@react-spring/web": "^10.0.3",
+    "@react-spring/web": "^10.0.0",
     "@san-siva/stylekit": "^1.0.1",
-    "mermaid": "^10.9.1",
+    "mermaid": "^10.0.0",
+    "next": ">=16.0.10",
     "prismjs": "^1.29.0",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0",
     "react-syntax-highlighter": "^15.5.0"
   },
+  "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",

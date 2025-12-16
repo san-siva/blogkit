@@ -51,5 +51,5 @@ export default {
       emitFiles: true,
     }),
   ],
-  external: ['react', 'react-dom', 'next'],
+  external: ['react', 'react-dom', 'next', '@react-spring/web', 'mermaid', 'prismjs', 'react-syntax-highlighter'],
 };
