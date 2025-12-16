@@ -11,18 +11,26 @@ A reusable, feature-rich blog component library for React and Next.js applicatio
 ## Installation
 
 ```bash
-npm install blogkit
+npm install @san-siva/blogkit @san-siva/stylekit
 # or
-yarn add blogkit
+yarn add @san-siva/blogkit @san-siva/stylekit
 # or
-pnpm add blogkit
+pnpm add @san-siva/blogkit @san-siva/stylekit
+```
+
+### Peer Dependencies
+
+Blogkit requires the following peer dependencies:
+
+```bash
+npm install react@^19.0.0 react-dom@^19.0.0 next@^16.0.10 @react-spring/web@^10.0.0 mermaid@^10.0.0 prismjs@^1.29.0 react-syntax-highlighter@^15.5.0
 ```
 
 ## Quick Start
 
 ```tsx
-import { Blog, BlogHeader, BlogSection, CodeBlock, Callout } from 'blogkit';
-import 'stylekit/index.module.scss';
+import { Blog, BlogHeader, BlogSection, CodeBlock, Callout } from '@san-siva/blogkit';
+import '@san-siva/stylekit/index.module.scss';
 
 export default function MyBlogPost() {
 	return (
