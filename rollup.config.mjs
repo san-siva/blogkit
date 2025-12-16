@@ -5,6 +5,7 @@ import json from '@rollup/plugin-json';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import url from 'rollup-plugin-url';
+import postcssUrl from 'postcss-url';
 
 // Plugin to preserve 'use client' directives
 function preserveDirectives() {
@@ -72,6 +73,11 @@ export default {
       extract: false,
       minimize: true,
       sourceMap: true,
+      plugins: [
+        postcssUrl({
+          url: 'inline',
+        }),
+      ],
       use: [
         [
           'sass',
