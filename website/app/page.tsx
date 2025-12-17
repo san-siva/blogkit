@@ -185,7 +185,7 @@ const BlogkitDocumentation: NextPage = () => {
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
 						rows={[
-							['<title', 'string', 'Section title (optional)'],
+							['title', 'string', 'Section title (optional)'],
 							[
 								'hasMarginBottom',
 								'boolean',
