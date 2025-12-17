@@ -96,18 +96,30 @@ const BlogkitDocumentation: NextPage = () => {
 		<Blog>
 			<BlogHeader
 				title={['Blogkit Documentation']}
-				desc={['A reusable, feature-rich blog component library for React and Next.js applications']}
+				desc={[
+					'A reusable, feature-rich blog component library for React and Next.js applications',
+				]}
 			/>
 
 			<BlogSection title="Overview">
 				<p className="margin-bottom--2">
-					Blogkit is a comprehensive component library built with TypeScript and SCSS modules,
-					providing everything you need to create beautiful, interactive blog posts with
-					code highlighting, diagrams, callouts, and more.
+					Blogkit is a comprehensive component library built with TypeScript and
+					SCSS modules, providing everything you need to create beautiful,
+					interactive blog posts with code highlighting, diagrams, callouts, and
+					more.
 				</p>
 				<p>
-					See Blogkit in action on <a href="https://santhoshsiva.dev" target="_blank" rel="noopener noreferrer">santhoshsiva.dev</a>,
-					where it powers blog listings, table of contents navigation, and rich content with Mermaid diagrams.
+					See Blogkit in action on{' '}
+					<a
+						href="https://santhoshsiva.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+						className={styles['a--highlighted']}
+					>
+						santhoshsiva.dev
+					</a>
+					, where it powers blog listings, table of contents navigation, and
+					rich content with Mermaid diagrams.
 				</p>
 			</BlogSection>
 
@@ -138,11 +150,7 @@ const BlogkitDocumentation: NextPage = () => {
 					<p className="margin-bottom--2">
 						The main container component that wraps all your blog content.
 					</p>
-					<CodeBlock
-						hasMarginDown
-						language="tsx"
-						code={CODE_EXAMPLES.blog}
-					/>
+					<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.blog} />
 				</BlogSection>
 
 				<BlogSection title="BlogHeader">
@@ -177,8 +185,12 @@ const BlogkitDocumentation: NextPage = () => {
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
 						rows={[
-							['title', 'string', 'Section title (optional)'],
-							['hasMarginBottom', 'boolean', 'Add margin at the bottom (optional)'],
+							['<title', 'string', 'Section title (optional)'],
+							[
+								'hasMarginBottom',
+								'boolean',
+								'Add margin at the bottom (optional)',
+							],
 							['children', 'ReactNode', 'Section content'],
 						]}
 					/>
@@ -199,8 +211,16 @@ const BlogkitDocumentation: NextPage = () => {
 						headers={['Prop', 'Type', 'Description']}
 						rows={[
 							['code', 'string', 'Code to display'],
-							['language', 'string', 'Programming language for syntax highlighting'],
-							['hasMarginDown', 'boolean', 'Add margin below the code block (optional)'],
+							[
+								'language',
+								'string',
+								'Programming language for syntax highlighting',
+							],
+							[
+								'hasMarginDown',
+								'boolean',
+								'Add margin below the code block (optional)',
+							],
 						]}
 					/>
 				</BlogSection>
@@ -210,39 +230,45 @@ const BlogkitDocumentation: NextPage = () => {
 						Highlight important information with styled callout boxes.
 					</p>
 
-					<div style={{
-						marginTop: '24px',
-						marginBottom: '24px',
-						display: 'grid',
-						gridGap: '16px',
-						rowGap: '16px',
-						gridAutoFlow: 'rows',
-						gridTemplateColumns: 'repeat(auto-fill, max-content)'
-					}}>
+					<div
+						style={{
+							marginTop: '24px',
+							marginBottom: '24px',
+							display: 'grid',
+							gridGap: '16px',
+							rowGap: '16px',
+							gridAutoFlow: 'rows',
+							gridTemplateColumns: 'repeat(auto-fill, max-content)',
+						}}
+					>
 						<Callout type="info">
 							<p>
-								<b>Information:</b> This is an informative message, often used to provide
+								<b>Information:</b> This is an informative message, often used
+								to provide
 								<br />
 								context or <b>additional details</b> to users.
 							</p>
 						</Callout>
 						<Callout type="warning">
 							<p>
-								<b>Warning:</b> This is a warning message, typically used to alert users of
+								<b>Warning:</b> This is a warning message, typically used to
+								alert users of
 								<br />
 								potential risks or issues.
 							</p>
 						</Callout>
 						<Callout type="error">
 							<p>
-								<b>Error:</b> This is an error message, used to notify users of critical
+								<b>Error:</b> This is an error message, used to notify users of
+								critical
 								<br />
 								problems or failures.
 							</p>
 						</Callout>
 						<Callout type="success">
 							<p>
-								<b>Success:</b> This is a success message, indicating that an action or
+								<b>Success:</b> This is a success message, indicating that an
+								action or
 								<br />
 								operation was completed <i>successfully</i>.
 							</p>
@@ -259,7 +285,11 @@ const BlogkitDocumentation: NextPage = () => {
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
 						rows={[
-							['type', '"info" | "success" | "warning" | "error"', 'Callout style'],
+							[
+								'type',
+								'"info" | "success" | "warning" | "error"',
+								'Callout style',
+							],
 							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
 							['children', 'ReactNode', 'Callout content'],
 						]}
@@ -326,8 +356,16 @@ const BlogkitDocumentation: NextPage = () => {
 						rows={[
 							['title', 'string', 'Link title'],
 							['desc', 'string', 'Link description (optional)'],
-							['href', 'string', 'Custom URL (optional, defaults to /blog/[title-slug])'],
-							['isInProgress', 'boolean', 'Hide link if post is in progress (optional)'],
+							[
+								'href',
+								'string',
+								'Custom URL (optional, defaults to /blog/[title-slug])',
+							],
+							[
+								'isInProgress',
+								'boolean',
+								'Hide link if post is in progress (optional)',
+							],
 						]}
 					/>
 				</BlogSection>
@@ -336,11 +374,7 @@ const BlogkitDocumentation: NextPage = () => {
 					<p className="margin-bottom--2">
 						Display tabular data with headers and rows.
 					</p>
-					<CodeBlock
-						hasMarginDown
-						language="tsx"
-						code={CODE_EXAMPLES.table}
-					/>
+					<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.table} />
 					<Table
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
@@ -356,34 +390,43 @@ const BlogkitDocumentation: NextPage = () => {
 			<BlogSection title="Features">
 				<ul className="margin-bottom--2">
 					<li>
-						<strong>Blog Layout with TOC:</strong> Responsive blog layout with sticky table of contents sidebar
+						<strong>Blog Layout with TOC:</strong> Responsive blog layout with
+						sticky table of contents sidebar
 					</li>
 					<li>
-						<strong>Code Highlighting:</strong> Syntax highlighting for multiple programming languages using Prism.js
+						<strong>Code Highlighting:</strong> Syntax highlighting for multiple
+						programming languages using Prism.js
 					</li>
 					<li>
-						<strong>Mermaid Diagrams:</strong> Render flowcharts, sequence diagrams, timelines, and more
+						<strong>Mermaid Diagrams:</strong> Render flowcharts, sequence
+						diagrams, timelines, and more
 					</li>
 					<li>
-						<strong>Callouts:</strong> Info, warning, error, and success notification boxes
+						<strong>Callouts:</strong> Info, warning, error, and success
+						notification boxes
 					</li>
 					<li>
-						<strong>Data Tables:</strong> Flexible table component with dynamic column sizing
+						<strong>Data Tables:</strong> Flexible table component with dynamic
+						column sizing
 					</li>
 					<li>
-						<strong>Blog Sections:</strong> Hierarchical section organization with auto-generated IDs
+						<strong>Blog Sections:</strong> Hierarchical section organization
+						with auto-generated IDs
 					</li>
 					<li>
 						<strong>Blog Links:</strong> Animated link cards for blog navigation
 					</li>
 					<li>
-						<strong>TypeScript Support:</strong> Fully typed components with ReactNode support
+						<strong>TypeScript Support:</strong> Fully typed components with
+						ReactNode support
 					</li>
 					<li>
-						<strong>SCSS Modules:</strong> Scoped, customizable styles using stylekit
+						<strong>SCSS Modules:</strong> Scoped, customizable styles using
+						stylekit
 					</li>
 					<li>
-						<strong>Next.js Optimized:</strong> Works seamlessly with Next.js 14, 15, and 16
+						<strong>Next.js Optimized:</strong> Works seamlessly with Next.js
+						14, 15, and 16
 					</li>
 					<li>
 						<strong>React 19 Ready:</strong> Full support for React 18 and 19
@@ -393,18 +436,31 @@ const BlogkitDocumentation: NextPage = () => {
 
 			<BlogSection title="Customization">
 				<p className="margin-bottom--2">
-					Blogkit uses SCSS modules for styling. You can customize the appearance by
-					overriding CSS variables in stylekit or creating your own theme.
+					Blogkit uses SCSS modules for styling. You can customize the
+					appearance by overriding CSS variables in stylekit or creating your
+					own theme.
 				</p>
 
 				<BlogSection title="Key Variables">
 					<ul className="margin-bottom--2">
-						<li><code>$color--primary</code> - Primary accent color</li>
-						<li><code>$color--secondary</code> - Secondary color</li>
-						<li><code>$color--error</code> - Error color</li>
-						<li><code>$font-family--primary</code> - Primary font family</li>
-						<li><code>$font-family--code</code> - Code font family</li>
-						<li><code>$border-radius</code> - Border radius for components</li>
+						<li>
+							<code>$color--primary</code> - Primary accent color
+						</li>
+						<li>
+							<code>$color--secondary</code> - Secondary color
+						</li>
+						<li>
+							<code>$color--error</code> - Error color
+						</li>
+						<li>
+							<code>$font-family--primary</code> - Primary font family
+						</li>
+						<li>
+							<code>$font-family--code</code> - Code font family
+						</li>
+						<li>
+							<code>$border-radius</code> - Border radius for components
+						</li>
 					</ul>
 				</BlogSection>
 			</BlogSection>
@@ -418,18 +474,40 @@ const BlogkitDocumentation: NextPage = () => {
 				</ul>
 			</BlogSection>
 
-			<BlogSection title="About">
-				<p className="margin-bottom--2">
-					Blogkit is built and maintained by <a href="https://santhoshsiva.dev" target="_blank" rel="noopener noreferrer">Santhosh Siva</a>.
-					It&apos;s extracted from a personal blog project and open to contributions.
+			<BlogSection title="Contributing">
+				<p className={styles['margin-bottom--1']}>
+					Contributions are welcome! Please fork the repository and submit pull
+					requests. For bugs or feature requests, open an issue on the
+					repository.
 				</p>
-				<Callout type="info">
-					<p>
-						<strong>License:</strong> MIT
-						<br />
-						<strong>Repository:</strong> <a href="https://github.com/san-siva/blogkit" target="_blank" rel="noopener noreferrer">github.com/san-siva/blogkit</a>
-					</p>
-				</Callout>
+				<a
+					href="https://github.com/san-siva/blogkit"
+					target="_blank"
+					rel="noopener noreferrer"
+					className={styles['a--highlighted']}
+				>
+					View source code, report issues, and contribute
+				</a>
+			</BlogSection>
+
+			<BlogSection title="License">
+				<p>This project is licensed under the MIT License.</p>
+			</BlogSection>
+
+			<BlogSection title="About">
+				<p>
+					<strong>Author:</strong> Santhosh Siva
+					<br />
+					<strong>GitHub:</strong>{' '}
+					<a
+						href="https://github.com/san-siva"
+						target="_blank"
+						rel="noopener noreferrer"
+						className={styles['a--highlighted']}
+					>
+						https://github.com/san-siva
+					</a>
+				</p>
 			</BlogSection>
 		</Blog>
 	);

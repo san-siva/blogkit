@@ -66,6 +66,9 @@
 		font-family: styles.$font-family--primary;
 		border-radius: styles.$border-radius;
 		margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 	}
 }
 

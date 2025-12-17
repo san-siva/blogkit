@@ -59,9 +59,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0;
-    padding-right: stylekit.space(0);
-    padding-bottom: stylekit.rem(4);
+    padding: stylekit.rem(4);
     padding-left: stylekit.rem(18);
 
     &__title {

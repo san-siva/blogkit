@@ -30,6 +30,10 @@
 			color: styles.$color--base;
 			background-color: styles.$color--primary;
 		}
+
+    &__cell * {
+      font-size: styles.$font-size--small;
+    }
 	}
 
 	&__row {
@@ -39,6 +43,10 @@
 			@include cell-base;
 			color: styles.$color--dark;
 		}
+
+    &__cell * {
+      font-size: styles.$font-size--small;
+    }
 	}
 }
 
