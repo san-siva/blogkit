@@ -1,0 +1,51 @@
+# Website and examples
+website/
+
+# Development files
+.git
+.github
+.claude
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Source files (keep only dist)
+src/
+assets/
+
+# Config files
+tsconfig.json
+tsconfig.build.json
+rollup.config.mjs
+.gitignore
+.npmignore
+
+# Documentation (except README and LICENSE)
+prompt.md
+*.md
+!README.md
+!LICENSE.md
+
+# Build artifacts
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Firebase
+.firebaserc
+.firebase
+firebase-debug.log

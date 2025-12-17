@@ -45,3 +45,6 @@ website/.firebaserc
 website/.firebase
 firebase-debug.log
 .git
+
+# Development notes
+prompt.md
