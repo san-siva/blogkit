@@ -82,6 +82,14 @@ The documentation includes:
 - Customization and theming guide
 - TypeScript usage examples and type definitions
 
+## Examples
+
+See Blogkit in action in these blogs and documentation sites:
+
+- **[Gitsy](https://gitsy-56895.web.app/)** - A blog built with Blogkit showcasing various components
+- **[Optimizing Background Tasks with requestIdleCallback](https://santhoshsiva.dev/blog/optimizing-background-tasks-with-requestidlecallback-advanced-scheduling-in-the-javascript-event-loop/)** - Advanced scheduling in the JavaScript event loop
+- **[Linting at Scale](https://santhoshsiva.dev/blog/linting-at-scale-strategies-for-updating-eslint-configs-in-large-applications/)** - Strategies for updating ESLint configs in large applications
+
 ## Requirements
 
 - React ^19.0.0
