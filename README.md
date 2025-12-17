@@ -1,12 +1,23 @@
 # Blogkit
 
-A reusable, feature-rich blog component library for React and Next.js applications. Built with TypeScript and SCSS modules, BlogKit provides everything you need to create beautiful, interactive blog posts with code highlighting, diagrams, callouts, and more.
+A comprehensive, production-ready blog component library for React and Next.js applications. Built with TypeScript and SCSS modules, Blogkit provides a complete suite of components for creating professional, interactive blog posts with advanced features including syntax highlighting, diagram rendering, callouts, and more.
 
-**[📚 View Full Documentation](https://blogkit-c367c.web.app/)** | **[🌐 See Live Demo on santhoshsiva.dev](https://santhoshsiva.dev)**
+**[View Full Documentation](https://blogkit-c367c.web.app/)** | **[Live Demo](https://santhoshsiva.dev)**
 
-## Key Features
+## Overview
 
-✨ **Blog Layout with TOC** • 🎨 **Code Highlighting** • 📊 **Mermaid Diagrams** • 💬 **Callouts** • 📋 **Data Tables** • 🔗 **Blog Links** • 📝 **TypeScript** • 🎯 **React 19 Ready**
+Blogkit is designed to streamline the development of content-rich blog applications by providing a modular, customizable component library. It supports modern React patterns, offers full TypeScript support, and includes responsive design out of the box.
+
+## Features
+
+- **Blog Layout System**: Pre-built layout components with table of contents navigation
+- **Syntax Highlighting**: Code block components with multi-language support via Prism.js
+- **Diagram Rendering**: Integrated Mermaid.js support for flowcharts, sequence diagrams, and more
+- **Content Components**: Callouts, data tables, and specialized blog link components
+- **TypeScript Support**: Fully typed API for enhanced developer experience
+- **Responsive Design**: Mobile-first design with SCSS modules
+- **React 19 Compatible**: Built to work seamlessly with the latest React version
+- **Next.js Optimized**: Designed for optimal performance in Next.js applications
 
 ## Installation
 
@@ -60,22 +71,51 @@ export default function MyBlogPost() {
 
 ## Documentation
 
-For detailed documentation, component APIs, live examples, and more:
-
-👉 **[Visit the Full Documentation](https://blogkit-c367c.web.app/)**
+Comprehensive documentation is available at [https://blogkit-c367c.web.app/](https://blogkit-c367c.web.app/)
 
 The documentation includes:
 
 - Complete component API reference
 - Interactive live examples
+- Implementation guides and best practices
 - Code snippets for all components
-- Customization guide
-- TypeScript usage examples
+- Customization and theming guide
+- TypeScript usage examples and type definitions
+
+## Requirements
+
+- React ^19.0.0
+- Next.js ^16.0.10
+- Node.js 18+ recommended
+
+## Browser Support
+
+Blogkit supports all modern browsers:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ## Contributing
 
-Contributions are welcome! Open an issue or submit a pull request on [GitHub](https://github.com/san-siva/blogkit).
+Contributions are welcome and appreciated. To contribute:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/improvement`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/improvement`)
+5. Open a Pull Request
+
+Please ensure your code follows the existing style conventions and includes appropriate tests.
+
+For bug reports and feature requests, please [open an issue](https://github.com/san-siva/blogkit/issues) on GitHub.
 
 ## License
 
 MIT © [Santhosh Siva](https://santhoshsiva.dev)
+
+## Author
+
+**Santhosh Siva**
+- Website: [https://santhoshsiva.dev](https://santhoshsiva.dev)
+- GitHub: [@san-siva](https://github.com/san-siva)
