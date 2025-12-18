@@ -11,6 +11,10 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     },
+    "./styles.css": {
+      "import": "./dist/esm/index.css",
+      "require": "./dist/cjs/index.css"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -33,9 +37,11 @@
   ],
   "author": "Santhosh Siva",
   "license": "MIT",
+  "dependencies": {
+    "@san-siva/stylekit": "^1.0.1"
+  },
   "peerDependencies": {
     "@react-spring/web": "^10.0.0",
-    "@san-siva/stylekit": "^1.0.1",
     "mermaid": "^10.0.0",
     "next": ">=16.0.10",
     "prismjs": "^1.29.0",

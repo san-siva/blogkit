@@ -22,12 +22,14 @@ Blogkit is designed to streamline the development of content-rich blog applicati
 ## Installation
 
 ```bash
-npm install @san-siva/blogkit @san-siva/stylekit
+npm install @san-siva/blogkit
 # or
-yarn add @san-siva/blogkit @san-siva/stylekit
+yarn add @san-siva/blogkit
 # or
-pnpm add @san-siva/blogkit @san-siva/stylekit
+pnpm add @san-siva/blogkit
 ```
+
+> **Note:** The required `@san-siva/stylekit` package is automatically installed as a dependency.
 
 ### Peer Dependencies
 
@@ -42,6 +44,7 @@ npm install react@^19.0.0 react-dom@^19.0.0 next@^16.0.10 @react-spring/web@^10.
 ```tsx
 import { Blog, BlogHeader, BlogSection, CodeBlock, Callout } from '@san-siva/blogkit';
 import '@san-siva/stylekit/index.module.scss';
+import '@san-siva/blogkit/styles.css';
 
 export default function MyBlogPost() {
 	return (

@@ -70,7 +70,7 @@ export default {
     }),
     postcss({
       modules: true,
-      extract: false,
+      extract: true,
       minimize: true,
       sourceMap: true,
       plugins: [

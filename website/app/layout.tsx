@@ -3,6 +3,7 @@ import { JetBrains_Mono, Montserrat, Rubik } from 'next/font/google';
 
 import '@san-siva/stylekit/globals.scss';
 import styles from '@san-siva/stylekit/index.module.scss';
+import '@san-siva/blogkit/styles.css';
 
 const montserrat = Montserrat({
 	subsets: ['latin'],

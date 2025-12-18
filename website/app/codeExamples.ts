@@ -1,0 +1,88 @@
+const installation = `npm install @san-siva/blogkit
+# or
+yarn add @san-siva/blogkit`;
+
+const quickStart = `import { Blog, BlogHeader, BlogSection } from '@san-siva/blogkit';
+import '@san-siva/stylekit/index.module.scss';
+import '@san-siva/blogkit/styles.css';
+
+export default function MyBlog() {
+  return (
+    <Blog>
+      <BlogHeader
+        title={['My Blog Post']}
+        desc={['A description of my blog post']}
+      />
+      <BlogSection title="Introduction">
+        <p>Your content here...</p>
+      </BlogSection>
+    </Blog>
+  );
+}`;
+
+const blog = `<Blog>
+  {/* Your blog content */}
+</Blog>`;
+
+const blogHeader = `<BlogHeader
+  title={['My Blog Title']}
+  desc={['Posted on January 1, 2025']}
+/>`;
+
+const blogSection = `<BlogSection title="Section Title" hasMarginBottom>
+  <p>Your section content...</p>
+</BlogSection>`;
+
+const codeBlock = `<CodeBlock
+  language="typescript"
+  code={\`const greeting = "Hello, World!";\`}
+  hasMarginDown={true}
+/>`;
+
+const callout = `<Callout type="info">
+  <p>
+    <b>Information:</b>
+		This is an informative message, often used to provide
+    <br />
+    context or <b>additional details</b> to users.
+  </p>
+</Callout>`;
+
+const mermaid = `<Mermaid
+  id="my-diagram"
+  code={\`flowchart LR
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Process]
+    B -->|No| D[End]
+    C --> D
+\`}
+  hasMarginDown={true}
+/>`;
+
+const blogLink = `<BlogLink
+  title="My Blog Post"
+  desc="A short description of the blog post content"
+  href="/blog/my-blog-post"
+/>`;
+
+const table = `<Table
+  headers={['Column 1', 'Column 2', 'Column 3']}
+  rows={[
+    ['Row 1, Col 1', 'Row 1, Col 2', 'Row 1, Col 3'],
+    ['Row 2, Col 1', 'Row 2, Col 2', 'Row 2, Col 3'],
+  ]}
+  hasMarginDown={true}
+/>`;
+
+export const CODE_EXAMPLES = {
+	installation,
+	quickStart,
+	blog,
+	blogHeader,
+	blogSection,
+	codeBlock,
+	callout,
+	mermaid,
+	blogLink,
+	table,
+};
