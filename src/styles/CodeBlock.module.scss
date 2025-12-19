@@ -1,11 +1,10 @@
 @use '@san-siva/stylekit/index.module.scss' as stylekit;
 
 .code-block {
-
 	code {
 		font-size: unset;
-    font-weight: unset;
-    background-color: unset;
+		font-weight: unset;
+		background-color: unset;
 		padding: unset;
 	}
 
@@ -49,52 +48,58 @@
 				font-style: unset;
 				line-height: stylekit.$line-height--normal;
 				color: unset;
-        text-align: left !important;
+				text-align: left !important;
 			}
 		}
 	}
 
-  &__header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: stylekit.rem(4);
-    padding-left: stylekit.rem(18);
+	&__header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		padding: stylekit.rem(4);
+		padding-left: stylekit.rem(18);
 
-    &__title {
-      font-size: stylekit.$font-size--small;
-      color: stylekit.$color--code;
-      text-transform: capitalize;
-    }
+		&__title {
+			font-size: stylekit.$font-size--small;
+			color: stylekit.$color--code;
+			text-transform: capitalize;
+		}
 
-    &__copy {
-      height: stylekit.rem(32);
-      width: stylekit.rem(32);
-      background-image: url('../assets/copy.svg');
-      background-size: stylekit.rem(14) stylekit.rem(14);
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
+		&__copy {
+			height: stylekit.rem(32);
+			width: stylekit.rem(32);
+			background-image: url('../assets/copy.svg');
+			background-size: stylekit.rem(14) stylekit.rem(14);
+			background-position: center;
+			background-repeat: no-repeat;
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
 
-      &:hover {
-        background-color: stylekit.$color--grey-dark;
-        border-radius: 100%;
-      }
+			&:hover {
+				background-color: stylekit.$color--grey-dark;
+				border-radius: 100%;
+			}
 
-      &--active {
-        background-image: url('../assets/done_copying.svg');
-        pointer-events: none;
-      }
-    }
-  }
+			&--active {
+				background-image: url('../assets/done_copying.svg');
+				pointer-events: none;
+			}
+		}
+	}
 }
 
 .margin-top--1 {
-  margin-top: stylekit.space(1);
+	margin-top: stylekit.space(1);
 }
 
 .margin-bottom--2 {
-  margin-bottom: stylekit.space(2);
+	margin-bottom: stylekit.space(2);
+}
+
+.code-block--static code {
+	color: stylekit.$color--base !important;
+  font-family: stylekit.$font-family--code !important;
+  font-size: stylekit.$font-size--small !important;
 }

@@ -17,7 +17,7 @@ const CodeBlockStatic = ({
 		<div
 			className={`${styles['code-block']} ${hasMarginUp ? styles['margin-top--1'] : ''} ${
 				hasMarginDown ? styles['margin-bottom--2'] : ''
-			}`}
+			} ${styles['code-block--static']}`}
 		>
 			<div className={styles['code-block__header']}>
 				<div className={styles['code-block__header__title']}>{language}</div>
