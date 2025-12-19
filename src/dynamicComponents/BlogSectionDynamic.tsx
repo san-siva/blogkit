@@ -36,17 +36,27 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 
 		const parentReference = useRef<ForwardedReference['parentRef']>(null);
 		const childReferences = useRef<ForwardedReference['childRefs']>([]);
+		const imperativeHandleRef = useRef<ForwardedReference | null>(null);
 
-		useImperativeHandle(forwardedReference, () => ({
-			parentRef: parentReference.current!,
-			childRefs: childReferences.current!,
-		}));
+		useImperativeHandle(forwardedReference, () => {
+			const handle = {
+				parentRef: parentReference.current!,
+				childRefs: childReferences.current!,
+			};
+			imperativeHandleRef.current = handle;
+			return handle;
+		});
 
 		const handleChildReferences = (element: ForwardedReference | null) => {
 			if (!element) return;
 			const { parentRef: subParentReference } = element;
 			if (!subParentReference) return;
 			childReferences.current.push(subParentReference);
+
+			// Re-trigger parent ref callback with updated children
+			if (typeof forwardedReference === 'function' && imperativeHandleRef.current) {
+				forwardedReference(imperativeHandleRef.current);
+			}
 		};
 
 		return (

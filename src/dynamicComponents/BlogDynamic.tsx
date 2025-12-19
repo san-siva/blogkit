@@ -64,12 +64,29 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 	const [visibleTitle, setVisibleTitle] = useState<string | null>(null);
 	const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+	const sortByDomPosition = useCallback(
+		([, a]: [string, SectionReferenceValue], [, b]: [string, SectionReferenceValue]) => {
+			const position = a.el.compareDocumentPosition(b.el);
+			if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+				return -1; // a comes before b
+			} else if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+				return 1; // b comes before a
+			}
+			return 0;
+		},
+		[]
+	);
+
 	const updateCategoryTitles = useCallback(() => {
-		let firstSectionId: string | null = null;
 		const now = Date.now();
 		const newCategoryTitles = new Map<string, CategoryTitleValue>();
 
-		for (const [id, { title, el, isSubSection }] of sectionReferences.current) {
+		// Sort sections by their DOM position to maintain correct order
+		const sectionsArray = Array.from(sectionReferences.current.entries());
+		sectionsArray.sort(sortByDomPosition);
+
+		let firstSectionId: string | null = null;
+		for (const [id, { title, el, isSubSection }] of sectionsArray) {
 			if (!firstSectionId) {
 				firstSectionId = id;
 			}
@@ -87,7 +104,7 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 				setVisibleTitle(firstSectionId);
 			}
 		}
-	}, [visibleTitle]);
+	}, [visibleTitle, sortByDomPosition]);
 
 	const debounceUpdateCategoryTitles = useCallback(() => {
 		// Clear existing timer and set a new one to batch updates
