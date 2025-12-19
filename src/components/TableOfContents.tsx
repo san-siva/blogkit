@@ -1,7 +1,5 @@
-'use client';
-
 import type { MouseEvent } from 'react';
-import styles from '../styles/Blog.module.scss';
+import TableOfContentsDynamic from '../dynamicComponents/TableOfContentsDynamic';
 
 interface CategoryTitleValue {
 	el: HTMLElement;
@@ -26,35 +24,12 @@ const TableOfContents = ({
 	onClickCategoryTitle,
 }: TableOfContentsProperties) => {
 	return (
-		<div className={styles['blog__sidebar']}>
-			<p
-				className={`${styles['margin-bottom--3']} ${styles['category__header']}`}
-			>
-				{title}
-			</p>
-			{[...categoryTitles].map(
-				([id, { title, isSubSection }], index, array) => {
-					const isNextSectionSubSection = array[index + 1]?.[1]?.isSubSection;
-					return (
-						<p
-							key={id}
-							data-idx={index}
-							data-id={id}
-							className={`${styles['category__title']} ${
-								id === visibleTitle ? styles['category__title--active'] : ''
-							} ${isSubSection ? styles['category__title--sub'] : ''} ${
-								isSubSection && !isNextSectionSubSection
-									? styles['margin-bottom-imp--2']
-									: ''
-							}`}
-							onClick={onClickCategoryTitle}
-						>
-							{title}
-						</p>
-					);
-				}
-			)}
-		</div>
+		<TableOfContentsDynamic
+			title={title}
+			categoryTitles={categoryTitles}
+			visibleTitle={visibleTitle}
+			onClickCategoryTitle={onClickCategoryTitle}
+		/>
 	);
 };
 

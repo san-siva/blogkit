@@ -1,76 +1,53 @@
-import {
-	Children,
-	cloneElement,
-	forwardRef,
-	isValidElement,
-	useImperativeHandle,
-	useRef,
-} from 'react';
+'use client';
 
-import type { ReactNode, RefAttributes } from 'react';
+import { forwardRef, lazy, Suspense } from 'react';
+import type { ReactNode } from 'react';
+import BlogSectionStatic from '../staticComponents/BlogSectionStatic';
+import type { ForwardedReference } from '../dynamicComponents/BlogDynamic';
+export type { ForwardedReference };
 
-import styles from '../styles/BlogSection.module.scss';
+const BlogSectionDynamic = lazy(
+	() => import('../dynamicComponents/BlogSectionDynamic')
+);
 
-import type { ForwardedReference } from './Blog';
-import { generateIdForBlogTitle } from '../utils';
-
-interface BlogProperties {
+interface BlogSectionProperties {
 	title?: string;
 	category?: string;
 	children?: ReactNode;
 	increaseMarginBottom?: boolean;
 }
 
-const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
+const BlogSection = forwardRef<ForwardedReference, BlogSectionProperties>(
 	(
 		{
 			title = '',
 			category = '',
 			children = null,
 			increaseMarginBottom = false,
-		}: BlogProperties,
-		forwardedReference
+		},
+		ref
 	) => {
-		const titleWithCategory = category ? `${category} - ${title}` : title;
-		const id = generateIdForBlogTitle(titleWithCategory);
-
-		const parentReference = useRef<ForwardedReference['parentRef']>(null);
-		const childReferences = useRef<ForwardedReference['childRefs']>([]);
-
-		useImperativeHandle(forwardedReference, () => ({
-			parentRef: parentReference.current!,
-			childRefs: childReferences.current!,
-		}));
-
-		const handleChildReferences = (element: ForwardedReference | null) => {
-			if (!element) return;
-			const { parentRef: subParentReference } = element;
-			if (!subParentReference) return;
-			childReferences.current.push(subParentReference);
-		};
-
 		return (
-			<div
-				className={`${styles['blog-section']}
-					${
-						increaseMarginBottom
-							? styles['margin-bottom--9']
-							: styles['margin-bottom--6']
-					}`}
-				data-title={title}
-				data-id={id}
-				ref={parentReference}
+			<Suspense
+				fallback={
+					<BlogSectionStatic
+						title={title}
+						category={category}
+						increaseMarginBottom={increaseMarginBottom}
+					>
+						{children}
+					</BlogSectionStatic>
+				}
 			>
-				{title ? (
-					<h4 className={styles['blog-section__title']}>{title}</h4>
-				) : null}
-				{Children.map(children, child => {
-					if (!isValidElement(child)) return child;
-					return cloneElement(child, {
-						ref: handleChildReferences,
-					} as RefAttributes<ForwardedReference>);
-				})}
-			</div>
+				<BlogSectionDynamic
+					ref={ref}
+					title={title}
+					category={category}
+					increaseMarginBottom={increaseMarginBottom}
+				>
+					{children}
+				</BlogSectionDynamic>
+			</Suspense>
 		);
 	}
 );

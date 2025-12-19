@@ -5,26 +5,22 @@ import type { NextPage } from 'next';
 import '@san-siva/stylekit/index.module.scss';
 import styles from './page.module.scss';
 
-import { BlogStatic } from '@san-siva/blogkit';
-import { BlogSectionStatic } from '@san-siva/blogkit';
-import { BlogLinkStatic } from '@san-siva/blogkit';
-import { CodeBlockStatic } from '@san-siva/blogkit';
-import { MermaidStatic } from '@san-siva/blogkit';
-
-import { Blog } from '@san-siva/blogkit';
-import { BlogHeader } from '@san-siva/blogkit';
-import { BlogSection } from '@san-siva/blogkit';
-import { Callout } from '@san-siva/blogkit';
-import { CodeBlock } from '@san-siva/blogkit';
-import { Mermaid } from '@san-siva/blogkit';
-import { BlogLink } from '@san-siva/blogkit';
-import { Table } from '@san-siva/blogkit';
+import {
+	Blog,
+	BlogHeader,
+	BlogSection,
+	BlogLink,
+	CodeBlock,
+	Mermaid,
+	Callout,
+	Table,
+} from '@san-siva/blogkit';
 
 import { CODE_EXAMPLES } from './codeExamples';
 
 const BlogkitDocumentation: NextPage = () => {
 	return (
-		<BlogStatic>
+		<Blog>
 			<BlogHeader
 				title={['Blogkit Documentation']}
 				desc={[
@@ -32,7 +28,7 @@ const BlogkitDocumentation: NextPage = () => {
 				]}
 			/>
 
-			<BlogSectionStatic title="Overview">
+			<BlogSection title="Overview">
 				<p className="margin-bottom--2">
 					Blogkit is a comprehensive component library built with TypeScript and
 					SCSS modules, providing everything you need to create beautiful,
@@ -52,47 +48,47 @@ const BlogkitDocumentation: NextPage = () => {
 					, where it powers blog listings, table of contents navigation, and
 					rich content with Mermaid diagrams.
 				</p>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="Installation">
+			<BlogSection title="Installation">
 				<p className="margin-bottom--2">
 					Install Blogkit directly from GitHub using npm or yarn:
 				</p>
-				<CodeBlockStatic
+				<CodeBlock
 					hasMarginDown
 					language="bash"
 					code={CODE_EXAMPLES.installation}
 				/>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="Quick Start">
+			<BlogSection title="Quick Start">
 				<p className="margin-bottom--2">
 					Here's a simple example to get you started:
 				</p>
-				<CodeBlockStatic
+				<CodeBlock
 					hasMarginDown
 					language="tsx"
 					code={CODE_EXAMPLES.quickStart}
 				/>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="Core Components">
-				<BlogSectionStatic title="Blog">
+			<BlogSection title="Core Components">
+				<BlogSection title="Blog">
 					<p className="margin-bottom--2">
 						The main container component that wraps all your blog content.
 					</p>
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.blog}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="BlogHeader">
+				<BlogSection title="BlogHeader">
 					<p className="margin-bottom--2">
 						Display a title and description at the top of your blog post.
 					</p>
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.blogHeader}
@@ -105,13 +101,13 @@ const BlogkitDocumentation: NextPage = () => {
 							['desc', 'string[]', 'Array of description lines'],
 						]}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="BlogSection">
+				<BlogSection title="BlogSection">
 					<p className="margin-bottom--2">
 						Create sections within your blog post with optional titles.
 					</p>
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.blogSection}
@@ -129,14 +125,14 @@ const BlogkitDocumentation: NextPage = () => {
 							['children', 'ReactNode', 'Section content'],
 						]}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="CodeBlock">
+				<BlogSection title="CodeBlock">
 					<p className="margin-bottom--2">
 						Display syntax-highlighted code blocks with support for multiple
 						programming languages.
 					</p>
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.codeBlock}
@@ -158,9 +154,9 @@ const BlogkitDocumentation: NextPage = () => {
 							],
 						]}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="Callout">
+				<BlogSection title="Callout">
 					<p className="margin-bottom--2">
 						Highlight important information with styled callout boxes.
 					</p>
@@ -210,7 +206,7 @@ const BlogkitDocumentation: NextPage = () => {
 						</Callout>
 					</div>
 
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.callout}
@@ -229,15 +225,15 @@ const BlogkitDocumentation: NextPage = () => {
 							['children', 'ReactNode', 'Callout content'],
 						]}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="Mermaid">
+				<BlogSection title="Mermaid">
 					<p className="margin-bottom--2">
 						Render diagrams and visualizations using Mermaid syntax. Supports
 						flowcharts, sequence diagrams, timelines, and more.
 					</p>
 
-					<MermaidStatic
+					<Mermaid
 						id="example-flowchart"
 						code={`flowchart LR
     A[Start] --> B{Decision}
@@ -247,7 +243,7 @@ const BlogkitDocumentation: NextPage = () => {
 						hasMarginDown
 					/>
 
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.mermaid}
@@ -263,23 +259,23 @@ const BlogkitDocumentation: NextPage = () => {
 							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
 						]}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="BlogLink">
+				<BlogSection title="BlogLink">
 					<p className="margin-bottom--2">
 						Create animated links to blog posts with title, description, and
 						hover effects.
 					</p>
 
 					<div className={styles.blogLinkContainer}>
-						<BlogLinkStatic
+						<BlogLink
 							title="Getting Started with Blogkit"
 							desc="Learn how to use Blogkit components in your Next.js application"
 							href="https://santhoshsiva.dev"
 						/>
 					</div>
 
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.blogLink}
@@ -303,13 +299,13 @@ const BlogkitDocumentation: NextPage = () => {
 							],
 						]}
 					/>
-				</BlogSectionStatic>
+				</BlogSection>
 
-				<BlogSectionStatic title="Table">
+				<BlogSection title="Table">
 					<p className="margin-bottom--2">
 						Display tabular data with headers and rows.
 					</p>
-					<CodeBlockStatic
+					<CodeBlock
 						hasMarginDown
 						language="tsx"
 						code={CODE_EXAMPLES.table}
@@ -323,10 +319,10 @@ const BlogkitDocumentation: NextPage = () => {
 							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
 						]}
 					/>
-				</BlogSectionStatic>
-			</BlogSectionStatic>
+				</BlogSection>
+			</BlogSection>
 
-			<BlogSectionStatic title="Features">
+			<BlogSection title="Features">
 				<ul className="margin-bottom--2">
 					<li>
 						<strong>Blog Layout with TOC:</strong> Responsive blog layout with
@@ -371,16 +367,16 @@ const BlogkitDocumentation: NextPage = () => {
 						<strong>React 19 Ready:</strong> Full support for React 18 and 19
 					</li>
 				</ul>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="Customization">
+			<BlogSection title="Customization">
 				<p className="margin-bottom--2">
 					Blogkit uses SCSS modules for styling. You can customize the
 					appearance by overriding CSS variables in stylekit or creating your
 					own theme.
 				</p>
 
-				<BlogSectionStatic title="Key Variables">
+				<BlogSection title="Key Variables">
 					<ul className="margin-bottom--2">
 						<li>
 							<code>$color--primary</code> - Primary accent color
@@ -401,19 +397,19 @@ const BlogkitDocumentation: NextPage = () => {
 							<code>$border-radius</code> - Border radius for components
 						</li>
 					</ul>
-				</BlogSectionStatic>
-			</BlogSectionStatic>
+				</BlogSection>
+			</BlogSection>
 
-			<BlogSectionStatic title="Browser Support">
+			<BlogSection title="Browser Support">
 				<ul className="margin-bottom--2">
 					<li>Chrome (latest)</li>
 					<li>Firefox (latest)</li>
 					<li>Safari (latest)</li>
 					<li>Edge (latest)</li>
 				</ul>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="Contributing">
+			<BlogSection title="Contributing">
 				<p className={styles['margin-bottom--1']}>
 					Contributions are welcome! Please fork the repository and submit pull
 					requests. For bugs or feature requests, open an issue on the
@@ -427,13 +423,13 @@ const BlogkitDocumentation: NextPage = () => {
 				>
 					View source code, report issues, and contribute
 				</a>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="License">
+			<BlogSection title="License">
 				<p>This project is licensed under the MIT License.</p>
-			</BlogSectionStatic>
+			</BlogSection>
 
-			<BlogSectionStatic title="About">
+			<BlogSection title="About">
 				<p>
 					<strong>Author:</strong> Santhosh Siva
 					<br />
@@ -447,8 +443,8 @@ const BlogkitDocumentation: NextPage = () => {
 						https://github.com/san-siva
 					</a>
 				</p>
-			</BlogSectionStatic>
-		</BlogStatic>
+			</BlogSection>
+		</Blog>
 	);
 };
 

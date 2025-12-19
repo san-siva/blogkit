@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-
-import styles from '../styles/Callout.module.scss';
+import CalloutDynamic from '../dynamicComponents/CalloutDynamic';
 
 interface CalloutProperties {
 	children?: ReactNode;
@@ -9,18 +8,20 @@ interface CalloutProperties {
 	hasMarginDown?: boolean;
 }
 
-const Callout = ({ children, type = 'info',
+const Callout = ({
+	children,
+	type = 'info',
 	hasMarginUp = false,
-	hasMarginDown = false
+	hasMarginDown = false,
 }: CalloutProperties) => {
-	const className = `${styles.callout} ${styles[`callout--${type}`]} ${
-		hasMarginUp ? styles['margin-top--1'] : ''
-	} ${hasMarginDown ? styles['margin-bottom--2'] : ''}`;
 	return (
-		<div className={className}>
-			<div className={styles.callout__icon}/>
-			<div className={styles.callout__wrapper}>{children}</div>
-		</div>
+		<CalloutDynamic
+			type={type}
+			hasMarginUp={hasMarginUp}
+			hasMarginDown={hasMarginDown}
+		>
+			{children}
+		</CalloutDynamic>
 	);
 };
 

@@ -6,5 +6,4 @@ export { default as Callout } from './Callout';
 export { default as Mermaid } from './Mermaid';
 export { default as BlogLink } from './BlogLink';
 export { default as Table } from './Table';
-
-export type { ForwardedReference } from './Blog';
+export { default as TableOfContents } from './TableOfContents';
