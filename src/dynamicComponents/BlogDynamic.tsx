@@ -4,6 +4,7 @@ import {
 	Children,
 	cloneElement,
 	isValidElement,
+	useCallback,
 	useEffect,
 	useRef,
 	useState,
@@ -61,27 +62,42 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		new Map()
 	);
 	const [visibleTitle, setVisibleTitle] = useState<string | null>(null);
+	const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	useEffect(() => {
+	const updateCategoryTitles = useCallback(() => {
 		let firstSectionId: string | null = null;
 		const now = Date.now();
+		const newCategoryTitles = new Map<string, CategoryTitleValue>();
+
 		for (const [id, { title, el, isSubSection }] of sectionReferences.current) {
 			if (!firstSectionId) {
 				firstSectionId = id;
 			}
-			setCategoryTitles((previous: CategoryTitle) => {
-				const newState = new Map(previous);
-				newState.set(id, {
-					el,
-					title,
-					lastUpdatedAt: now,
-					isSubSection,
-				});
-				return newState;
+			newCategoryTitles.set(id, {
+				el,
+				title,
+				lastUpdatedAt: now,
+				isSubSection,
 			});
 		}
-		setVisibleTitle(firstSectionId);
-	}, []);
+
+		if (newCategoryTitles.size > 0) {
+			setCategoryTitles(newCategoryTitles);
+			if (!visibleTitle) {
+				setVisibleTitle(firstSectionId);
+			}
+		}
+	}, [visibleTitle]);
+
+	const debounceUpdateCategoryTitles = useCallback(() => {
+		// Clear existing timer and set a new one to batch updates
+		if (updateTimerRef.current) {
+			clearTimeout(updateTimerRef.current);
+		}
+		updateTimerRef.current = setTimeout(() => {
+			updateCategoryTitles();
+		}, 50);
+	}, [updateCategoryTitles]);
 
 	useEffect(() => {
 		const observers = new Map<string, IntersectionObserver>();
@@ -107,40 +123,53 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		};
 	}, [categoryTitles.size]);
 
-	useEffect(
-		() =>
+	useEffect(() => {
+		return () => {
 			clearTimers(
 				addPaddingTopTimerReference.current,
 				highlightCategoryTimerReference.current
-			),
-		[addPaddingTopTimerReference, highlightCategoryTimerReference]
-	);
+			);
+			if (updateTimerRef.current) {
+				clearTimeout(updateTimerRef.current);
+			}
+		};
+	}, []);
 
-	const addSectionReferences = (element: HTMLElement, isSubSection = false) => {
-		if (!element) return;
-		const id = element.dataset.id;
-		if (!id) return;
-		const title = element.dataset.title;
-		if (!title) return;
-
-		sectionReferences.current.set(id, {
-			el: element,
-			title,
-			isSubSection,
-		});
-	};
-
-	const handleSectionReference = (element: ForwardedReference) => {
+	const handleSectionReference = useCallback((element: ForwardedReference) => {
 		if (!element) return;
 		const { parentRef, childRefs } = element;
-		if (!parentRef) return;
-		addSectionReferences(parentRef);
-		if (!Array.isArray(childRefs)) return;
-		for (const childReference of childRefs) {
-			if (!childReference) continue;
-			addSectionReferences(childReference, true);
+
+		// Add parent section reference
+		if (parentRef) {
+			const id = parentRef.dataset.id;
+			const title = parentRef.dataset.title;
+			if (id && title) {
+				sectionReferences.current.set(id, {
+					el: parentRef,
+					title,
+					isSubSection: false,
+				});
+			}
 		}
-	};
+
+		// Add child section references
+		if (Array.isArray(childRefs)) {
+			for (const childRef of childRefs) {
+				if (!childRef) continue;
+				const id = childRef.dataset.id;
+				const title = childRef.dataset.title;
+				if (id && title) {
+					sectionReferences.current.set(id, {
+						el: childRef,
+						title,
+						isSubSection: true,
+					});
+				}
+			}
+		}
+
+		debounceUpdateCategoryTitles();
+	}, [debounceUpdateCategoryTitles]);
 
 	const handleClickCategoryTitle = (
 		error: MouseEvent<HTMLParagraphElement>
@@ -163,6 +192,7 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 			clearTimeout(timer);
 		}, 1000);
 	};
+
 
 	return (
 		<div className={styles.blog}>
