@@ -1,8 +1,5 @@
-'use client';
-
 import type { NextPage } from 'next';
 
-import '@san-siva/stylekit/index.module.scss';
 import styles from './page.module.scss';
 
 import {
@@ -77,11 +74,7 @@ const BlogkitDocumentation: NextPage = () => {
 					<p className="margin-bottom--2">
 						The main container component that wraps all your blog content.
 					</p>
-					<CodeBlock
-						hasMarginDown
-						language="tsx"
-						code={CODE_EXAMPLES.blog}
-					/>
+					<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.blog} />
 				</BlogSection>
 
 				<BlogSection title="BlogHeader">
@@ -301,11 +294,7 @@ const BlogkitDocumentation: NextPage = () => {
 					<p className="margin-bottom--2">
 						Display tabular data with headers and rows.
 					</p>
-					<CodeBlock
-						hasMarginDown
-						language="tsx"
-						code={CODE_EXAMPLES.table}
-					/>
+					<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.table} />
 					<Table
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
