@@ -9,6 +9,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import { useSpring, animated } from '@react-spring/web';
 
 import type { MouseEvent, ReactNode, RefAttributes } from 'react';
 
@@ -38,34 +39,22 @@ interface CategoryTitleValue extends SectionReferenceValue {
 
 type CategoryTitle = Map<string, CategoryTitleValue>;
 
-type AddPaddingTopTimerReference = ReturnType<typeof setTimeout> | null;
-
 const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
-	const addPaddingTopTimerReference = useRef<AddPaddingTopTimerReference>(null);
-	const highlightCategoryTimerReference =
-		useRef<AddPaddingTopTimerReference>(null);
-
-	const clearTimers = (
-		addPaddingTopTimerReference_: AddPaddingTopTimerReference,
-		highlightCategoryTimerReference_: AddPaddingTopTimerReference
-	) => {
-		if (addPaddingTopTimerReference_) {
-			clearTimeout(addPaddingTopTimerReference_);
-		}
-		if (highlightCategoryTimerReference_) {
-			clearTimeout(highlightCategoryTimerReference_);
-		}
-	};
-
 	const sectionReferences = useRef<SectionReference>(new Map());
 	const [categoryTitles, setCategoryTitles] = useState<CategoryTitle>(
 		new Map()
 	);
 	const [visibleTitle, setVisibleTitle] = useState<string | null>(null);
+	const [showTOC, setShowTOC] = useState(false);
+
 	const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const showTOCTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const sortByDomPosition = useCallback(
-		([, a]: [string, SectionReferenceValue], [, b]: [string, SectionReferenceValue]) => {
+		(
+			[, a]: [string, SectionReferenceValue],
+			[, b]: [string, SectionReferenceValue]
+		) => {
 			const position = a.el.compareDocumentPosition(b.el);
 			if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
 				return -1; // a comes before b
@@ -76,6 +65,16 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		},
 		[]
 	);
+
+	const debounceShowTOC = useCallback(() => {
+		if (showTOC) return;
+		if (showTOCTimerRef.current) {
+			clearTimeout(showTOCTimerRef.current);
+		}
+		showTOCTimerRef.current = setTimeout(() => {
+			setShowTOC(true);
+		}, 200);
+	}, [showTOC]);
 
 	const updateCategoryTitles = useCallback(() => {
 		const now = Date.now();
@@ -98,12 +97,13 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 			});
 		}
 
-		if (newCategoryTitles.size > 0) {
-			setCategoryTitles(newCategoryTitles);
-			if (!visibleTitle) {
-				setVisibleTitle(firstSectionId);
-			}
-		}
+		if (newCategoryTitles.size === 0) return;
+
+		setCategoryTitles(newCategoryTitles);
+		debounceShowTOC();
+
+		if (visibleTitle) return;
+		setVisibleTitle(firstSectionId);
 	}, [visibleTitle, sortByDomPosition]);
 
 	const debounceUpdateCategoryTitles = useCallback(() => {
@@ -142,51 +142,53 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 
 	useEffect(() => {
 		return () => {
-			clearTimers(
-				addPaddingTopTimerReference.current,
-				highlightCategoryTimerReference.current
-			);
 			if (updateTimerRef.current) {
 				clearTimeout(updateTimerRef.current);
+			}
+			if (showTOCTimerRef.current) {
+				clearTimeout(showTOCTimerRef.current);
 			}
 		};
 	}, []);
 
-	const handleSectionReference = useCallback((element: ForwardedReference) => {
-		if (!element) return;
-		const { parentRef, childRefs } = element;
+	const handleSectionReference = useCallback(
+		(element: ForwardedReference) => {
+			if (!element) return;
+			const { parentRef, childRefs } = element;
 
-		// Add parent section reference
-		if (parentRef) {
-			const id = parentRef.dataset.id;
-			const title = parentRef.dataset.title;
-			if (id && title) {
-				sectionReferences.current.set(id, {
-					el: parentRef,
-					title,
-					isSubSection: false,
-				});
-			}
-		}
-
-		// Add child section references
-		if (Array.isArray(childRefs)) {
-			for (const childRef of childRefs) {
-				if (!childRef) continue;
-				const id = childRef.dataset.id;
-				const title = childRef.dataset.title;
+			// Add parent section reference
+			if (parentRef) {
+				const id = parentRef.dataset.id;
+				const title = parentRef.dataset.title;
 				if (id && title) {
 					sectionReferences.current.set(id, {
-						el: childRef,
+						el: parentRef,
 						title,
-						isSubSection: true,
+						isSubSection: false,
 					});
 				}
 			}
-		}
 
-		debounceUpdateCategoryTitles();
-	}, [debounceUpdateCategoryTitles]);
+			// Add child section references
+			if (Array.isArray(childRefs)) {
+				for (const childRef of childRefs) {
+					if (!childRef) continue;
+					const id = childRef.dataset.id;
+					const title = childRef.dataset.title;
+					if (id && title) {
+						sectionReferences.current.set(id, {
+							el: childRef,
+							title,
+							isSubSection: true,
+						});
+					}
+				}
+			}
+
+			debounceUpdateCategoryTitles();
+		},
+		[debounceUpdateCategoryTitles]
+	);
 
 	const handleClickCategoryTitle = (
 		error: MouseEvent<HTMLParagraphElement>
@@ -210,6 +212,11 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		}, 1000);
 	};
 
+	const sidebarStyle = useSpring({
+		opacity: showTOC ? 1 : 0,
+		transform: showTOC ? 'translateX(0)' : 'translateX(80px)',
+		config: { tension: 280, friction: 60 },
+	});
 
 	return (
 		<div className={styles.blog}>
@@ -221,7 +228,7 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 					} as RefAttributes<ForwardedReference>);
 				})}
 			</div>
-			<div className={styles['blog__sidebar']}>
+			<animated.div className={styles['blog__sidebar']} style={sidebarStyle}>
 				<p
 					className={`${styles['margin-bottom--3']} ${styles['category__header']}`}
 				>
@@ -249,7 +256,7 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 						);
 					}
 				)}
-			</div>
+			</animated.div>
 		</div>
 	);
 };

@@ -21,11 +21,13 @@
 		top: calc(var(--topbar-height) + #{styles.space(6)});
 		padding: styles.space(6);
 		min-width: calc(
-			#{styles.rem(380)} - #{styles.space(6)} - #{styles.space(6)}
+			#{styles.rem(320)} - #{styles.space(6)} - #{styles.space(6)}
 		);
 		border-radius: styles.$border-radius--1;
 		background-color: styles.$color--code;
-    box-shadow: 0 0 0 1px styles.$color--border, 0 styles.space(1) styles.space(2) 0 styles.$color--border;
+		box-shadow:
+			0 0 0 1px styles.$color--border,
+			0 styles.space(1) styles.space(2) 0 styles.$color--border;
 
 		margin-left: styles.space(9);
 
