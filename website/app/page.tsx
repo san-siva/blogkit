@@ -235,11 +235,7 @@ const BlogkitDocumentation: NextPage = () => {
 
 					<Mermaid
 						id="example-flowchart"
-						code={`flowchart LR
-    A[Start] --> B{Decision}
-    B -->|Yes| C[Process]
-    B -->|No| D[End]
-    C --> D`}
+						code={CODE_EXAMPLES.mermaidFlowchart}
 						hasMarginDown
 					/>
 

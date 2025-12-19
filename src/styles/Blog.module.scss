@@ -17,9 +17,15 @@
 	}
 
 	&__sidebar {
-		min-width: 400px;
 		position: sticky;
 		top: calc(var(--topbar-height) + #{styles.space(6)});
+		padding: styles.space(6);
+		min-width: calc(
+			#{styles.rem(380)} - #{styles.space(6)} - #{styles.space(6)}
+		);
+		border-radius: styles.$border-radius--1;
+		background-color: styles.$color--code;
+    box-shadow: 0 0 0 1px styles.$color--border, 0 styles.space(1) styles.space(2) 0 styles.$color--border;
 
 		margin-left: styles.space(9);
 
@@ -31,7 +37,7 @@
 			cursor: pointer;
 
 			animation: fadeInDown 0.3s ease-in-out;
-      transition: all 0.3s ease-in-out;
+			transition: all 0.3s ease-in-out;
 
 			&--active,
 			&:hover {
@@ -47,13 +53,17 @@
 				font-size: styles.$font-size--small;
 				font-weight: styles.$font-weight--400;
 			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 }
 
 @media (max-width: styles.rem(1302)) {
 	.blog {
-    display: block;
+		display: block;
 		&__sidebar {
 			display: none;
 		}
@@ -62,17 +72,17 @@
 
 // Margin utilities
 .margin-bottom--3 {
-  margin-bottom: styles.space(3);
+	margin-bottom: styles.space(3);
 }
 
 .margin-bottom-imp--2 {
-  margin-bottom: styles.space(2) !important;
+	margin-bottom: styles.space(2) !important;
 }
 
 .category__header {
-  font-weight: styles.$font-weight--500;
+	font-weight: styles.$font-weight--500;
 }
 
 .category__title {
-  // Styles defined in &__sidebar > .category__title above
+	// Styles defined in &__sidebar > .category__title above
 }

@@ -48,14 +48,15 @@ const callout = `<Callout type="info">
   </p>
 </Callout>`;
 
-const mermaid = `<Mermaid
-  id="my-diagram"
-  code={\`flowchart LR
+const mermaidFlowchart = `flowchart LR
     A[Start] --> B{Decision}
     B -->|Yes| C[Process]
     B -->|No| D[End]
-    C --> D
-\`}
+    C --> D`;
+
+const mermaid = `<Mermaid
+  id="my-diagram"
+  code={\`${mermaidFlowchart}\`}
   hasMarginDown={true}
 />`;
 
@@ -83,6 +84,7 @@ export const CODE_EXAMPLES = {
 	codeBlock,
 	callout,
 	mermaid,
+	mermaidFlowchart,
 	blogLink,
 	table,
 };
