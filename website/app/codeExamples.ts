@@ -1,11 +1,4 @@
-const installation = `npm install @san-siva/blogkit
-# or
-yarn add @san-siva/blogkit
-
-# Install peer dependencies
-npm install react@^19.0.0 react-dom@^19.0.0 next@^16.0.10 \\
-  @react-spring/web@^10.0.0 mermaid@^10.0.0 prismjs@^1.29.0 \\
-  react-syntax-highlighter@^15.5.0`;
+const installation = `npm install @san-siva/blogkit`;
 
 const setup = `// app/layout.tsx or _app.tsx
 // REQUIRED: Import Blogkit styles once in your root layout

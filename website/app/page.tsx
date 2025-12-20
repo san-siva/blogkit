@@ -48,36 +48,35 @@ const BlogkitDocumentation: NextPage = () => {
 			</BlogSection>
 
 			<BlogSection title="Installation">
-				<p className="margin-bottom--2">
-					Install Blogkit and its peer dependencies:
-				</p>
+				<p className="margin-bottom--2">Install Blogkit using npm or yarn:</p>
 				<CodeBlock
 					hasMarginDown
 					language="bash"
 					code={CODE_EXAMPLES.installation}
 				/>
+				<p className="margin-bottom--2">
+					<b>Note:</b> npm 7+ will automatically prompt you to install peer
+					dependencies if they're missing.
+				</p>
 			</BlogSection>
 
 			<BlogSection title="Setup">
 				<p className="margin-bottom--2">
 					<b>Important:</b> You must import the Blogkit styles in your root
-					layout or app entry point. This is required because Blogkit
-					components use pre-compiled SCSS modules.
+					layout or app entry point.
 				</p>
 				<Callout type="info" hasMarginDown>
 					<p>
 						<b>Why is this required?</b>
 						<br />
-						The <code>styles.css</code> import provides all component styles,
-						responsive design rules, theme variables, and critical layout
-						styles. Without it, components will render unstyled.
+						Blogkit pre-compiles its SCSS modules into CSS at build time. This
+						means you don't need Sass as a dependency, and your builds are
+						faster. The <code>styles.css</code> import provides all component
+						styles, responsive design rules, theme variables, and critical
+						layout styles. Without it, components will render unstyled.
 					</p>
 				</Callout>
-				<CodeBlock
-					hasMarginDown
-					language="tsx"
-					code={CODE_EXAMPLES.setup}
-				/>
+				<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.setup} />
 			</BlogSection>
 
 			<BlogSection title="Quick Start">

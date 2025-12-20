@@ -33,11 +33,13 @@ pnpm add @san-siva/blogkit
 
 ### Peer Dependencies
 
-Blogkit requires the following peer dependencies:
+npm 7+ will automatically prompt you to install peer dependencies. If you need to install them manually:
 
 ```bash
-npm install react@^19.0.0 react-dom@^19.0.0 next@^16.0.10 @react-spring/web@^10.0.0 mermaid@^10.0.0 prismjs@^1.29.0 react-syntax-highlighter@^15.5.0
+npm install @react-spring/web mermaid prismjs react-syntax-highlighter
 ```
+
+**Note:** Blogkit also requires `react@^19.0.0`, `react-dom@^19.0.0`, and `next@^16.0.10`, which are typically already installed in Next.js projects.
 
 ## Quick Start
 
@@ -51,13 +53,19 @@ import '@san-siva/blogkit/styles.css';
 ```
 
 **Why is this required?**
-Blogkit components rely on SCSS modules that are pre-compiled into CSS during the build process. The `styles.css` import provides:
+
+Blogkit pre-compiles its SCSS modules into CSS at build time. This approach provides several benefits:
+- **No Sass dependency** - You don't need to install Sass in your project
+- **Faster builds** - CSS is already compiled, no SCSS processing needed
+- **Better compatibility** - Avoids conflicts with different Sass versions
+
+The `styles.css` import provides:
 - All component styles (Blog, CodeBlock, Mermaid, Table, Callout, etc.)
 - Responsive design rules
 - Theme variables and custom properties
 - Critical layout styles
 
-Without this import, components will render without styling and may appear broken.
+Without this import, components will render unstyled.
 
 ### 2. Use Components
 
