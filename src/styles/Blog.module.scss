@@ -2,8 +2,9 @@
 
 .blog {
 	width: 100%;
+	max-width: 100%;
 	display: grid;
-	grid-template-columns: max-content #{styles.rem(320)};
+	grid-template-columns: #{styles.rem(780)} minmax(#{styles.rem(320)}, 1fr);
 	grid-gap: styles.space(8);
 
 	> * {
@@ -17,11 +18,8 @@
 	&__sidebar {
 		position: sticky;
 		height: fit-content;
-		top: calc(var(--topbar-height) + #{styles.space(6)});
+		top: var(--topbar-height);
 		padding: styles.space(6);
-		min-width: calc(
-			#{styles.rem(320)} - #{styles.space(6)} - #{styles.space(6)}
-		);
 		border-radius: styles.$border-radius--1;
 		background-color: styles.$color--code;
 		box-shadow:
@@ -72,21 +70,4 @@ $breakpoint: calc(
 			display: none;
 		}
 	}
-}
-
-// Margin utilities
-.margin-bottom--3 {
-	margin-bottom: styles.space(3);
-}
-
-.margin-bottom-imp--2 {
-	margin-bottom: styles.space(2) !important;
-}
-
-.category__header {
-	font-weight: styles.$font-weight--500;
-}
-
-.category__title {
-	// Styles defined in &__sidebar > .category__title above
 }

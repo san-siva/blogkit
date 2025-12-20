@@ -49,7 +49,7 @@ const BlogkitDocumentation: NextPage = () => {
 
 			<BlogSection title="Installation">
 				<p className="margin-bottom--2">
-					Install Blogkit directly from GitHub using npm or yarn:
+					Install Blogkit and its peer dependencies:
 				</p>
 				<CodeBlock
 					hasMarginDown
@@ -58,9 +58,32 @@ const BlogkitDocumentation: NextPage = () => {
 				/>
 			</BlogSection>
 
+			<BlogSection title="Setup">
+				<p className="margin-bottom--2">
+					<b>Important:</b> You must import the Blogkit styles in your root
+					layout or app entry point. This is required because Blogkit
+					components use pre-compiled SCSS modules.
+				</p>
+				<Callout type="info" hasMarginDown>
+					<p>
+						<b>Why is this required?</b>
+						<br />
+						The <code>styles.css</code> import provides all component styles,
+						responsive design rules, theme variables, and critical layout
+						styles. Without it, components will render unstyled.
+					</p>
+				</Callout>
+				<CodeBlock
+					hasMarginDown
+					language="tsx"
+					code={CODE_EXAMPLES.setup}
+				/>
+			</BlogSection>
+
 			<BlogSection title="Quick Start">
 				<p className="margin-bottom--2">
-					Here's a simple example to get you started:
+					Once you've imported the styles, you can start using Blogkit
+					components:
 				</p>
 				<CodeBlock
 					hasMarginDown

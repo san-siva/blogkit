@@ -41,10 +41,28 @@ npm install react@^19.0.0 react-dom@^19.0.0 next@^16.0.10 @react-spring/web@^10.
 
 ## Quick Start
 
+### 1. Import Styles
+
+First, import the required stylesheets in your root layout or app entry point:
+
+```tsx
+// app/layout.tsx or _app.tsx
+import '@san-siva/blogkit/styles.css';
+```
+
+**Why is this required?**
+Blogkit components rely on SCSS modules that are pre-compiled into CSS during the build process. The `styles.css` import provides:
+- All component styles (Blog, CodeBlock, Mermaid, Table, Callout, etc.)
+- Responsive design rules
+- Theme variables and custom properties
+- Critical layout styles
+
+Without this import, components will render without styling and may appear broken.
+
+### 2. Use Components
+
 ```tsx
 import { Blog, BlogHeader, BlogSection, CodeBlock, Callout } from '@san-siva/blogkit';
-import '@san-siva/stylekit/index.module.scss';
-import '@san-siva/blogkit/styles.css';
 
 export default function MyBlogPost() {
 	return (

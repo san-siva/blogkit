@@ -82,7 +82,7 @@ export default {
         [
           'sass',
           {
-            includePaths: ['node_modules', 'node_modules/@san-siva/stylekit'],
+            includePaths: ['node_modules'],
           },
         ],
       ],
