@@ -19,7 +19,7 @@ const BlogkitDocumentation: NextPage = () => {
 	return (
 		<Blog>
 			<BlogHeader
-				title={['Blogkit Documentation']}
+				title={['Blogkit']}
 				desc={[
 					'A reusable, feature-rich blog component library for React and Next.js applications',
 				]}
