@@ -1,5 +1,3 @@
-'use client';
-
 import { forwardRef, lazy, Suspense } from 'react';
 import type { ReactNode } from 'react';
 import BlogSectionStatic from '../staticComponents/BlogSectionStatic';

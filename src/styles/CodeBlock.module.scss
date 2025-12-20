@@ -1,5 +1,7 @@
 @use '@san-siva/stylekit/index.module.scss' as stylekit;
 
+$code-block-background-color: #282a36;
+
 .code-block {
 	code {
 		font-size: unset;
@@ -8,7 +10,7 @@
 		padding: unset;
 	}
 
-	background-color: #282a36 !important;
+	background-color: $code-block-background-color !important;
 	filter: stylekit.$color--shadow-dark;
 	border-radius: stylekit.$border-radius;
 
@@ -25,6 +27,23 @@
 		white-space: pre-wrap;
 
 		overflow-x: auto;
+
+		// Custom scrollbar styling
+		scrollbar-width: thin;
+		scrollbar-color: stylekit.$color--grey-dark $code-block-background-color;
+
+		&::-webkit-scrollbar {
+			height: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: $code-block-background-color;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: stylekit.$color--grey-dark;
+			border-radius: 4px;
+		}
 
 		padding-top: 0px;
 		padding-right: stylekit.rem(18);
@@ -101,5 +120,5 @@
 .code-block--static code {
 	color: stylekit.$color--base !important;
   font-family: stylekit.$font-family--code !important;
-  font-size: stylekit.$font-size--small !important;
+  font-size: stylekit.$font-size--p-small !important;
 }
