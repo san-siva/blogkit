@@ -47,6 +47,27 @@ const BlogkitDocumentation: NextPage = () => {
 				</p>
 			</BlogSection>
 
+			<BlogSection title="System Requirements">
+				<Table
+					headers={['Requirement', 'Details']}
+					hasMarginDown
+					rows={[
+						['Node.js', '18.0.0 or higher (20.x LTS recommended)'],
+						['Package Manager', 'npm 7+, yarn 1.22+, or pnpm 8+'],
+						['React', '^19.0.0 or higher'],
+						['React DOM', '^19.0.0 or higher'],
+						['Next.js', '^16.0.10 or higher'],
+						['TypeScript', '5.0.0 or higher (optional)'],
+					]}
+				/>
+				<Callout type="info" hasMarginDown>
+					<p>
+						<b>Browser Support:</b> Blogkit supports all modern browsers
+						including Chrome 90+, Firefox 88+, Safari 14+, and Edge 90+.
+					</p>
+				</Callout>
+			</BlogSection>
+
 			<BlogSection title="Installation">
 				<p className="margin-bottom--2">Install Blogkit using npm or yarn:</p>
 				<CodeBlock
@@ -408,12 +429,20 @@ const BlogkitDocumentation: NextPage = () => {
 			</BlogSection>
 
 			<BlogSection title="Browser Support">
-				<ul className="margin-bottom--2">
-					<li>Chrome (latest)</li>
-					<li>Firefox (latest)</li>
-					<li>Safari (latest)</li>
-					<li>Edge (latest)</li>
-				</ul>
+				<p className="margin-bottom--2">
+					Blogkit supports all modern browsers with the following minimum
+					versions:
+				</p>
+				<Table
+					headers={['Browser', 'Minimum Version']}
+					hasMarginDown
+					rows={[
+						['Chrome', '90+'],
+						['Firefox', '88+'],
+						['Safari', '14+ (macOS and iOS)'],
+						['Edge', '90+'],
+					]}
+				/>
 			</BlogSection>
 
 			<BlogSection title="Contributing">

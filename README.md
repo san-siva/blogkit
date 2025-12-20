@@ -119,19 +119,40 @@ See Blogkit in action in these blogs and documentation sites:
 - **[Optimizing Background Tasks with requestIdleCallback](https://santhoshsiva.dev/blog/optimizing-background-tasks-with-requestidlecallback-advanced-scheduling-in-the-javascript-event-loop/)** - Advanced scheduling in the JavaScript event loop
 - **[Linting at Scale](https://santhoshsiva.dev/blog/linting-at-scale-strategies-for-updating-eslint-configs-in-large-applications/)** - Strategies for updating ESLint configs in large applications
 
-## Requirements
+## System Requirements
 
-- React ^19.0.0
-- Next.js ^16.0.10
-- Node.js 18+ recommended
+### Development Environment
 
-## Browser Support
+- **Node.js**: 18.0.0 or higher (20.x LTS recommended)
+- **Package Manager**: npm 7+, yarn 1.22+, or pnpm 8+
+- **TypeScript**: 5.0.0 or higher (optional, but recommended for type safety)
+
+### Runtime Dependencies
+
+- **React**: ^19.0.0 or higher
+- **React DOM**: ^19.0.0 or higher
+- **Next.js**: ^16.0.10 or higher
+
+### Operating System
+
+Blogkit is cross-platform and supports:
+- **macOS**: 10.15 (Catalina) or later
+- **Windows**: 10 or later
+- **Linux**: Most modern distributions (Ubuntu 20.04+, Debian 10+, etc.)
+
+### Browser Support
 
 Blogkit supports all modern browsers:
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- **Chrome**: Latest version
+- **Firefox**: Latest version
+- **Safari**: Latest version (macOS and iOS)
+- **Edge**: Latest version
+
+Minimum browser versions:
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
 
 ## Contributing
 
