@@ -42,9 +42,7 @@ export default function RootLayout({
 			<body
 				className={`${montserrat.variable} ${rubik.variable} ${jetbrainsMono.variable}`}
 			>
-				<div className={`${styles.page} ${styles['page--contents-max-width']}`}>
-					{children}
-				</div>
+				<div className={`${styles.page}`}>{children}</div>
 			</body>
 		</html>
 	);

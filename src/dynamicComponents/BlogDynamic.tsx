@@ -9,7 +9,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import { useSpring, animated } from '@react-spring/web';
+import { useSpring, animated, config } from '@react-spring/web';
 
 import type { MouseEvent, ReactNode, RefAttributes } from 'react';
 
@@ -204,8 +204,8 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 
 	const sidebarStyle = useSpring({
 		opacity: showTOC ? 1 : 0,
-		transform: showTOC ? 'translateX(0)' : 'translateX(80px)',
-		config: { tension: 280, friction: 60 },
+		transform: showTOC ? 'translateX(0)' : 'translateX(40px)',
+		config: config.gentle,
 	});
 
 	return (
