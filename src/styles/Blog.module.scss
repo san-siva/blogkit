@@ -16,11 +16,8 @@
 		height: fit-content;
 		top: var(--topbar-height);
 		padding: styles.space(6);
+    padding-top: styles.rem(66);
 		border-radius: styles.$border-radius--1;
-		background-color: styles.$color--code;
-		box-shadow:
-			0 0 0 1px styles.$color--border,
-			0 styles.space(1) styles.space(2) 0 styles.$color--border;
 
 		> .category__title {
 			display: block;
