@@ -1,4 +1,4 @@
-import BlogHeaderDynamic from '../dynamicComponents/BlogHeaderDynamic';
+import BlogHeaderStatic from '../staticComponents/BlogHeaderStatic';
 
 interface BlogHeaderProperties {
 	title: string[];
@@ -12,7 +12,7 @@ const BlogHeader = ({
 	isDescCite = true,
 }: BlogHeaderProperties) => {
 	return (
-		<BlogHeaderDynamic title={title} desc={desc} isDescCite={isDescCite} />
+		<BlogHeaderStatic title={title} desc={desc} isDescCite={isDescCite} />
 	);
 };
 

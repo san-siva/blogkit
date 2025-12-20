@@ -1,3 +1,5 @@
+'use client';
+
 import { lazy, Suspense } from 'react';
 import type { ReactNode } from 'react';
 import BlogStatic from '../staticComponents/BlogStatic';

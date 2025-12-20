@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import CalloutDynamic from '../dynamicComponents/CalloutDynamic';
+import CalloutStatic from '../staticComponents/CalloutStatic';
 
 interface CalloutProperties {
 	children?: ReactNode;
@@ -15,13 +15,13 @@ const Callout = ({
 	hasMarginDown = false,
 }: CalloutProperties) => {
 	return (
-		<CalloutDynamic
+		<CalloutStatic
 			type={type}
 			hasMarginUp={hasMarginUp}
 			hasMarginDown={hasMarginDown}
 		>
 			{children}
-		</CalloutDynamic>
+		</CalloutStatic>
 	);
 };
 

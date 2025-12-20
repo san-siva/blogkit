@@ -66,16 +66,6 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		[]
 	);
 
-	const debounceShowTOC = useCallback(() => {
-		if (showTOC) return;
-		if (showTOCTimerRef.current) {
-			clearTimeout(showTOCTimerRef.current);
-		}
-		showTOCTimerRef.current = setTimeout(() => {
-			setShowTOC(true);
-		}, 200);
-	}, [showTOC]);
-
 	const updateCategoryTitles = useCallback(() => {
 		const now = Date.now();
 		const newCategoryTitles = new Map<string, CategoryTitleValue>();
@@ -100,11 +90,11 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		if (newCategoryTitles.size === 0) return;
 
 		setCategoryTitles(newCategoryTitles);
-		debounceShowTOC();
+		if (!showTOC) setShowTOC(true);
 
 		if (visibleTitle) return;
 		setVisibleTitle(firstSectionId);
-	}, [visibleTitle, sortByDomPosition]);
+	}, [visibleTitle, sortByDomPosition, showTOC, setShowTOC]);
 
 	const debounceUpdateCategoryTitles = useCallback(() => {
 		// Clear existing timer and set a new one to batch updates
@@ -113,7 +103,7 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 		}
 		updateTimerRef.current = setTimeout(() => {
 			updateCategoryTitles();
-		}, 50);
+		}, 200);
 	}, [updateCategoryTitles]);
 
 	useEffect(() => {

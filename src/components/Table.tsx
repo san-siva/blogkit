@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import TableDynamic from '../dynamicComponents/TableDynamic';
+import TableStatic from '../staticComponents/TableStatic';
 
 interface TableProperties {
 	rows?: ReactNode[][];
@@ -15,7 +15,7 @@ const Table = ({
 	hasMarginDown = false,
 }: TableProperties) => {
 	return (
-		<TableDynamic
+		<TableStatic
 			rows={rows}
 			headers={headers}
 			hasMarginUp={hasMarginUp}
