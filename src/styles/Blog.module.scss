@@ -17,6 +17,7 @@
 		top: var(--topbar-height);
 		padding: styles.space(6);
     padding-top: styles.rem(66);
+    padding-right: 0;
 		border-radius: styles.$border-radius--1;
 
 		> .category__title {
