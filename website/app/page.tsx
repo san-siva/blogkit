@@ -33,18 +33,118 @@ const BlogkitDocumentation: NextPage = () => {
 					more.
 				</p>
 				<p>
-					See Blogkit in action on{' '}
-					<a
-						href="https://santhoshsiva.dev"
-						target="_blank"
-						rel="noopener noreferrer"
-						className={styles['a--highlighted']}
-					>
-						santhoshsiva.dev
-					</a>
-					, where it powers blog listings, table of contents navigation, and
-					rich content with Mermaid diagrams.
+					In fact, this documentation page itself was built using Blogkit!
+					You're currently viewing a live example of what Blogkit can do.
 				</p>
+			</BlogSection>
+
+			<BlogSection title="Examples">
+				<p className="margin-bottom--2">
+					Explore these production-ready examples to see Blogkit in action and
+					learn from real-world implementations:
+				</p>
+
+				<BlogSection title="Live Websites">
+					<ul className="margin-bottom--2">
+						<li className="margin-bottom--1">
+							<strong>Blogkit Documentation</strong> - This site! A complete
+							documentation website with component examples (
+							<a
+								href="https://github.com/san-siva/blogkit/tree/main/website"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								source code
+							</a>
+							)
+						</li>
+						<li className="margin-bottom--1">
+							<a
+								href="https://gitsy-56895.web.app/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								Gitsy
+							</a>{' '}
+							- A feature-rich blog showcasing advanced Blogkit features and
+							customization (
+							<a
+								href="https://github.com/san-siva/gitsy/tree/main/website"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								source code
+							</a>
+							)
+						</li>
+						<li className="margin-bottom--1">
+							<a
+								href="https://stylekit-68309.web.app/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								StyleKit Documentation
+							</a>{' '}
+							- Complex documentation site demonstrating advanced component
+							usage and styling (
+							<a
+								href="https://github.com/san-siva/stylekit/tree/main/website"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								source code
+							</a>
+							)
+						</li>
+					</ul>
+				</BlogSection>
+
+				<BlogSection title="Blog Post Examples">
+					<p className="margin-bottom--2">
+						See how Blogkit handles complex technical content with rich
+						features:
+					</p>
+					<ul className="margin-bottom--2">
+						<li className="margin-bottom--1">
+							<a
+								href="https://santhoshsiva.dev/blog/linting-at-scale-strategies-for-updating-eslint-configs-in-large-applications/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								Linting at Scale: Strategies for Updating ESLint Configs
+							</a>{' '}
+							- A comprehensive blog post demonstrating code blocks, table of
+							contents, diagrams, and complex formatting
+						</li>
+						<li>
+							<a
+								href="https://santhoshsiva.dev/blog/understanding-closures-capturing-lexical-environments/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								Understanding Closures: Capturing Lexical Environments
+							</a>{' '}
+							- Technical deep-dive showcasing advanced formatting and code
+							examples
+						</li>
+					</ul>
+				</BlogSection>
+
+				<Callout type="success" hasMarginDown>
+					<p>
+						<strong>Tip:</strong> Browse the source code of these examples to
+						learn best practices for component usage, styling customization, and
+						application structure. Each example demonstrates different use cases
+						and complexity levels.
+					</p>
+				</Callout>
 			</BlogSection>
 
 			<BlogSection title="System Requirements">
@@ -399,32 +499,84 @@ const BlogkitDocumentation: NextPage = () => {
 
 			<BlogSection title="Customization">
 				<p className="margin-bottom--2">
-					Blogkit uses SCSS modules for styling. You can customize the
-					appearance by overriding CSS variables in stylekit or creating your
-					own theme.
+					Blogkit is powered by{' '}
+					<a
+						href="https://github.com/san-siva/stylekit"
+						target="_blank"
+						rel="noopener noreferrer"
+						className={styles['a--highlighted']}
+					>
+						StyleKit
+					</a>
+					, a modular SCSS design system that provides the foundation for all
+					styling in Blogkit. StyleKit is a comprehensive design system that
+					includes colors, typography, spacing utilities, animations, and
+					responsive breakpoints.
 				</p>
 
-				<BlogSection title="Key Variables">
+				<BlogSection title="How StyleKit Powers Blogkit">
+					<p className="margin-bottom--2">
+						StyleKit provides Blogkit with a consistent design language through:
+					</p>
 					<ul className="margin-bottom--2">
 						<li>
-							<code>$color--primary</code> - Primary accent color
+							<strong>Color System:</strong> Primary, secondary, accent, and
+							semantic colors with variants for consistent theming
 						</li>
 						<li>
-							<code>$color--secondary</code> - Secondary color
+							<strong>Typography Scale:</strong> Font families, sizes, weights,
+							and line heights for harmonious text hierarchy
 						</li>
 						<li>
-							<code>$color--error</code> - Error color
+							<strong>Spacing System:</strong> A 0-9 scale (4px to 96px) for
+							consistent margins and padding
 						</li>
 						<li>
-							<code>$font-family--primary</code> - Primary font family
+							<strong>Utility Classes:</strong> Pre-built classes for common
+							styling patterns
 						</li>
 						<li>
-							<code>$font-family--code</code> - Code font family
+							<strong>Responsive Design:</strong> Built-in breakpoints for
+							mobile-first layouts
 						</li>
 						<li>
-							<code>$border-radius</code> - Border radius for components
+							<strong>Animations:</strong> Smooth transitions and loading
+							animations
 						</li>
 					</ul>
+					<p className="margin-bottom--2">
+						By leveraging StyleKit, Blogkit ensures visual consistency across
+						all components while giving you full control over customization
+						through SCSS variables and CSS custom properties.
+					</p>
+				</BlogSection>
+
+				<BlogSection title="Customizing Your Blog">
+					<p className="margin-bottom--2">
+						You can customize Blogkit's appearance in two ways:
+					</p>
+					<ol className="margin-bottom--2">
+						<li>
+							<strong>Override StyleKit Variables:</strong> Import StyleKit in
+							your own SCSS files and override variables to match your brand
+						</li>
+						<li>
+							<strong>Use CSS Custom Properties:</strong> Override CSS variables
+							at runtime for dynamic theming
+						</li>
+					</ol>
+					<p>
+						Visit the{' '}
+						<a
+							href="https://stylekit-68309.web.app/"
+							target="_blank"
+							rel="noopener noreferrer"
+							className={styles['a--highlighted']}
+						>
+							StyleKit documentation
+						</a>{' '}
+						to explore all available design tokens and customization options.
+					</p>
 				</BlogSection>
 			</BlogSection>
 
