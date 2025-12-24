@@ -1,5 +1,7 @@
 # Blogkit
 
+![Blogkit Demo](assets/demo.png)
+
 A comprehensive, production-ready blog component library for React and Next.js applications. Built with TypeScript and SCSS modules, Blogkit provides a complete suite of components for creating professional, interactive blog posts with advanced features including syntax highlighting, diagram rendering, callouts, and more.
 
 **[View Full Documentation](https://blogkit-c367c.web.app/)** | **[Live Demo](https://santhoshsiva.dev)**
