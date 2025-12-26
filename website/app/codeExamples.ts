@@ -84,6 +84,7 @@ const table = `<Table
     ['Row 2, Col 1', 'Row 2, Col 2', 'Row 2, Col 3'],
   ]}
   hasMarginDown={true}
+  fontSize="14px"
 />`;
 
 export const CODE_EXAMPLES = {

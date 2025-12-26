@@ -354,7 +354,15 @@ const BlogkitDocumentation: NextPage = () => {
 						rows={[
 							[
 								'type',
-								'"info" | "success" | "warning" | "error"',
+								<p>
+									"info",
+									<br />
+									"warning",
+									<br />
+									"error",
+									<br />
+									"success"
+								</p>,
 								'Callout style',
 							],
 							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
@@ -435,7 +443,8 @@ const BlogkitDocumentation: NextPage = () => {
 
 				<BlogSection title="Table">
 					<p className="margin-bottom--2">
-						Display tabular data with headers and rows.
+						Display tabular data with headers and rows. Columns automatically
+						size to fit their content for optimal space usage.
 					</p>
 					<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.table} />
 					<Table
@@ -445,6 +454,12 @@ const BlogkitDocumentation: NextPage = () => {
 							['headers', '(string | ReactNode)[]', 'Table header cells'],
 							['rows', '(string | ReactNode)[][]', 'Table rows'],
 							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
+							['hasMarginUp', 'boolean', 'Add margin above (optional)'],
+							[
+								'fontSize',
+								'string',
+								'Custom font size (e.g., "14px", "1rem") (optional)',
+							],
 						]}
 					/>
 				</BlogSection>

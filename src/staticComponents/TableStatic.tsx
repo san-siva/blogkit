@@ -6,6 +6,7 @@ interface TableProperties {
 	headers?: ReactNode[];
 	hasMarginUp?: boolean;
 	hasMarginDown?: boolean;
+	fontSize?: string;
 }
 
 const Table = ({
@@ -13,6 +14,7 @@ const Table = ({
 	headers = [],
 	hasMarginUp = false,
 	hasMarginDown = false,
+	fontSize,
 }: TableProperties) => {
 	const columnCount = headers.length;
 
@@ -22,7 +24,7 @@ const Table = ({
 				${hasMarginUp ? styles['margin-top--1'] : ''}
 				${hasMarginDown ? styles['margin-bottom--2'] : ''}`}
 			style={{
-				gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+				gridTemplateColumns: `repeat(${columnCount}, auto)`,
 			}}
 		>
 			<div className={`${styles['table__header']}`}>
@@ -30,6 +32,7 @@ const Table = ({
 					<div
 						key={typeof header === 'string' ? header : index}
 						className={`${styles['table__header__cell']}`}
+						style={fontSize ? { fontSize } : undefined}
 					>
 						{header}
 					</div>
@@ -41,6 +44,7 @@ const Table = ({
 						<div
 							key={typeof cell === 'string' ? cell : cellIndex}
 							className={`${styles['table__row__cell']}`}
+							style={fontSize ? { fontSize } : undefined}
 						>
 							{cell}
 						</div>

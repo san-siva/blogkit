@@ -6,6 +6,7 @@ interface TableProperties {
 	headers?: ReactNode[];
 	hasMarginUp?: boolean;
 	hasMarginDown?: boolean;
+	fontSize?: string;
 }
 
 const Table = ({
@@ -13,6 +14,7 @@ const Table = ({
 	headers = [],
 	hasMarginUp = false,
 	hasMarginDown = false,
+	fontSize,
 }: TableProperties) => {
 	return (
 		<TableStatic
@@ -20,6 +22,7 @@ const Table = ({
 			headers={headers}
 			hasMarginUp={hasMarginUp}
 			hasMarginDown={hasMarginDown}
+			fontSize={fontSize}
 		/>
 	);
 };
