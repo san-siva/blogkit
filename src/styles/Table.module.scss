@@ -6,6 +6,8 @@
 	font-family: styles.$font-family--code;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
+	display: flex;
+	align-items: center;
 
 	&:last-child {
 		border-right: none;
