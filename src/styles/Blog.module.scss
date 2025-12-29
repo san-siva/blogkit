@@ -14,9 +14,12 @@
 	&__sidebar {
 		position: sticky;
 		height: fit-content;
-		top: var(--topbar-height);
 		padding: styles.space(6);
-    padding-top: styles.rem(66);
+
+    $top: styles.rem(66);
+		top: $top;
+
+    padding-top: $top;
     padding-right: 0;
 		border-radius: styles.$border-radius--1;
 
