@@ -38,7 +38,8 @@
 	"author": "Santhosh Siva",
 	"license": "MIT",
 	"dependencies": {
-		"@san-siva/stylekit": "^1.0.5"
+		"@san-siva/stylekit": "^1.0.5",
+		"schema-dts": "^1.1.5"
 	},
 	"peerDependencies": {
 		"@react-spring/web": "^10.0.0",

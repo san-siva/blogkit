@@ -12,12 +12,14 @@ import {
 import { useSpring, animated, config } from '@react-spring/web';
 
 import type { MouseEvent, ReactNode, RefAttributes } from 'react';
+import type { Thing, WithContext } from 'schema-dts';
 
 import styles from '../styles/Blog.module.scss';
 
 interface BlogProperties {
 	children: ReactNode;
 	title?: string;
+	jsonLd?: WithContext<Thing>;
 }
 
 export interface ForwardedReference {
@@ -39,7 +41,7 @@ interface CategoryTitleValue extends SectionReferenceValue {
 
 type CategoryTitle = Map<string, CategoryTitleValue>;
 
-const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
+const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) => {
 	const sectionReferences = useRef<SectionReference>(new Map());
 	const [categoryTitles, setCategoryTitles] = useState<CategoryTitle>(
 		new Map()
@@ -210,6 +212,12 @@ const Blog = ({ children, title = 'In this article' }: BlogProperties) => {
 
 	return (
 		<div className={styles.blog}>
+			{jsonLd && (
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				/>
+			)}
 			<div className={styles['blog__content']}>
 				{Children.map(children, child => {
 					if (!isValidElement(child)) return child;
