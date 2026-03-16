@@ -7,7 +7,7 @@
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 
 	&:last-child {
 		border-right: none;
@@ -17,13 +17,13 @@
 .table {
 	width: max-content;
 	max-width: 100%;
-  margin-right: auto;
+	margin-right: auto;
 	overflow: hidden;
 	overflow-x: auto;
 	display: grid;
 	grid-auto-flow: row;
-  background-color: styles.$color--primary-light;
-  border-radius: styles.$border-radius;
+	background-color: styles.$color--primary-light;
+	border-radius: styles.$border-radius;
 
 	&__header {
 		display: contents;
@@ -35,9 +35,9 @@
 			background-color: styles.$color--primary;
 		}
 
-    &__cell * {
-      font-size: inherit;
-    }
+		&__cell * {
+			font-size: inherit;
+		}
 	}
 
 	&__row {
@@ -48,9 +48,9 @@
 			color: styles.$color--dark;
 		}
 
-    &__cell * {
-      font-size: inherit;
-    }
+		&__cell * {
+			font-size: inherit;
+		}
 	}
 }
 
