@@ -15,6 +15,7 @@ import type { MouseEvent, ReactNode, RefAttributes } from 'react';
 import type { Thing, WithContext } from 'schema-dts';
 
 import styles from '../styles/Blog.module.scss';
+import lockScrollUpdates from '../utils/lockScrollUpdates';
 
 interface BlogProperties {
 	children: ReactNode;
@@ -41,7 +42,11 @@ interface CategoryTitleValue extends SectionReferenceValue {
 
 type CategoryTitle = Map<string, CategoryTitleValue>;
 
-const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) => {
+const Blog = ({
+	children,
+	title = 'In this article',
+	jsonLd,
+}: BlogProperties) => {
 	const sectionReferences = useRef<SectionReference>(new Map());
 	const [categoryTitles, setCategoryTitles] = useState<CategoryTitle>(
 		new Map()
@@ -51,6 +56,9 @@ const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) =
 
 	const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const showTOCTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const hasScrolledToInitialSection = useRef(false);
+	const isClickScrolling = useRef(false);
+	const scrollEndHandlerRef = useRef<(() => void) | null>(null);
 
 	const sortByDomPosition = useCallback(
 		(
@@ -114,6 +122,7 @@ const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) =
 			const observer = new IntersectionObserver(
 				([entry]) => {
 					if (!entry.isIntersecting) return;
+					if (isClickScrolling.current) return;
 					setVisibleTitle(visibleId => {
 						if (visibleId === id && !entry.isIntersecting) return null;
 						if (entry.isIntersecting) return id;
@@ -140,8 +149,27 @@ const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) =
 			if (showTOCTimerRef.current) {
 				clearTimeout(showTOCTimerRef.current);
 			}
+			if (scrollEndHandlerRef.current) {
+				document.body.removeEventListener('scrollend', scrollEndHandlerRef.current);
+			}
 		};
 	}, []);
+
+	// On initial load, scroll to section specified in URL
+	useEffect(() => {
+		if (hasScrolledToInitialSection.current) return;
+		if (categoryTitles.size === 0) return;
+		const url = new URL(window.location.href);
+		const section = url.searchParams.get('section');
+		if (!section) return;
+		const entry = categoryTitles.get(section);
+		if (!entry) return;
+		hasScrolledToInitialSection.current = true;
+		const top =
+			entry.el.getBoundingClientRect().top + document.body.scrollTop - 100;
+		document.body.scrollTo({ top, behavior: 'smooth' });
+		lockScrollUpdates(section, isClickScrolling, scrollEndHandlerRef, setVisibleTitle);
+	}, [categoryTitles]);
 
 	const handleSectionReference = useCallback(
 		(element: ForwardedReference) => {
@@ -193,15 +221,17 @@ const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) =
 		if (!el) return;
 
 		const top = el.getBoundingClientRect().top + document.body.scrollTop - 100;
+
+		const url = new URL(window.location.href);
+		url.searchParams.set('section', id);
+		window.history.replaceState({}, '', url.toString());
+
 		document.body.scrollTo({
 			top,
 			behavior: 'smooth',
 		});
 
-		const timer = setTimeout(() => {
-			setVisibleTitle(id);
-			clearTimeout(timer);
-		}, 1000);
+		lockScrollUpdates(id, isClickScrolling, scrollEndHandlerRef, setVisibleTitle);
 	};
 
 	const sidebarStyle = useSpring({

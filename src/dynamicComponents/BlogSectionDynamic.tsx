@@ -14,7 +14,7 @@ import type { ReactNode, RefAttributes } from 'react';
 import styles from '../styles/BlogSection.module.scss';
 
 import type { ForwardedReference } from './BlogDynamic';
-import { generateIdForBlogTitle } from '../utils';
+import { generateIdForBlogTitle, generateSectionHref } from '../utils';
 
 interface BlogProperties {
 	title?: string;
@@ -74,7 +74,11 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 				ref={parentReference}
 			>
 				{title ? (
-					<h4 className={styles['blog-section__title']}>{title}</h4>
+					<h4 className={styles['blog-section__title']}>
+						<a href={generateSectionHref(id)} className={styles['blog-section__title-link']} onClick={e => e.preventDefault()}>
+							{title}
+						</a>
+					</h4>
 				) : null}
 				{Children.map(children, child => {
 					if (!isValidElement(child)) return child;
