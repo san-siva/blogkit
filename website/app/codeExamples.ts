@@ -35,6 +35,30 @@ const blog = `<Blog>
   {/* Your blog content */}
 </Blog>`;
 
+const blogJsonLd = `import { Blog } from '@san-siva/blogkit';
+import type { WithContext, BlogPosting } from 'schema-dts';
+
+const jsonLd: WithContext<BlogPosting> = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: 'My Blog Post Title',
+  description: 'A short description of the post',
+  author: {
+    '@type': 'Person',
+    name: 'Author Name',
+  },
+  datePublished: '2025-01-01',
+  url: 'https://example.com/blog/my-post',
+};
+
+export default function MyBlogPost() {
+  return (
+    <Blog jsonLd={jsonLd}>
+      {/* Your blog content */}
+    </Blog>
+  );
+}`;
+
 const blogHeader = `<BlogHeader
   title={['My Blog Title']}
   desc={['Posted on January 1, 2025']}
@@ -92,6 +116,7 @@ export const CODE_EXAMPLES = {
 	setup,
 	quickStart,
 	blog,
+	blogJsonLd,
 	blogHeader,
 	blogSection,
 	codeBlock,

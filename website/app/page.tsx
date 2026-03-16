@@ -218,6 +218,64 @@ const BlogkitDocumentation: NextPage = () => {
 						The main container component that wraps all your blog content.
 					</p>
 					<CodeBlock hasMarginDown language="tsx" code={CODE_EXAMPLES.blog} />
+					<Table
+						hasMarginDown
+						headers={['Prop', 'Type', 'Default', 'Description']}
+						rows={[
+							['children', 'ReactNode', '—', 'Blog content'],
+							[
+								'title',
+								'string',
+								'"In this article"',
+								'Label for the table of contents',
+							],
+							[
+								'jsonLd',
+								'WithContext<Thing>',
+								'undefined',
+								'Schema.org structured data injected as a JSON-LD script tag',
+							],
+						]}
+					/>
+					<BlogSection title="JSON-LD / Structured Data">
+						<p className="margin-bottom--2">
+							Pass a{' '}
+							<code>jsonLd</code> prop to inject{' '}
+							<a
+								href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Schema.org structured data
+							</a>{' '}
+							into your page as a{' '}
+							<code>{`<script type="application/ld+json">`}</code> tag. This
+							improves SEO by helping search engines understand your content.
+							Blogkit uses the{' '}
+							<a
+								href="https://www.npmjs.com/package/schema-dts"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								schema-dts
+							</a>{' '}
+							package, which provides full TypeScript types for all Schema.org
+							types.
+						</p>
+						<Callout type="info">
+							<p>
+								<b>Tip:</b> Use a specific Schema.org type like{' '}
+								<code>BlogPosting</code>, <code>Article</code>, or{' '}
+								<code>TechArticle</code> instead of the base{' '}
+								<code>Thing</code> type for richer structured data.
+							</p>
+						</Callout>
+						<CodeBlock
+							hasMarginDown
+							language="tsx"
+							code={CODE_EXAMPLES.blogJsonLd}
+						/>
+					</BlogSection>
 				</BlogSection>
 
 				<BlogSection title="BlogHeader">
