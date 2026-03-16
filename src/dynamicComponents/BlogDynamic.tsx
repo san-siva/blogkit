@@ -128,6 +128,9 @@ const Blog = ({
 						if (entry.isIntersecting) return id;
 						return visibleId;
 					});
+					const url = new URL(window.location.href);
+					url.searchParams.set('section', id);
+					window.history.replaceState({}, '', url.toString());
 				},
 				{ threshold: 0.1 }
 			);
