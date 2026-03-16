@@ -548,56 +548,92 @@ const BlogkitDocumentation: NextPage = () => {
 			</BlogSection>
 
 			<BlogSection title="Features">
-				<ul className="margin-bottom--2">
-					<li>
-						<strong>Blog Layout with TOC:</strong> Responsive blog layout with
-						sticky table of contents sidebar
-					</li>
-					<li>
-						<strong>Code Highlighting:</strong> Syntax highlighting for multiple
-						programming languages using Prism.js
-					</li>
-					<li>
-						<strong>Mermaid Diagrams:</strong> Render flowcharts, sequence
-						diagrams, timelines, and more
-					</li>
-					<li>
-						<strong>Callouts:</strong> Info, warning, error, and success
-						notification boxes
-					</li>
-					<li>
-						<strong>Data Tables:</strong> Flexible table component with dynamic
-						column sizing
-					</li>
-					<li>
-						<strong>Deep Linking:</strong> Sections automatically generate
-						shareable URLs via <code>?section=</code> query params, with
-						scroll-aware TOC highlighting that activates only after user
-						interaction
-					</li>
-					<li>
-						<strong>Blog Sections:</strong> Hierarchical section organization
-						with auto-generated IDs
-					</li>
-					<li>
-						<strong>Blog Links:</strong> Animated link cards for blog navigation
-					</li>
-					<li>
-						<strong>TypeScript Support:</strong> Fully typed components with
-						ReactNode support
-					</li>
-					<li>
-						<strong>SCSS Modules:</strong> Scoped, customizable styles using
-						stylekit
-					</li>
-					<li>
-						<strong>Next.js Optimized:</strong> Works seamlessly with Next.js
-						14, 15, and 16
-					</li>
-					<li>
-						<strong>React 19 Ready:</strong> Full support for React 18 and 19
-					</li>
-				</ul>
+				<Table
+					hasMarginDown
+					headers={['Feature', 'Description']}
+					rows={[
+						[
+							'Blog Layout with TOC',
+							'Responsive blog layout with sticky table of contents sidebar',
+						],
+						[
+							'Code Highlighting',
+							'Syntax highlighting for multiple programming languages using Prism.js',
+						],
+						[
+							'Mermaid Diagrams',
+							'Render flowcharts, sequence diagrams, timelines, and more',
+						],
+						[
+							'Callouts',
+							'Info, warning, error, and success notification boxes',
+						],
+						[
+							'Data Tables',
+							'Flexible table component with dynamic column sizing',
+						],
+						[
+							'Blog Sections',
+							'Hierarchical section organization with auto-generated IDs',
+						],
+						[
+							'Blog Links',
+							'Animated link cards for blog navigation',
+						],
+					]}
+				/>
+				<BlogSection title="Developer Experience">
+					<Table
+						hasMarginDown
+						headers={['Feature', 'Description']}
+						rows={[
+							[
+								'TypeScript Support',
+								'Fully typed components with ReactNode support',
+							],
+							[
+								'SCSS Modules',
+								'Scoped, customizable styles using StyleKit',
+							],
+						]}
+					/>
+				</BlogSection>
+				<BlogSection title="Compatibility">
+					<Table
+						hasMarginDown
+						headers={['Feature', 'Description']}
+						rows={[
+							[
+								'Next.js Optimized',
+								'Works seamlessly with Next.js 14, 15, and 16',
+							],
+							[
+								'React 19 Ready',
+								'Full support for React 18 and 19',
+							],
+						]}
+					/>
+				</BlogSection>
+				<BlogSection title="SEO">
+					<Table
+						hasMarginDown
+						headers={['Feature', 'Description']}
+						rows={[
+							[
+								'Deep Linking',
+								'Sections generate shareable ?section= URLs with scroll-aware TOC highlighting that activates only after user interaction',
+							],
+							[
+								'SSR & Hydration Safe',
+								'Static fallback renders full content server-side for instant load and SEO; interactive layer hydrates progressively via Suspense without layout shift',
+							],
+							[
+								'JSON-LD / Structured Data',
+								'Inject Schema.org structured data via the jsonLd prop to enable rich search results such as article cards, author attribution, and publish dates',
+							],
+						]}
+					/>
+				</BlogSection>
 			</BlogSection>
 
 			<BlogSection title="Customization">
