@@ -256,10 +256,9 @@ const BlogkitDocumentation: NextPage = () => {
 							search listings.
 						</p>
 						<p className="margin-bottom--2">
-							Unlike{' '}
-							<code>{`<meta>`}</code> tags, which only describe the page in
-							general terms, JSON-LD lets you express precise, typed facts about
-							your content using the shared vocabulary defined by{' '}
+							Unlike <code>{`<meta>`}</code> tags, which only describe the page
+							in general terms, JSON-LD lets you express precise, typed facts
+							about your content using the shared vocabulary defined by{' '}
 							<a
 								href="https://schema.org"
 								target="_blank"
@@ -571,6 +570,12 @@ const BlogkitDocumentation: NextPage = () => {
 						column sizing
 					</li>
 					<li>
+						<strong>Deep Linking:</strong> Sections automatically generate
+						shareable URLs via <code>?section=</code> query params, with
+						scroll-aware TOC highlighting that activates only after user
+						interaction
+					</li>
+					<li>
 						<strong>Blog Sections:</strong> Hierarchical section organization
 						with auto-generated IDs
 					</li>
@@ -717,7 +722,15 @@ const BlogkitDocumentation: NextPage = () => {
 
 			<BlogSection title="About">
 				<p>
-					<strong>Author:</strong> Santhosh Siva
+					<strong>Author:</strong>{' '}
+					<a
+						href="https://santhoshsiva.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+						className={styles['a--highlighted']}
+					>
+						Santhosh Siva
+					</a>
 					<br />
 					<strong>GitHub:</strong>{' '}
 					<a
