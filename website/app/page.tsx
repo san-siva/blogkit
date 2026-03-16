@@ -47,8 +47,16 @@ const BlogkitDocumentation: NextPage = () => {
 				<BlogSection title="Live Websites">
 					<ul className="margin-bottom--2">
 						<li className="margin-bottom--1">
-							<strong>Blogkit Documentation</strong> - This site! A complete
-							documentation website with component examples (
+							<a
+								href="https://blogkit.santhoshsiva.dev/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className={styles['a--highlighted']}
+							>
+								Blogkit Documentation
+							</a>{' '}
+							- This site! A complete documentation website with component
+							examples (
 							<a
 								href="https://github.com/san-siva/blogkit/tree/main/website"
 								target="_blank"

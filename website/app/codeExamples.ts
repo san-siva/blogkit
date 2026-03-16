@@ -48,7 +48,7 @@ const jsonLd: WithContext<BlogPosting> = {
     name: 'Author Name',
   },
   datePublished: '2025-01-01',
-  url: 'https://example.com/blog/my-post',
+  url: 'https://blogkit.santhoshsiva.dev/',
 };
 
 export default function MyBlogPost() {
