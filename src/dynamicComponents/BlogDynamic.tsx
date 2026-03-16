@@ -56,9 +56,11 @@ const Blog = ({
 
 	const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const showTOCTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const hasScrolledToInitialSection = useRef(false);
 	const isClickScrolling = useRef(false);
 	const scrollEndHandlerRef = useRef<(() => void) | null>(null);
+	const intersectionObserversRef = useRef<Map<string, IntersectionObserver>>(
+		new Map()
+	);
 
 	const sortByDomPosition = useCallback(
 		(
@@ -117,12 +119,12 @@ const Blog = ({
 	}, [updateCategoryTitles]);
 
 	useEffect(() => {
-		const observers = new Map<string, IntersectionObserver>();
 		for (const [id, { el }] of categoryTitles) {
 			const observer = new IntersectionObserver(
 				([entry]) => {
 					if (!entry.isIntersecting) return;
 					if (isClickScrolling.current) return;
+					if (document.body.scrollTop === 0) return;
 					setVisibleTitle(visibleId => {
 						if (visibleId === id && !entry.isIntersecting) return null;
 						if (entry.isIntersecting) return id;
@@ -134,14 +136,9 @@ const Blog = ({
 				},
 				{ threshold: 0.1 }
 			);
-			observers.set(id, observer);
-			observer.observe(el);
+			intersectionObserversRef.current.set(id, observer);
+			observer.observe(el as HTMLElement);
 		}
-		return () => {
-			for (const observer of observers.values()) {
-				observer.disconnect();
-			}
-		};
 	}, [categoryTitles.size]);
 
 	useEffect(() => {
@@ -153,26 +150,58 @@ const Blog = ({
 				clearTimeout(showTOCTimerRef.current);
 			}
 			if (scrollEndHandlerRef.current) {
-				document.body.removeEventListener('scrollend', scrollEndHandlerRef.current);
+				document.body.removeEventListener(
+					'scrollend',
+					scrollEndHandlerRef.current
+				);
+			}
+			if (intersectionObserversRef.current) {
+				for (const observer of intersectionObserversRef.current.values()) {
+					observer.disconnect();
+				}
 			}
 		};
 	}, []);
 
-	// On initial load, scroll to section specified in URL
-	useEffect(() => {
-		if (hasScrolledToInitialSection.current) return;
-		if (categoryTitles.size === 0) return;
+	const getSectionFromUrl = () => {
 		const url = new URL(window.location.href);
 		const section = url.searchParams.get('section');
-		if (!section) return;
-		const entry = categoryTitles.get(section);
-		if (!entry) return;
-		hasScrolledToInitialSection.current = true;
+		if (!section) return null;
+		return section;
+	};
+
+	const updateUrl = (id: string) => {
+		const url = new URL(window.location.href);
+		url.searchParams.set('section', id);
+		window.history.replaceState({}, '', url.toString());
+	};
+
+	const scrollIntoView = (element: HTMLElement) => {
+		if (!element) return;
 		const top =
-			entry.el.getBoundingClientRect().top + document.body.scrollTop - 100;
+			element.getBoundingClientRect().top + document.body.scrollTop - 100;
 		document.body.scrollTo({ top, behavior: 'smooth' });
-		lockScrollUpdates(section, isClickScrolling, scrollEndHandlerRef, setVisibleTitle);
-	}, [categoryTitles]);
+	};
+
+	// On initial load, scroll to section specified in URL
+	useEffect(() => {
+		if (categoryTitles.size === 0) return;
+		const section = getSectionFromUrl();
+		if (!section) {
+			return;
+		}
+		const entry = categoryTitles.get(section);
+		if (!entry) {
+			return;
+		}
+		scrollIntoView(entry.el);
+		lockScrollUpdates(
+			section,
+			isClickScrolling,
+			scrollEndHandlerRef,
+			setVisibleTitle
+		);
+	}, [categoryTitles.size]);
 
 	const handleSectionReference = useCallback(
 		(element: ForwardedReference) => {
@@ -223,18 +252,16 @@ const Blog = ({
 		const { el } = categoryTitles.get(id) || {};
 		if (!el) return;
 
-		const top = el.getBoundingClientRect().top + document.body.scrollTop - 100;
+		updateUrl(id);
 
-		const url = new URL(window.location.href);
-		url.searchParams.set('section', id);
-		window.history.replaceState({}, '', url.toString());
+		scrollIntoView(el);
 
-		document.body.scrollTo({
-			top,
-			behavior: 'smooth',
-		});
-
-		lockScrollUpdates(id, isClickScrolling, scrollEndHandlerRef, setVisibleTitle);
+		lockScrollUpdates(
+			id,
+			isClickScrolling,
+			scrollEndHandlerRef,
+			setVisibleTitle
+		);
 	};
 
 	const sidebarStyle = useSpring({

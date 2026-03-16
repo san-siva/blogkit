@@ -239,19 +239,36 @@ const BlogkitDocumentation: NextPage = () => {
 					/>
 					<BlogSection title="JSON-LD / Structured Data">
 						<p className="margin-bottom--2">
-							Pass a{' '}
-							<code>jsonLd</code> prop to inject{' '}
+							JSON-LD (JavaScript Object Notation for Linked Data) is a
+							lightweight way to embed machine-readable metadata directly inside
+							your HTML. Search engines like Google read this metadata to
+							understand the content of a page beyond what they can infer from
+							the visible text alone — enabling rich results such as article
+							cards, author attribution, publish dates, and breadcrumbs in
+							search listings.
+						</p>
+						<p className="margin-bottom--2">
+							Unlike{' '}
+							<code>{`<meta>`}</code> tags, which only describe the page in
+							general terms, JSON-LD lets you express precise, typed facts about
+							your content using the shared vocabulary defined by{' '}
 							<a
-								href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+								href="https://schema.org"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								Schema.org structured data
-							</a>{' '}
-							into your page as a{' '}
-							<code>{`<script type="application/ld+json">`}</code> tag. This
-							improves SEO by helping search engines understand your content.
-							Blogkit uses the{' '}
+								Schema.org
+							</a>
+							. For example, a <code>BlogPosting</code> type can carry the
+							headline, author, publication date, and canonical URL all in one
+							structured block — the same information that social platforms and
+							search engines surface when previewing your link.
+						</p>
+						<p className="margin-bottom--2">
+							Pass a <code>jsonLd</code> prop to the <code>Blog</code> component
+							to inject this metadata as a{' '}
+							<code>{`<script type="application/ld+json">`}</code> tag in the
+							page head. Blogkit uses the{' '}
 							<a
 								href="https://www.npmjs.com/package/schema-dts"
 								target="_blank"
@@ -259,15 +276,15 @@ const BlogkitDocumentation: NextPage = () => {
 							>
 								schema-dts
 							</a>{' '}
-							package, which provides full TypeScript types for all Schema.org
-							types.
+							package to give you full TypeScript types for every Schema.org
+							type, so mistakes are caught at compile time.
 						</p>
-						<Callout type="info">
+						<Callout type="info" hasMarginDown>
 							<p>
 								<b>Tip:</b> Use a specific Schema.org type like{' '}
 								<code>BlogPosting</code>, <code>Article</code>, or{' '}
-								<code>TechArticle</code> instead of the base{' '}
-								<code>Thing</code> type for richer structured data.
+								<code>TechArticle</code> instead of the base <code>Thing</code>{' '}
+								type for richer structured data.
 							</p>
 						</Callout>
 						<CodeBlock
