@@ -23,7 +23,9 @@
 	],
 	"scripts": {
 		"build": "rollup -c && tsc --emitDeclarationOnly --outDir dist/types && cp -r src/assets dist/",
-		"dev": "rollup -c -w"
+		"dev": "rollup -c -w",
+		"lint": "tsc --noEmit",
+		"prepublishOnly": "npm run lint && npm run build"
 	},
 	"keywords": [
 		"blog",
