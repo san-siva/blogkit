@@ -40,7 +40,7 @@
 	"author": "Santhosh Siva",
 	"license": "MIT",
 	"dependencies": {
-		"@san-siva/stylekit": "^1.0.8",
+		"@san-siva/stylekit": "^1.0.11",
 		"schema-dts": "^1.1.5"
 	},
 	"peerDependencies": {
