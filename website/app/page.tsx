@@ -548,37 +548,39 @@ const BlogkitDocumentation: NextPage = () => {
 			</BlogSection>
 
 			<BlogSection title="Features">
-				<Table
-					hasMarginDown
-					headers={['Feature', 'Description']}
-					rows={[
-						[
-							'Blog Layout with TOC',
-							'Responsive blog layout with sticky table of contents sidebar',
-						],
-						[
-							'Code Highlighting',
-							'Syntax highlighting for multiple programming languages using Prism.js',
-						],
-						[
-							'Mermaid Diagrams',
-							'Render flowcharts, sequence diagrams, timelines, and more',
-						],
-						[
-							'Callouts',
-							'Info, warning, error, and success notification boxes',
-						],
-						[
-							'Data Tables',
-							'Flexible table component with dynamic column sizing',
-						],
-						[
-							'Blog Sections',
-							'Hierarchical section organization with auto-generated IDs',
-						],
-						['Blog Links', 'Animated link cards for blog navigation'],
-					]}
-				/>
+				<BlogSection title="">
+					<Table
+						hasMarginDown
+						headers={['Feature', 'Description']}
+						rows={[
+							[
+								'Blog Layout with TOC',
+								'Responsive blog layout with sticky table of contents sidebar',
+							],
+							[
+								'Code Highlighting',
+								'Syntax highlighting for multiple programming languages using Prism.js',
+							],
+							[
+								'Mermaid Diagrams',
+								'Render flowcharts, sequence diagrams, timelines, and more',
+							],
+							[
+								'Callouts',
+								'Info, warning, error, and success notification boxes',
+							],
+							[
+								'Data Tables',
+								'Flexible table component with dynamic column sizing',
+							],
+							[
+								'Blog Sections',
+								'Hierarchical section organization with auto-generated IDs',
+							],
+							['Blog Links', 'Animated link cards for blog navigation'],
+						]}
+					/>
+				</BlogSection>
 				<BlogSection title="Developer Experience">
 					<Table
 						hasMarginDown

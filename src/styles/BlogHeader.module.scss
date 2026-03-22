@@ -1,12 +1,13 @@
 @use '@san-siva/stylekit/styles/index.module.scss' as stylekit;
 
 .blog-header {
-  line-height: stylekit.$line-height--small;
+	line-height: stylekit.$line-height--small;
+	font-weight: stylekit.$font-weight--800;
 }
 
 .blog-date {
-  display: block;
-  margin-bottom: calc(#{stylekit.space(8)} * 2);
-  color: stylekit.$color--dark;
-  font-style: italic;
+	display: block;
+	margin-bottom: calc(#{stylekit.space(8)} * 2);
+	color: stylekit.$color--dark;
+	font-style: italic;
 }
