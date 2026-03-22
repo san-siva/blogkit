@@ -2,7 +2,7 @@
 
 @mixin cell-base {
 	padding: styles.rem(12) styles.rem(16);
-	font-size: styles.$font-size--p-small;
+	font-size: styles.$font-size--small;
 	font-family: styles.$font-family--code;
 	word-wrap: break-word;
 	overflow-wrap: break-word;

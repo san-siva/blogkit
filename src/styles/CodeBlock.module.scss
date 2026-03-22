@@ -62,7 +62,7 @@ $code-block-background-color: #282a36;
 			> code,
 			> code > * {
 				font-family: stylekit.$font-family--code;
-				font-size: stylekit.$font-size--p-small;
+				font-size: stylekit.$font-size--small;
 				font-weight: unset;
 				font-style: unset;
 				line-height: stylekit.$line-height--normal;
@@ -120,5 +120,5 @@ $code-block-background-color: #282a36;
 .code-block--static code {
 	color: stylekit.$color--base !important;
   font-family: stylekit.$font-family--code !important;
-  font-size: stylekit.$font-size--p-small !important;
+  font-size: stylekit.$font-size--small !important;
 }

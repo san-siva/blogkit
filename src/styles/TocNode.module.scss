@@ -4,7 +4,7 @@
 	&__title {
 		display: block;
 		margin-bottom: styles.space(1);
-		font-size: styles.$font-size--p-small;
+		font-size: styles.$font-size--small;
 		font-weight: styles.$font-weight--500;
 		cursor: pointer;
 
@@ -22,11 +22,11 @@
 		}
 
 		&--sub {
-			font-size: styles.$font-size--small;
+			font-size: styles.$font-size--very-small;
 		}
 
 		&--sub-sub {
-			font-size: styles.$font-size--small;
+			font-size: styles.$font-size--very-small;
 			font-weight: styles.$font-weight--400;
 		}
 
@@ -39,7 +39,7 @@
 		&--sub-sub,
 		&--sub {
 			padding: styles.space(1) styles.space(2);
-			margin: styles.space(1) 0;
+			margin: styles.space(1);
 			border-left: 1px solid styles.$color--border;
 		}
 
