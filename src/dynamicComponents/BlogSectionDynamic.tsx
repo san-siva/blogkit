@@ -82,8 +82,10 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 				data-id={id}
 				ref={parentReference}
 			>
-				{title ? (
-					<h3 className={styles['blog-section__title']}>
+				<h3
+					className={`${styles['blog-section__title']} ${title ? '' : styles['blog-section__title--empty']}`}
+				>
+					{title ? (
 						<a
 							href={generateSectionHref(id)}
 							className={styles['blog-section__title-link']}
@@ -91,8 +93,10 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 						>
 							{title}
 						</a>
-					</h3>
-				) : null}
+					) : (
+						<p>No title</p>
+					)}
+				</h3>
 				{Children.map(children, child => {
 					if (!isValidElement(child)) return child;
 					return cloneElement(child, {

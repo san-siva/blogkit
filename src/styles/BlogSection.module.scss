@@ -7,7 +7,12 @@
 		margin-top: stylekit.space(4);
 		margin-bottom: stylekit.space(2);
 		font-size: stylekit.$font-size--h3;
-		font-weight: stylekit.$font-weight--600;
+		font-weight: stylekit.$font-weight--700;
+
+		&--empty > p {
+			color: transparent;
+			font-size: 0;
+		}
 	}
 
 	&__title-link {
@@ -29,8 +34,8 @@
 
 		> .blog-section__title {
 			margin-top: stylekit.space(6);
-			font-size: stylekit.$font-size--h4;
-			font-weight: stylekit.$font-weight--500;
+			font-weight: stylekit.$font-weight--600;
+			font-size: stylekit.$font-size--h5;
 		}
 
 		.blog-section {
@@ -38,6 +43,7 @@
 
 			> .blog-section__title {
 				margin-top: stylekit.space(4);
+				font-weight: stylekit.$font-weight--500;
 				font-size: stylekit.$font-size--h6;
 			}
 		}
