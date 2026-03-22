@@ -22,36 +22,6 @@
 		padding-top: $top;
 		padding-right: 0;
 		border-radius: styles.$border-radius--1;
-
-		> .category__title {
-			display: block;
-			margin-bottom: styles.space(1);
-			font-size: styles.$font-size--p-small;
-			font-weight: styles.$font-weight--500;
-			cursor: pointer;
-
-			animation: fadeInDown 0.3s ease-in-out;
-			transition: all 0.3s ease-in-out;
-
-			&--active,
-			&:hover {
-				text-decoration: underline;
-				text-decoration-color: styles.$color--primary;
-			}
-
-			&--active {
-				color: styles.$color--primary;
-			}
-
-			&--sub {
-				font-size: styles.$font-size--small;
-				font-weight: styles.$font-weight--400;
-			}
-
-			&:last-child {
-				margin-bottom: 0;
-			}
-		}
 	}
 }
 

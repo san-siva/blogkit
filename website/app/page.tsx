@@ -45,71 +45,76 @@ const BlogkitDocumentation: NextPage = () => {
 				</p>
 
 				<BlogSection title="Live Websites">
-					<ul className="margin-bottom--2">
-						<li className="margin-bottom--1">
-							<a
-								href="https://blogkit.santhoshsiva.dev/"
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles['a--highlighted']}
-							>
-								Blogkit Documentation
-							</a>{' '}
-							- This site! A complete documentation website with component
-							examples (
-							<a
-								href="https://github.com/san-siva/blogkit/tree/main/website"
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles['a--highlighted']}
-							>
-								source code
-							</a>
-							)
-						</li>
-						<li className="margin-bottom--1">
-							<a
-								href="https://gitsy-56895.web.app/"
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles['a--highlighted']}
-							>
-								Gitsy
-							</a>{' '}
-							- A feature-rich blog showcasing advanced Blogkit features and
-							customization (
-							<a
-								href="https://github.com/san-siva/gitsy/tree/main/website"
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles['a--highlighted']}
-							>
-								source code
-							</a>
-							)
-						</li>
-						<li className="margin-bottom--1">
-							<a
-								href="https://stylekit-68309.web.app/"
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles['a--highlighted']}
-							>
-								StyleKit Documentation
-							</a>{' '}
-							- Complex documentation site demonstrating advanced component
-							usage and styling (
-							<a
-								href="https://github.com/san-siva/stylekit/tree/main/website"
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles['a--highlighted']}
-							>
-								source code
-							</a>
-							)
-						</li>
-					</ul>
+					<BlogSection title="Third-Level">
+						<p>Third-level content</p>
+					</BlogSection>
+					<BlogSection title="Third-Level-1">
+						<ul className="margin-bottom--2">
+							<li className="margin-bottom--1">
+								<a
+									href="https://blogkit.santhoshsiva.dev/"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles['a--highlighted']}
+								>
+									Blogkit Documentation
+								</a>{' '}
+								- This site! A complete documentation website with component
+								examples (
+								<a
+									href="https://github.com/san-siva/blogkit/tree/main/website"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles['a--highlighted']}
+								>
+									source code
+								</a>
+								)
+							</li>
+							<li className="margin-bottom--1">
+								<a
+									href="https://gitsy-56895.web.app/"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles['a--highlighted']}
+								>
+									Gitsy
+								</a>{' '}
+								- A feature-rich blog showcasing advanced Blogkit features and
+								customization (
+								<a
+									href="https://github.com/san-siva/gitsy/tree/main/website"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles['a--highlighted']}
+								>
+									source code
+								</a>
+								)
+							</li>
+							<li className="margin-bottom--1">
+								<a
+									href="https://stylekit-68309.web.app/"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles['a--highlighted']}
+								>
+									StyleKit Documentation
+								</a>{' '}
+								- Complex documentation site demonstrating advanced component
+								usage and styling (
+								<a
+									href="https://github.com/san-siva/stylekit/tree/main/website"
+									target="_blank"
+									rel="noopener noreferrer"
+									className={styles['a--highlighted']}
+								>
+									source code
+								</a>
+								)
+							</li>
+						</ul>
+					</BlogSection>
 				</BlogSection>
 
 				<BlogSection title="Blog Post Examples">
@@ -576,10 +581,7 @@ const BlogkitDocumentation: NextPage = () => {
 							'Blog Sections',
 							'Hierarchical section organization with auto-generated IDs',
 						],
-						[
-							'Blog Links',
-							'Animated link cards for blog navigation',
-						],
+						['Blog Links', 'Animated link cards for blog navigation'],
 					]}
 				/>
 				<BlogSection title="Developer Experience">
@@ -591,10 +593,7 @@ const BlogkitDocumentation: NextPage = () => {
 								'TypeScript Support',
 								'Fully typed components with ReactNode support',
 							],
-							[
-								'SCSS Modules',
-								'Scoped, customizable styles using StyleKit',
-							],
+							['SCSS Modules', 'Scoped, customizable styles using StyleKit'],
 						]}
 					/>
 				</BlogSection>
@@ -607,10 +606,7 @@ const BlogkitDocumentation: NextPage = () => {
 								'Next.js Optimized',
 								'Works seamlessly with Next.js 14, 15, and 16',
 							],
-							[
-								'React 19 Ready',
-								'Full support for React 18 and 19',
-							],
+							['React 19 Ready', 'Full support for React 18 and 19'],
 						]}
 					/>
 				</BlogSection>

@@ -5,6 +5,7 @@ import {
 	cloneElement,
 	forwardRef,
 	isValidElement,
+	useEffect,
 	useImperativeHandle,
 	useRef,
 } from 'react';
@@ -49,13 +50,26 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 			return handle;
 		});
 
+		// Re-register when title or category changes so the TOC reflects the updated heading
+		useEffect(() => {
+			if (typeof forwardedReference === 'function' && imperativeHandleRef.current) {
+				forwardedReference(imperativeHandleRef.current);
+			}
+		}, [title, category]); // eslint-disable-line react-hooks/exhaustive-deps
+
 		const handleChildReferences = (element: ForwardedReference | null) => {
 			if (!element) return;
 			const { parentRef: subParentReference } = element;
 			if (!subParentReference) return;
-			childReferences.current.push(subParentReference);
 
-			// Re-trigger parent ref callback with updated children
+			// Avoid registering the same child section twice
+		const alreadyRegistered = childReferences.current.some(
+				ref => ref.parentRef === subParentReference
+			);
+			if (!alreadyRegistered) {
+				childReferences.current.push(element);
+			}
+
 			if (typeof forwardedReference === 'function' && imperativeHandleRef.current) {
 				forwardedReference(imperativeHandleRef.current);
 			}

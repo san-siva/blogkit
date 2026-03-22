@@ -18,23 +18,46 @@
 			text-decoration-color: stylekit.$color--primary;
 		}
 	}
-}
 
-.blog-section .blog-section > .blog-section__title {
-	font-size: stylekit.$font-size--h6;
-	margin-bottom: stylekit.space(2);
-}
+	// Sub-section (depth 1)
+	.blog-section {
+		> .blog-section__title {
+			font-size: stylekit.$font-size--h6;
+			margin-bottom: stylekit.space(2);
+		}
 
-.blog-section .blog-section > *:first-child {
-	margin-top: stylekit.space(4);
-}
+		> *:first-child {
+			margin-top: stylekit.space(4);
+		}
 
-.blog-section .blog-section:not(:last-child) {
-	margin-bottom: stylekit.space(4);
-}
+		&:not(:last-child) {
+			margin-bottom: stylekit.space(4);
+		}
 
-.blog-section .blog-section:last-child {
-	margin-bottom: stylekit.space(8);
+		&:last-child {
+			margin-bottom: stylekit.space(8);
+		}
+
+		// Sub-sub-section (depth 2)
+		.blog-section {
+			> .blog-section__title {
+				font-size: stylekit.$font-size--p;
+				margin-bottom: stylekit.space(1);
+			}
+
+			> *:first-child {
+				margin-top: stylekit.space(2);
+			}
+
+			&:not(:last-child) {
+				margin-bottom: stylekit.space(2);
+			}
+
+			&:last-child {
+				margin-bottom: stylekit.space(4);
+			}
+		}
+	}
 }
 
 .margin-bottom--6 {

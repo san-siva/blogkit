@@ -1,0 +1,49 @@
+@use '@san-siva/stylekit/styles/index.module.scss' as styles;
+
+.toc-node {
+	&__title {
+		display: block;
+		margin-bottom: styles.space(1);
+		font-size: styles.$font-size--p-small;
+		font-weight: styles.$font-weight--500;
+		cursor: pointer;
+
+		animation: fadeInDown 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+
+		&--active,
+		&:hover {
+			text-decoration: underline;
+			text-decoration-color: styles.$color--primary;
+		}
+
+		&--active {
+			color: styles.$color--primary;
+		}
+
+		&--sub {
+			font-size: styles.$font-size--small;
+		}
+
+		&--sub-sub {
+			font-size: styles.$font-size--small;
+			font-weight: styles.$font-weight--400;
+		}
+
+		&:not(:last-child) {
+			margin-bottom: 0;
+		}
+	}
+
+	&__children {
+		&--sub-sub,
+		&--sub {
+			padding: styles.space(1) styles.space(2);
+			margin: styles.space(1) 0;
+			border-left: 1px solid styles.$color--border;
+		}
+
+		&--sub-sub {
+		}
+	}
+}

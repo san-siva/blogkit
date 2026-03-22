@@ -4,18 +4,19 @@ import {
 	Children,
 	cloneElement,
 	isValidElement,
-	useCallback,
-	useEffect,
-	useRef,
 	useState,
 } from 'react';
 import { useSpring, animated, config } from '@react-spring/web';
 
-import type { MouseEvent, ReactNode, RefAttributes } from 'react';
+import type { ReactNode, RefAttributes } from 'react';
 import type { Thing, WithContext } from 'schema-dts';
 
 import styles from '../styles/Blog.module.scss';
-import lockScrollUpdates from '../utils/lockScrollUpdates';
+import { useCategoryTitles } from '../hooks/useCategoryTitles';
+import { useSectionObserver } from '../hooks/useSectionObserver';
+import type { CategoryTitleValue } from '../hooks/useCategoryTitles';
+import TocNodeStatic from '../staticComponents/TocNodeStatic';
+import type { TocNode } from '../staticComponents/TocNodeStatic';
 
 interface BlogProperties {
 	children: ReactNode;
@@ -25,244 +26,45 @@ interface BlogProperties {
 
 export interface ForwardedReference {
 	parentRef: HTMLDivElement;
-	childRefs: HTMLDivElement[];
+	childRefs: ForwardedReference[];
 }
 
-interface SectionReferenceValue {
-	el: HTMLElement;
-	title: string;
-	isSubSection: boolean;
-}
-
-type SectionReference = Map<string, SectionReferenceValue>;
-
-interface CategoryTitleValue extends SectionReferenceValue {
-	lastUpdatedAt: number;
-}
-
-type CategoryTitle = Map<string, CategoryTitleValue>;
+const buildTocTree = (entries: [string, CategoryTitleValue][]): TocNode[] => {
+	const roots: TocNode[] = [];
+	const stack: TocNode[] = [];
+	for (const [id, { title, depth }] of entries) {
+		const node: TocNode = { id, title, depth, children: [] };
+		while (stack.length > 0 && stack[stack.length - 1].depth >= depth) {
+			stack.pop();
+		}
+		if (stack.length === 0) {
+			roots.push(node);
+		} else {
+			stack[stack.length - 1].children.push(node);
+		}
+		stack.push(node);
+	}
+	return roots;
+};
 
 const Blog = ({
 	children,
 	title = 'In this article',
 	jsonLd,
 }: BlogProperties) => {
-	const sectionReferences = useRef<SectionReference>(new Map());
-	const [categoryTitles, setCategoryTitles] = useState<CategoryTitle>(
-		new Map()
-	);
 	const [visibleTitle, setVisibleTitle] = useState<string | null>(null);
 	const [showTOC, setShowTOC] = useState(false);
 
-	const updateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const showTOCTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const isClickScrolling = useRef(false);
-	const scrollEndHandlerRef = useRef<(() => void) | null>(null);
-	const intersectionObserversRef = useRef<Map<string, IntersectionObserver>>(
-		new Map()
-	);
+	const { categoryTitles, handleSectionReference } = useCategoryTitles({
+		visibleTitle,
+		setVisibleTitle,
+		setShowTOC,
+	});
 
-	const sortByDomPosition = useCallback(
-		(
-			[, a]: [string, SectionReferenceValue],
-			[, b]: [string, SectionReferenceValue]
-		) => {
-			const position = a.el.compareDocumentPosition(b.el);
-			if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
-				return -1; // a comes before b
-			} else if (position & Node.DOCUMENT_POSITION_PRECEDING) {
-				return 1; // b comes before a
-			}
-			return 0;
-		},
-		[]
-	);
-
-	const updateCategoryTitles = useCallback(() => {
-		const now = Date.now();
-		const newCategoryTitles = new Map<string, CategoryTitleValue>();
-
-		// Sort sections by their DOM position to maintain correct order
-		const sectionsArray = Array.from(sectionReferences.current.entries());
-		sectionsArray.sort(sortByDomPosition);
-
-		let firstSectionId: string | null = null;
-		for (const [id, { title, el, isSubSection }] of sectionsArray) {
-			if (!firstSectionId) {
-				firstSectionId = id;
-			}
-			newCategoryTitles.set(id, {
-				el,
-				title,
-				lastUpdatedAt: now,
-				isSubSection,
-			});
-		}
-
-		if (newCategoryTitles.size === 0) return;
-
-		setCategoryTitles(newCategoryTitles);
-		if (!showTOC) setShowTOC(true);
-
-		if (visibleTitle) return;
-		setVisibleTitle(firstSectionId);
-	}, [visibleTitle, sortByDomPosition, showTOC, setShowTOC]);
-
-	const debounceUpdateCategoryTitles = useCallback(() => {
-		// Clear existing timer and set a new one to batch updates
-		if (updateTimerRef.current) {
-			clearTimeout(updateTimerRef.current);
-		}
-		updateTimerRef.current = setTimeout(() => {
-			updateCategoryTitles();
-		}, 200);
-	}, [updateCategoryTitles]);
-
-	useEffect(() => {
-		for (const [id, { el }] of categoryTitles) {
-			const observer = new IntersectionObserver(
-				([entry]) => {
-					if (!entry.isIntersecting) return;
-					if (isClickScrolling.current) return;
-					if (document.body.scrollTop === 0) return;
-					setVisibleTitle(visibleId => {
-						if (visibleId === id && !entry.isIntersecting) return null;
-						if (entry.isIntersecting) return id;
-						return visibleId;
-					});
-					const url = new URL(window.location.href);
-					url.searchParams.set('section', id);
-					window.history.replaceState({}, '', url.toString());
-				},
-				{ threshold: 0.1 }
-			);
-			intersectionObserversRef.current.set(id, observer);
-			observer.observe(el as HTMLElement);
-		}
-	}, [categoryTitles.size]);
-
-	useEffect(() => {
-		return () => {
-			if (updateTimerRef.current) {
-				clearTimeout(updateTimerRef.current);
-			}
-			if (showTOCTimerRef.current) {
-				clearTimeout(showTOCTimerRef.current);
-			}
-			if (scrollEndHandlerRef.current) {
-				document.body.removeEventListener(
-					'scrollend',
-					scrollEndHandlerRef.current
-				);
-			}
-			if (intersectionObserversRef.current) {
-				for (const observer of intersectionObserversRef.current.values()) {
-					observer.disconnect();
-				}
-			}
-		};
-	}, []);
-
-	const getSectionFromUrl = () => {
-		const url = new URL(window.location.href);
-		const section = url.searchParams.get('section');
-		if (!section) return null;
-		return section;
-	};
-
-	const updateUrl = (id: string) => {
-		const url = new URL(window.location.href);
-		url.searchParams.set('section', id);
-		window.history.replaceState({}, '', url.toString());
-	};
-
-	const scrollIntoView = (element: HTMLElement) => {
-		if (!element) return;
-		const top =
-			element.getBoundingClientRect().top + document.body.scrollTop - 100;
-		document.body.scrollTo({ top, behavior: 'smooth' });
-	};
-
-	// On initial load, scroll to section specified in URL
-	useEffect(() => {
-		if (categoryTitles.size === 0) return;
-		const section = getSectionFromUrl();
-		if (!section) {
-			return;
-		}
-		const entry = categoryTitles.get(section);
-		if (!entry) {
-			return;
-		}
-		scrollIntoView(entry.el);
-		lockScrollUpdates(
-			section,
-			isClickScrolling,
-			scrollEndHandlerRef,
-			setVisibleTitle
-		);
-	}, [categoryTitles.size]);
-
-	const handleSectionReference = useCallback(
-		(element: ForwardedReference) => {
-			if (!element) return;
-			const { parentRef, childRefs } = element;
-
-			// Add parent section reference
-			if (parentRef) {
-				const id = parentRef.dataset.id;
-				const title = parentRef.dataset.title;
-				if (id && title) {
-					sectionReferences.current.set(id, {
-						el: parentRef,
-						title,
-						isSubSection: false,
-					});
-				}
-			}
-
-			// Add child section references
-			if (Array.isArray(childRefs)) {
-				for (const childRef of childRefs) {
-					if (!childRef) continue;
-					const id = childRef.dataset.id;
-					const title = childRef.dataset.title;
-					if (id && title) {
-						sectionReferences.current.set(id, {
-							el: childRef,
-							title,
-							isSubSection: true,
-						});
-					}
-				}
-			}
-
-			debounceUpdateCategoryTitles();
-		},
-		[debounceUpdateCategoryTitles]
-	);
-
-	const handleClickCategoryTitle = (
-		error: MouseEvent<HTMLParagraphElement>
-	) => {
-		const id = error.currentTarget.dataset.id;
-		const index = error.currentTarget.dataset.idx;
-		if (!id || !index) return;
-
-		const { el } = categoryTitles.get(id) || {};
-		if (!el) return;
-
-		updateUrl(id);
-
-		scrollIntoView(el);
-
-		lockScrollUpdates(
-			id,
-			isClickScrolling,
-			scrollEndHandlerRef,
-			setVisibleTitle
-		);
-	};
+	const { handleClickCategoryTitle } = useSectionObserver({
+		categoryTitles,
+		setVisibleTitle,
+	});
 
 	const sidebarStyle = useSpring({
 		opacity: showTOC ? 1 : 0,
@@ -292,28 +94,15 @@ const Blog = ({
 				>
 					{title}
 				</p>
-				{[...categoryTitles].map(
-					([id, { title, isSubSection }], index, array) => {
-						const isNextSectionSubSection = array[index + 1]?.[1]?.isSubSection;
-						return (
-							<p
-								key={id}
-								data-idx={index}
-								data-id={id}
-								className={`${styles['category__title']} ${
-									id === visibleTitle ? styles['category__title--active'] : ''
-								} ${isSubSection ? styles['category__title--sub'] : ''} ${
-									isSubSection && !isNextSectionSubSection
-										? styles['margin-bottom-imp--2']
-										: ''
-								}`}
-								onClick={handleClickCategoryTitle}
-							>
-								{title}
-							</p>
-						);
-					}
-				)}
+				{buildTocTree([...categoryTitles]).map((node, i) => (
+					<TocNodeStatic
+						key={node.id}
+						node={node}
+						index={i}
+						visibleTitle={visibleTitle}
+						onClick={handleClickCategoryTitle}
+					/>
+				))}
 			</animated.div>
 		</div>
 	);
