@@ -14,7 +14,6 @@ interface BlogSectionProperties {
 	title?: string;
 	category?: string;
 	children?: ReactNode;
-	increaseMarginBottom?: boolean;
 }
 
 const BlogSection = forwardRef<ForwardedReference, BlogSectionProperties>(
@@ -23,7 +22,6 @@ const BlogSection = forwardRef<ForwardedReference, BlogSectionProperties>(
 			title = '',
 			category = '',
 			children = null,
-			increaseMarginBottom = false,
 		},
 		ref
 	) => {
@@ -33,7 +31,6 @@ const BlogSection = forwardRef<ForwardedReference, BlogSectionProperties>(
 					<BlogSectionStatic
 						title={title}
 						category={category}
-						increaseMarginBottom={increaseMarginBottom}
 					>
 						{children}
 					</BlogSectionStatic>
@@ -43,7 +40,6 @@ const BlogSection = forwardRef<ForwardedReference, BlogSectionProperties>(
 					ref={ref}
 					title={title}
 					category={category}
-					increaseMarginBottom={increaseMarginBottom}
 				>
 					{children}
 				</BlogSectionDynamic>

@@ -1,8 +1,13 @@
 @use '@san-siva/stylekit/styles/index.module.scss' as stylekit;
 
 .blog-section {
+	margin-bottom: stylekit.space(9);
+
 	&__title {
+		margin-top: stylekit.space(4);
 		margin-bottom: stylekit.space(2);
+		font-size: stylekit.$font-size--h3;
+		font-weight: stylekit.$font-weight--600;
 	}
 
 	&__title-link {
@@ -19,51 +24,22 @@
 		}
 	}
 
-	// Sub-section (depth 1)
 	.blog-section {
+		margin-bottom: stylekit.space(6);
+
 		> .blog-section__title {
-			font-size: stylekit.$font-size--h6;
-			margin-bottom: stylekit.space(2);
+			margin-top: stylekit.space(6);
+			font-size: stylekit.$font-size--h4;
+			font-weight: stylekit.$font-weight--500;
 		}
 
-		> *:first-child {
-			margin-top: stylekit.space(4);
-		}
-
-		&:not(:last-child) {
-			margin-bottom: stylekit.space(4);
-		}
-
-		&:last-child {
-			margin-bottom: stylekit.space(8);
-		}
-
-		// Sub-sub-section (depth 2)
 		.blog-section {
+			margin-bottom: stylekit.space(4);
+
 			> .blog-section__title {
-				font-size: stylekit.$font-size--p;
-				margin-bottom: stylekit.space(1);
-			}
-
-			> *:first-child {
-				margin-top: stylekit.space(2);
-			}
-
-			&:not(:last-child) {
-				margin-bottom: stylekit.space(2);
-			}
-
-			&:last-child {
-				margin-bottom: stylekit.space(4);
+				margin-top: stylekit.space(4);
+				font-size: stylekit.$font-size--h6;
 			}
 		}
 	}
-}
-
-.margin-bottom--6 {
-	margin-bottom: stylekit.space(6);
-}
-
-.margin-bottom--9 {
-	margin-bottom: stylekit.space(9);
 }

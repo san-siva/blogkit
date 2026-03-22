@@ -21,17 +21,11 @@ interface BlogProperties {
 	title?: string;
 	category?: string;
 	children?: ReactNode;
-	increaseMarginBottom?: boolean;
 }
 
 const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 	(
-		{
-			title = '',
-			category = '',
-			children = null,
-			increaseMarginBottom = false,
-		}: BlogProperties,
+		{ title = '', category = '', children = null }: BlogProperties,
 		forwardedReference
 	) => {
 		const titleWithCategory = category ? `${category} - ${title}` : title;
@@ -52,7 +46,10 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 
 		// Re-register when title or category changes so the TOC reflects the updated heading
 		useEffect(() => {
-			if (typeof forwardedReference === 'function' && imperativeHandleRef.current) {
+			if (
+				typeof forwardedReference === 'function' &&
+				imperativeHandleRef.current
+			) {
 				forwardedReference(imperativeHandleRef.current);
 			}
 		}, [title, category]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -63,36 +60,38 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 			if (!subParentReference) return;
 
 			// Avoid registering the same child section twice
-		const alreadyRegistered = childReferences.current.some(
+			const alreadyRegistered = childReferences.current.some(
 				ref => ref.parentRef === subParentReference
 			);
 			if (!alreadyRegistered) {
 				childReferences.current.push(element);
 			}
 
-			if (typeof forwardedReference === 'function' && imperativeHandleRef.current) {
+			if (
+				typeof forwardedReference === 'function' &&
+				imperativeHandleRef.current
+			) {
 				forwardedReference(imperativeHandleRef.current);
 			}
 		};
 
 		return (
 			<div
-				className={`${styles['blog-section']}
-					${
-						increaseMarginBottom
-							? styles['margin-bottom--9']
-							: styles['margin-bottom--6']
-					}`}
+				className={styles['blog-section']}
 				data-title={title}
 				data-id={id}
 				ref={parentReference}
 			>
 				{title ? (
-					<h4 className={styles['blog-section__title']}>
-						<a href={generateSectionHref(id)} className={styles['blog-section__title-link']} onClick={e => e.preventDefault()}>
+					<h3 className={styles['blog-section__title']}>
+						<a
+							href={generateSectionHref(id)}
+							className={styles['blog-section__title-link']}
+							onClick={e => e.preventDefault()}
+						>
 							{title}
 						</a>
-					</h4>
+					</h3>
 				) : null}
 				{Children.map(children, child => {
 					if (!isValidElement(child)) return child;
