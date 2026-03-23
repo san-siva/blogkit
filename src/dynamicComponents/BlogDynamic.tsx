@@ -29,10 +29,12 @@ export interface ForwardedReference {
 	childRefs: ForwardedReference[];
 }
 
+const MAX_TOC_DEPTH = 2;
+
 const buildTocTree = (entries: [string, CategoryTitleValue][]): TocNode[] => {
 	const roots: TocNode[] = [];
 	const stack: TocNode[] = [];
-	for (const [id, { title, depth }] of entries) {
+	for (const [id, { title, depth }] of entries.filter(([, { depth }]) => depth <= MAX_TOC_DEPTH)) {
 		const node: TocNode = { id, title, depth, children: [] };
 		while (stack.length > 0 && stack[stack.length - 1].depth >= depth) {
 			stack.pop();
