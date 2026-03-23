@@ -46,6 +46,20 @@
 				font-weight: stylekit.$font-weight--500;
 				font-size: stylekit.$font-size--h6;
 			}
+
+			.blog-section {
+				margin-bottom: stylekit.space(2);
+				> .blog-section__title {
+					margin-top: stylekit.space(2);
+					font-size: stylekit.$font-size--p;
+				}
+
+				.blog-section {
+					> .blog-section__title {
+						font-weight: stylekit.$font-weight--400;
+					}
+				}
+			}
 		}
 	}
 }
