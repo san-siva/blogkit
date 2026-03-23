@@ -557,8 +557,23 @@ const BlogkitDocumentation: NextPage = () => {
 					<CheckList
 						items={[
 							{ id: '1', children: <p>Install dependencies</p> },
-							{ id: '2', children: <p><strong>Configure</strong> environment</p>, isChecked: true },
-							{ id: '3', children: <p>Run <code>npm test</code></p> },
+							{
+								id: '2',
+								children: (
+									<p>
+										<strong>Configure</strong> environment
+									</p>
+								),
+								isChecked: true,
+							},
+							{
+								id: '3',
+								children: (
+									<p>
+										Run <code>npm test</code>
+									</p>
+								),
+							},
 						]}
 						hasMarginDown
 					/>
