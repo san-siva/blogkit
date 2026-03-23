@@ -11,6 +11,7 @@ import {
 	Mermaid,
 	Callout,
 	Table,
+	CheckList,
 } from '@san-siva/blogkit';
 
 import { CODE_EXAMPLES } from './codeExamples';
@@ -541,6 +542,53 @@ const BlogkitDocumentation: NextPage = () => {
 								'fontSize',
 								'string',
 								'Custom font size (e.g., "14px", "1rem") (optional)',
+							],
+						]}
+					/>
+				</BlogSection>
+
+				<BlogSection title="CheckList">
+					<p className="margin-bottom--2">
+						An interactive checklist with toggleable items. State is managed
+						client-side; the static fallback preserves initial checked states
+						for SSR.
+					</p>
+
+					<CheckList
+						items={[
+							{ id: '1', children: <p>Install dependencies</p> },
+							{ id: '2', children: <p><strong>Configure</strong> environment</p>, isChecked: true },
+							{ id: '3', children: <p>Run <code>npm test</code></p> },
+						]}
+						hasMarginDown
+					/>
+
+					<CodeBlock
+						hasMarginDown
+						language="tsx"
+						code={CODE_EXAMPLES.checkList}
+					/>
+
+					<Table
+						hasMarginDown
+						headers={['Prop', 'Type', 'Description']}
+						rows={[
+							['items', 'CheckListItem[]', 'Array of checklist items'],
+							['hasMarginUp', 'boolean', 'Add margin above (optional)'],
+							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
+						]}
+					/>
+
+					<Table
+						hasMarginDown
+						headers={['CheckListItem', 'Type', 'Description']}
+						rows={[
+							['id', 'string', 'Unique identifier for the item'],
+							['children', 'ReactNode', 'Content for the item'],
+							[
+								'isChecked',
+								'boolean',
+								'Initial checked state (optional, defaults to false)',
 							],
 						]}
 					/>

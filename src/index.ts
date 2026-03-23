@@ -7,6 +7,7 @@ export { default as Callout } from './components/Callout';
 export { default as Mermaid } from './components/Mermaid';
 export { default as BlogLink } from './components/BlogLink';
 export { default as Table } from './components/Table';
+export { default as CheckList, type CheckListItem } from './components/CheckList';
 
 // Utilities
 export { generateIdForBlogTitle, generateUrlForBlogTitle } from './utils';
