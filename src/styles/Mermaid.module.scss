@@ -6,12 +6,54 @@
 	> * {
 		background-color: unset;
 	}
+
+	&__controls {
+		display: flex;
+		flex-direction: row;
+		gap: styles.rem(4);
+		justify-content: flex-end;
+		margin-bottom: styles.rem(6);
+		opacity: 0;
+
+		&__btn {
+			background: none;
+			border: 1px solid styles.$color--grey-medium;
+			color: styles.$color--dark;
+			cursor: pointer;
+			font-size: styles.$font-size--very-small;
+			font-weight: styles.$font-weight--500;
+			line-height: 1;
+			padding: styles.rem(4) styles.rem(8);
+			border-radius: styles.rem(2);
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.05);
+			}
+		}
+	}
+
+	&__viewport {
+		overflow: hidden;
+		cursor: grab;
+		user-select: none;
+		-webkit-user-select: none;
+
+		&--dragging {
+			cursor: grabbing;
+		}
+	}
+
+	&:hover {
+		.mermaid__controls {
+			opacity: 1;
+		}
+	}
 }
 
 .margin-top--1 {
-  margin-top: styles.space(1);
+	margin-top: styles.space(1);
 }
 
 .margin-bottom--2 {
-  margin-bottom: styles.space(2);
+	margin-bottom: styles.space(2);
 }
