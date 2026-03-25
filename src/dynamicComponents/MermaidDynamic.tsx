@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import mermaid from 'mermaid';
 
+import CalloutStatic from '../staticComponents/CalloutStatic';
 import styles from '../styles/Mermaid.module.scss';
 
 interface MermaidProperties {
@@ -37,29 +38,31 @@ const Mermaid = ({
 	hasMarginDown = false,
 }: MermaidProperties) => {
 	const [enabled, setEnabled] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 	const mermaidReference = useRef<HTMLDivElement>(null);
+	const renderCount = useRef(0);
 
 	const initializeMermaid = useCallback(async () => {
+		if (!mermaidReference.current || !code) return;
+		const renderId = `mermaid-diagram-${id}-${++renderCount.current}`;
+		document.getElementById(renderId)?.remove();
 		try {
-			if (!mermaidReference.current || !code) return;
-			const { svg, bindFunctions } = await mermaid.render(
-				`mermaid-diagram-${id}`,
-				code
-			);
-			if (!svg) return;
-			mermaidReference.current.innerHTML = svg || '';
+			const { svg, bindFunctions } = await mermaid.render(renderId, code);
+			if (!mermaidReference.current || !svg) return;
+			mermaidReference.current.innerHTML = svg;
 			bindFunctions?.(mermaidReference.current);
 			setEnabled(true);
-		} catch (error) {
-			console.error('Failed to render Mermaid diagram:', error);
+		} catch (err) {
+			const message =
+				err instanceof Error ? err.message : 'Failed to render diagram';
+			setError(message);
 		}
 	}, [code, id]);
 
 	useEffect(() => {
-		if (!code || !mermaidReference.current) return;
-		const timer = setTimeout(async () => {
-			await initializeMermaid();
-		}, 100);
+		if (!code) return;
+		setError(null);
+		const timer = setTimeout(initializeMermaid, 100);
 		return () => clearTimeout(timer);
 	}, [code, initializeMermaid]);
 
@@ -69,8 +72,22 @@ const Mermaid = ({
 				${hasMarginUp ? styles['margin-top--1'] : ''}
 				${hasMarginDown ? styles['margin-bottom--2'] : ''}`}
 		>
-			{enabled ? null : <p>Diagram Loading...</p>}
-			<div ref={mermaidReference} id={id}></div>
+			{error ? (
+				<CalloutStatic type="error">
+					<p>
+						<b>Diagram error:</b> {error}
+					</p>
+				</CalloutStatic>
+			) : !enabled ? (
+				<CalloutStatic type="info">
+					<p>Rendering diagram...</p>
+				</CalloutStatic>
+			) : null}
+			<div
+				ref={mermaidReference}
+				id={id}
+				style={enabled ? undefined : { display: 'none' }}
+			/>
 		</div>
 	);
 };
