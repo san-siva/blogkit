@@ -96,36 +96,7 @@ const Mermaid = ({
 		return () => clearTimeout(timer);
 	}, [code, initializeMermaid, applyTransform]);
 
-	const handleWheel = useCallback(
-		(e: WheelEvent) => {
-			e.preventDefault();
-			const factor = e.deltaY < 0 ? 1 + ZOOM_STEP : 1 - ZOOM_STEP;
-			applyTransform(prev => {
-				const newScale = Math.min(
-					Math.max(prev.scale * factor, MIN_SCALE),
-					MAX_SCALE
-				);
-				if (!viewportRef.current) return { ...prev, scale: newScale };
-				const rect = viewportRef.current.getBoundingClientRect();
-				const cursorX = e.clientX - rect.left;
-				const cursorY = e.clientY - rect.top;
-				const ratio = newScale / prev.scale;
-				return {
-					scale: newScale,
-					x: cursorX - (cursorX - prev.x) * ratio,
-					y: cursorY - (cursorY - prev.y) * ratio,
-				};
-			});
-		},
-		[applyTransform]
-	);
 
-	useEffect(() => {
-		const viewport = viewportRef.current;
-		if (!viewport || !enabled) return;
-		viewport.addEventListener('wheel', handleWheel, { passive: false });
-		return () => viewport.removeEventListener('wheel', handleWheel);
-	}, [handleWheel, enabled]);
 
 	const handleMouseDown = useCallback((e: React.MouseEvent) => {
 		e.preventDefault();
