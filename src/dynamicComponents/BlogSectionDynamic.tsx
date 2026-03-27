@@ -10,7 +10,7 @@ import {
 	useRef,
 } from 'react';
 
-import type { ReactNode, RefAttributes } from 'react';
+import type { HTMLAttributes, ReactElement, ReactNode, RefAttributes } from 'react';
 
 import styles from '../styles/BlogSection.module.scss';
 
@@ -18,7 +18,7 @@ import type { ForwardedReference } from './BlogDynamic';
 import { generateIdForBlogTitle, generateSectionHref } from '../utils';
 
 interface BlogProperties {
-	title?: string;
+	title?: string | ReactElement<HTMLAttributes<HTMLParagraphElement>, 'p'>;
 	category?: string;
 	children?: ReactNode;
 }
@@ -28,7 +28,8 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 		{ title = '', category = '', children = null }: BlogProperties,
 		forwardedReference
 	) => {
-		const titleWithCategory = category ? `${category} - ${title}` : title;
+		const titleString = typeof title === 'string' ? title : '';
+		const titleWithCategory = category ? `${category} - ${titleString}` : titleString;
 		const id = generateIdForBlogTitle(titleWithCategory);
 
 		const parentReference = useRef<ForwardedReference['parentRef']>(null);
@@ -78,7 +79,7 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 		return (
 			<div
 				className={styles['blog-section']}
-				data-title={title}
+				data-title={titleString}
 				data-id={id}
 				ref={parentReference}
 			>

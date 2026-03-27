@@ -335,12 +335,12 @@ const BlogkitDocumentation: NextPage = () => {
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
 						rows={[
-							['title', 'string', 'Section title (optional)'],
 							[
-								'hasMarginBottom',
-								'boolean',
-								'Add margin at the bottom (optional)',
+								'title',
+								'string | ReactElement<p>',
+								'Section title (optional)',
 							],
+							['category', 'string', 'Category prefix for the title (optional)'],
 							['children', 'ReactNode', 'Section content'],
 						]}
 					/>
@@ -366,11 +366,8 @@ const BlogkitDocumentation: NextPage = () => {
 								'string',
 								'Programming language for syntax highlighting',
 							],
-							[
-								'hasMarginDown',
-								'boolean',
-								'Add margin below the code block (optional)',
-							],
+							['hasMarginUp', 'boolean', 'Add margin above (optional)'],
+							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
 						]}
 					/>
 				</BlogSection>
@@ -448,6 +445,7 @@ const BlogkitDocumentation: NextPage = () => {
 								</p>,
 								'Callout style',
 							],
+							['hasMarginUp', 'boolean', 'Add margin above (optional)'],
 							['hasMarginDown', 'boolean', 'Add margin below (optional)'],
 							['children', 'ReactNode', 'Callout content'],
 						]}
@@ -549,9 +547,9 @@ const BlogkitDocumentation: NextPage = () => {
 
 				<BlogSection title="CheckList">
 					<p className="margin-bottom--2">
-						An interactive checklist with toggleable items. State is managed
-						client-side; the static fallback preserves initial checked states
-						for SSR.
+						A read-only checklist for displaying items with an initial checked
+						state. Only <code>{'<p>'}</code> elements are accepted as item
+						content.
 					</p>
 
 					<CheckList
@@ -599,7 +597,7 @@ const BlogkitDocumentation: NextPage = () => {
 						headers={['CheckListItem', 'Type', 'Description']}
 						rows={[
 							['id', 'string', 'Unique identifier for the item'],
-							['children', 'ReactNode', 'Content for the item'],
+							['children', 'ReactElement<p>', 'Item label — only <p> tags accepted'],
 							[
 								'isChecked',
 								'boolean',

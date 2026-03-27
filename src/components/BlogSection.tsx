@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef, lazy, Suspense } from 'react';
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import BlogSectionStatic from '../staticComponents/BlogSectionStatic';
 import type { ForwardedReference } from '../dynamicComponents/BlogDynamic';
 export type { ForwardedReference };
@@ -11,7 +11,7 @@ const BlogSectionDynamic = lazy(
 );
 
 interface BlogSectionProperties {
-	title?: string;
+	title?: string | ReactElement<HTMLAttributes<HTMLParagraphElement>, 'p'>;
 	category?: string;
 	children?: ReactNode;
 }

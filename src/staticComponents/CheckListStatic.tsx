@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactElement } from 'react';
 
 import styles from '../styles/CheckList.module.scss';
 
 export interface CheckListItem {
 	id: string;
-	children: ReactNode;
+	children: ReactElement<HTMLAttributes<HTMLParagraphElement>, 'p'>;
 	isChecked?: boolean;
 }
 
@@ -32,7 +32,7 @@ const CheckListStatic = ({
 							item.isChecked ? styles['check-list__item__input--checked'] : ''
 						}`}
 					/>
-					<div>{item.children}</div>
+					{item.children}
 				</div>
 			))}
 		</div>

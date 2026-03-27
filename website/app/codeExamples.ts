@@ -64,8 +64,12 @@ const blogHeader = `<BlogHeader
   desc={['Posted on January 1, 2025']}
 />`;
 
-const blogSection = `<BlogSection title="Section Title" hasMarginBottom>
+const blogSection = `<BlogSection title="Section Title">
   <p>Your section content...</p>
+</BlogSection>
+
+<BlogSection title={<p><strong>Rich title</strong></p>}>
+  <p>You can also pass a p tag as the title.</p>
 </BlogSection>`;
 
 const codeBlock = `<CodeBlock
