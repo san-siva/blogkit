@@ -555,16 +555,6 @@ const BlogkitDocumentation: NextPage = () => {
 					<CheckList
 						items={[
 							{
-								id: '1',
-								children: (
-									<p>
-										A read-only checklist for displaying items with an initial
-										checked state. Only <code>{'<p>'}</code> elements are
-										accepted as item content.
-									</p>
-								),
-							},
-							{
 								id: '2',
 								children: (
 									<p>
