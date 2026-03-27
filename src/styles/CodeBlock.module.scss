@@ -83,7 +83,6 @@ $code-block-background-color: #282a36;
 		&__title {
 			font-size: stylekit.$font-size--small;
 			color: stylekit.$color--code;
-			text-transform: capitalize;
 		}
 
 		&__copy {
@@ -119,6 +118,6 @@ $code-block-background-color: #282a36;
 
 .code-block--static code {
 	color: stylekit.$color--base !important;
-  font-family: stylekit.$font-family--code !important;
-  font-size: stylekit.$font-size--small !important;
+	font-family: stylekit.$font-family--code !important;
+	font-size: stylekit.$font-size--small !important;
 }
