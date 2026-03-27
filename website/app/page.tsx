@@ -335,12 +335,12 @@ const BlogkitDocumentation: NextPage = () => {
 						hasMarginDown
 						headers={['Prop', 'Type', 'Description']}
 						rows={[
+							['title', 'string | ReactElement<p>', 'Section title (optional)'],
 							[
-								'title',
-								'string | ReactElement<p>',
-								'Section title (optional)',
+								'category',
+								'string',
+								'Category prefix for the title (optional)',
 							],
-							['category', 'string', 'Category prefix for the title (optional)'],
 							['children', 'ReactNode', 'Section content'],
 						]}
 					/>
@@ -554,7 +554,16 @@ const BlogkitDocumentation: NextPage = () => {
 
 					<CheckList
 						items={[
-							{ id: '1', children: <p>Install dependencies</p> },
+							{
+								id: '1',
+								children: (
+									<p>
+										A read-only checklist for displaying items with an initial
+										checked state. Only <code>{'<p>'}</code> elements are
+										accepted as item content.
+									</p>
+								),
+							},
 							{
 								id: '2',
 								children: (
@@ -597,7 +606,11 @@ const BlogkitDocumentation: NextPage = () => {
 						headers={['CheckListItem', 'Type', 'Description']}
 						rows={[
 							['id', 'string', 'Unique identifier for the item'],
-							['children', 'ReactElement<p>', 'Item label — only <p> tags accepted'],
+							[
+								'children',
+								'ReactElement<p>',
+								'Item label — only <p> tags accepted',
+							],
 							[
 								'isChecked',
 								'boolean',

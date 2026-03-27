@@ -1,9 +1,6 @@
-'use client';
-
-import { lazy, Suspense } from 'react';
-import CheckListStatic, { type CheckListItem } from '../staticComponents/CheckListStatic';
-
-const CheckListDynamic = lazy(() => import('../dynamicComponents/CheckListDynamic'));
+import CheckListStatic, {
+	type CheckListItem,
+} from '../staticComponents/CheckListStatic';
 
 interface CheckListProperties {
 	items: CheckListItem[];
@@ -17,13 +14,11 @@ const CheckList = ({
 	hasMarginDown = false,
 }: CheckListProperties) => {
 	return (
-		<Suspense
-			fallback={
-				<CheckListStatic items={items} hasMarginUp={hasMarginUp} hasMarginDown={hasMarginDown} />
-			}
-		>
-			<CheckListDynamic items={items} hasMarginUp={hasMarginUp} hasMarginDown={hasMarginDown} />
-		</Suspense>
+		<CheckListStatic
+			items={items}
+			hasMarginUp={hasMarginUp}
+			hasMarginDown={hasMarginDown}
+		/>
 	);
 };
 

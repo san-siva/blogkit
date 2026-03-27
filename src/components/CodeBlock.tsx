@@ -1,11 +1,4 @@
-'use client';
-
-import { lazy, Suspense } from 'react';
 import CodeBlockStatic from '../staticComponents/CodeBlockStatic';
-
-const CodeBlockDynamic = lazy(
-	() => import('../dynamicComponents/CodeBlockDynamic')
-);
 
 interface CodeBlockProperties {
 	hasMarginUp?: boolean;
@@ -21,23 +14,12 @@ const CodeBlock = ({
 	hasMarginDown = false,
 }: CodeBlockProperties) => {
 	return (
-		<Suspense
-			fallback={
-				<CodeBlockStatic
-					language={language}
-					code={code}
-					hasMarginUp={hasMarginUp}
-					hasMarginDown={hasMarginDown}
-				/>
-			}
-		>
-			<CodeBlockDynamic
-				language={language}
-				code={code}
-				hasMarginUp={hasMarginUp}
-				hasMarginDown={hasMarginDown}
-			/>
-		</Suspense>
+		<CodeBlockStatic
+			language={language}
+			code={code}
+			hasMarginUp={hasMarginUp}
+			hasMarginDown={hasMarginDown}
+		/>
 	);
 };
 
