@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import styles from '../styles/BlogSection.module.scss';
-import { generateIdForBlogTitle } from '../utils';
+import { extractTextFromReactNode, generateIdForBlogTitle } from '../utils';
 
 interface BlogSectionStaticProperties {
 	title?: string | ReactElement<HTMLAttributes<HTMLParagraphElement>, 'p'>;
@@ -13,7 +13,7 @@ const BlogSectionStatic = ({
 	category = '',
 	children = null,
 }: BlogSectionStaticProperties) => {
-	const titleString = typeof title === 'string' ? title : '';
+	const titleString = typeof title === 'string' ? title : extractTextFromReactNode(title);
 	const titleWithCategory = category ? `${category} - ${titleString}` : titleString;
 	const id = generateIdForBlogTitle(titleWithCategory);
 

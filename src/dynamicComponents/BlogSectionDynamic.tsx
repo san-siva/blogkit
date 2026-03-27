@@ -15,7 +15,7 @@ import type { HTMLAttributes, ReactElement, ReactNode, RefAttributes } from 'rea
 import styles from '../styles/BlogSection.module.scss';
 
 import type { ForwardedReference } from './BlogDynamic';
-import { generateIdForBlogTitle, generateSectionHref } from '../utils';
+import { extractTextFromReactNode, generateIdForBlogTitle, generateSectionHref } from '../utils';
 
 interface BlogProperties {
 	title?: string | ReactElement<HTMLAttributes<HTMLParagraphElement>, 'p'>;
@@ -28,7 +28,7 @@ const BlogSection = forwardRef<ForwardedReference, BlogProperties>(
 		{ title = '', category = '', children = null }: BlogProperties,
 		forwardedReference
 	) => {
-		const titleString = typeof title === 'string' ? title : '';
+		const titleString = typeof title === 'string' ? title : extractTextFromReactNode(title);
 		const titleWithCategory = category ? `${category} - ${titleString}` : titleString;
 		const id = generateIdForBlogTitle(titleWithCategory);
 
