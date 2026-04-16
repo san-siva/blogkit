@@ -41,7 +41,7 @@
 	"author": "Santhosh Siva",
 	"license": "MIT",
 	"dependencies": {
-		"@san-siva/stylekit": "^1.0.12",
+		"@san-siva/stylekit": "^1.0.13",
 		"schema-dts": "^1.1.5"
 	},
 	"peerDependencies": {
