@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import mermaid from 'mermaid';
 
@@ -35,21 +36,18 @@ const MIN_SCALE = 0.5;
 const MAX_SCALE = 4;
 const ZOOM_STEP = 0.15;
 
-const Mermaid = ({
-	code = '',
-	id = '',
-	hasMarginUp = false,
-	hasMarginDown = false,
-}: MermaidProperties) => {
-	const [enabled, setEnabled] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-	const [transform, setTransform] = useState({ scale: 1, x: 0, y: 0 });
-	const [isDragging, setIsDragging] = useState(false);
+interface Transform {
+	scale: number;
+	x: number;
+	y: number;
+}
 
-	const mermaidReference = useRef<HTMLDivElement>(null);
-	const viewportRef = useRef<HTMLDivElement>(null);
-	const renderCount = useRef(0);
-	const transformRef = useRef({ scale: 1, x: 0, y: 0 });
+const INITIAL_TRANSFORM: Transform = { scale: 1, x: 0, y: 0 };
+
+const usePanZoom = () => {
+	const [transform, setTransform] = useState<Transform>(INITIAL_TRANSFORM);
+	const [isDragging, setIsDragging] = useState(false);
+	const transformRef = useRef<Transform>(INITIAL_TRANSFORM);
 	const isDraggingRef = useRef(false);
 	const dragStart = useRef({
 		mouseX: 0,
@@ -58,47 +56,13 @@ const Mermaid = ({
 		transformY: 0,
 	});
 
-	const applyTransform = useCallback(
-		(
-			updater: (
-				prev: typeof transformRef.current
-			) => typeof transformRef.current
-		) => {
-			const next = updater(transformRef.current);
-			transformRef.current = next;
-			setTransform(next);
-		},
-		[]
-	);
+	const apply = useCallback((updater: (prev: Transform) => Transform) => {
+		const next = updater(transformRef.current);
+		transformRef.current = next;
+		setTransform(next);
+	}, []);
 
-	const initializeMermaid = useCallback(async () => {
-		if (!mermaidReference.current || !code) return;
-		const renderId = `mermaid-diagram-${id}-${++renderCount.current}`;
-		document.getElementById(renderId)?.remove();
-		try {
-			const { svg, bindFunctions } = await mermaid.render(renderId, code);
-			if (!mermaidReference.current || !svg) return;
-			mermaidReference.current.innerHTML = svg;
-			bindFunctions?.(mermaidReference.current);
-			setEnabled(true);
-		} catch (err) {
-			const message =
-				err instanceof Error ? err.message : 'Failed to render diagram';
-			setError(message);
-		}
-	}, [code, id]);
-
-	useEffect(() => {
-		if (!code) return;
-		setError(null);
-		applyTransform(() => ({ scale: 1, x: 0, y: 0 }));
-		const timer = setTimeout(initializeMermaid, 100);
-		return () => clearTimeout(timer);
-	}, [code, initializeMermaid, applyTransform]);
-
-
-
-	const handleMouseDown = useCallback((e: React.MouseEvent) => {
+	const onMouseDown = useCallback((e: React.MouseEvent) => {
 		e.preventDefault();
 		isDraggingRef.current = true;
 		setIsDragging(true);
@@ -110,10 +74,10 @@ const Mermaid = ({
 		};
 	}, []);
 
-	const handleMouseMove = useCallback(
+	const onMouseMove = useCallback(
 		(e: React.MouseEvent) => {
 			if (!isDraggingRef.current) return;
-			applyTransform(prev => ({
+			apply(prev => ({
 				...prev,
 				x:
 					dragStart.current.transformX + (e.clientX - dragStart.current.mouseX),
@@ -121,31 +85,220 @@ const Mermaid = ({
 					dragStart.current.transformY + (e.clientY - dragStart.current.mouseY),
 			}));
 		},
-		[applyTransform]
+		[apply]
 	);
 
-	const handleMouseUp = useCallback(() => {
+	const onMouseUp = useCallback(() => {
 		isDraggingRef.current = false;
 		setIsDragging(false);
 	}, []);
 
 	const zoomIn = useCallback(() => {
-		applyTransform(prev => ({
+		apply(prev => ({
 			...prev,
 			scale: Math.min(prev.scale * (1 + ZOOM_STEP), MAX_SCALE),
 		}));
-	}, [applyTransform]);
+	}, [apply]);
 
 	const zoomOut = useCallback(() => {
-		applyTransform(prev => ({
+		apply(prev => ({
 			...prev,
 			scale: Math.max(prev.scale * (1 - ZOOM_STEP), MIN_SCALE),
 		}));
-	}, [applyTransform]);
+	}, [apply]);
 
-	const resetView = useCallback(() => {
-		applyTransform(() => ({ scale: 1, x: 0, y: 0 }));
-	}, [applyTransform]);
+	const reset = useCallback(() => {
+		apply(() => INITIAL_TRANSFORM);
+	}, [apply]);
+
+	return {
+		transform,
+		isDragging,
+		onMouseDown,
+		onMouseMove,
+		onMouseUp,
+		zoomIn,
+		zoomOut,
+		reset,
+	};
+};
+
+type PanZoom = ReturnType<typeof usePanZoom>;
+
+interface MermaidViewportProps {
+	className: string;
+	draggingClassName: string;
+	pan: PanZoom;
+	contentRef: React.RefObject<HTMLDivElement>;
+	contentId?: string;
+	hidden?: boolean;
+}
+
+const MermaidViewport = ({
+	className,
+	draggingClassName,
+	pan,
+	contentRef,
+	contentId,
+	hidden,
+}: MermaidViewportProps) => (
+	<div
+		className={`${className} ${pan.isDragging ? draggingClassName : ''}`}
+		style={hidden ? { display: 'none' } : undefined}
+		onMouseDown={pan.onMouseDown}
+		onMouseMove={pan.onMouseMove}
+		onMouseUp={pan.onMouseUp}
+		onMouseLeave={pan.onMouseUp}
+	>
+		<div
+			style={{
+				transform: `translate(${pan.transform.x}px, ${pan.transform.y}px) scale(${pan.transform.scale})`,
+				transformOrigin: '0 0',
+				transition: pan.isDragging ? 'none' : 'transform 0.1s ease',
+			}}
+		>
+			<div ref={contentRef} id={contentId} />
+		</div>
+	</div>
+);
+
+interface MermaidControlsProps {
+	className: string;
+	isExpanded: boolean;
+	onZoomIn: () => void;
+	onZoomOut: () => void;
+	onReset: () => void;
+	onToggleExpand: () => void;
+}
+
+const MermaidControls = ({
+	className,
+	isExpanded,
+	onZoomIn,
+	onZoomOut,
+	onReset,
+	onToggleExpand,
+}: MermaidControlsProps) => {
+	const toggleLabel = isExpanded ? 'Close fullscreen' : 'Expand to fullscreen';
+	const toggleModifier = isExpanded
+		? styles['mermaid__controls__btn--collapse']
+		: styles['mermaid__controls__btn--expand'];
+	return (
+		<div className={className}>
+			<button
+				className={`${styles['mermaid__controls__btn']} ${styles['mermaid__controls__btn--zoom-in']}`}
+				onClick={onZoomIn}
+				aria-label="Zoom in"
+				title="Zoom in"
+			/>
+			<button
+				className={`${styles['mermaid__controls__btn']} ${styles['mermaid__controls__btn--zoom-out']}`}
+				onClick={onZoomOut}
+				aria-label="Zoom out"
+				title="Zoom out"
+			/>
+			<button
+				className={`${styles['mermaid__controls__btn']} ${styles['mermaid__controls__btn--reset']}`}
+				onClick={onReset}
+				aria-label="Reset view"
+				title="Reset view"
+			/>
+			<button
+				className={`${styles['mermaid__controls__btn']} ${toggleModifier}`}
+				onClick={onToggleExpand}
+				aria-label={toggleLabel}
+				title={toggleLabel}
+			/>
+		</div>
+	);
+};
+
+const Mermaid = ({
+	code = '',
+	id = '',
+	hasMarginUp = false,
+	hasMarginDown = false,
+}: MermaidProperties) => {
+	const [enabled, setEnabled] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const [isExpanded, setIsExpanded] = useState(false);
+
+	const mermaidReference = useRef<HTMLDivElement>(null);
+	const modalMermaidReference = useRef<HTMLDivElement>(null);
+	const renderCount = useRef(0);
+	const activeRenderIds = useRef<Set<string>>(new Set());
+
+	const inline = usePanZoom();
+	const modal = usePanZoom();
+
+	const renderInto = useCallback(
+		async (target: HTMLDivElement | null, prefix: string) => {
+			if (!target || !code) return false;
+			const renderId = `${prefix}-${id}-${++renderCount.current}`;
+			activeRenderIds.current.add(renderId);
+			try {
+				const { svg, bindFunctions } = await mermaid.render(renderId, code);
+				if (!svg) return false;
+				target.innerHTML = svg;
+				bindFunctions?.(target);
+				return true;
+			} catch (err) {
+				const message =
+					err instanceof Error ? err.message : 'Failed to render diagram';
+				setError(message);
+				return false;
+			} finally {
+				document.getElementById(renderId)?.remove();
+				activeRenderIds.current.delete(renderId);
+			}
+		},
+		[code, id]
+	);
+
+	useEffect(() => {
+		const ids = activeRenderIds.current;
+		return () => {
+			ids.forEach(renderId => {
+				document.getElementById(renderId)?.remove();
+			});
+			ids.clear();
+		};
+	}, []);
+
+	useEffect(() => {
+		if (!code) return;
+		setError(null);
+		inline.reset();
+		const timer = setTimeout(() => {
+			renderInto(mermaidReference.current, 'mermaid-diagram').then(ok => {
+				if (ok) setEnabled(true);
+			});
+		}, 100);
+		return () => clearTimeout(timer);
+	}, [code, renderInto, inline.reset]);
+
+	useEffect(() => {
+		if (!isExpanded) return;
+		modal.reset();
+		const timer = setTimeout(() => {
+			renderInto(modalMermaidReference.current, 'mermaid-modal');
+		}, 0);
+		return () => clearTimeout(timer);
+	}, [isExpanded, renderInto, modal.reset]);
+
+	useEffect(() => {
+		if (!isExpanded) return;
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') setIsExpanded(false);
+		};
+		const previousOverflow = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		window.addEventListener('keydown', onKey);
+		return () => {
+			document.body.style.overflow = previousOverflow;
+			window.removeEventListener('keydown', onKey);
+		};
+	}, [isExpanded]);
 
 	return (
 		<div
@@ -164,45 +317,55 @@ const Mermaid = ({
 					<p>Rendering diagram...</p>
 				</CalloutStatic>
 			) : (
-				<div className={styles['mermaid__controls']}>
-					<button className={styles['mermaid__controls__btn']} onClick={zoomIn}>
-						+
-					</button>
-					<button
-						className={styles['mermaid__controls__btn']}
-						onClick={zoomOut}
-					>
-						−
-					</button>
-					<button
-						className={styles['mermaid__controls__btn']}
-						onClick={resetView}
-					>
-						Reset
-					</button>
-				</div>
+				<MermaidControls
+					className={styles['mermaid__controls']}
+					isExpanded={false}
+					onZoomIn={inline.zoomIn}
+					onZoomOut={inline.zoomOut}
+					onReset={inline.reset}
+					onToggleExpand={() => setIsExpanded(true)}
+				/>
 			)}
-			<div
-				ref={viewportRef}
-				className={`${styles['mermaid__viewport']} ${
-					isDragging ? styles['mermaid__viewport--dragging'] : ''
-				}`}
-				style={enabled ? undefined : { display: 'none' }}
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
-				onMouseUp={handleMouseUp}
-				onMouseLeave={handleMouseUp}
-			>
-				<div
-					style={{
-						transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
-						transformOrigin: '0 0',
-						transition: isDragging ? 'none' : 'transform 0.1s ease',
-					}}
-				>
-					<div ref={mermaidReference} id={id} />
-				</div>
-			</div>
+			<MermaidViewport
+				className={styles['mermaid__viewport']}
+				draggingClassName={styles['mermaid__viewport--dragging']}
+				pan={inline}
+				contentRef={mermaidReference}
+				contentId={id}
+				hidden={!enabled}
+			/>
+
+			{isExpanded &&
+				typeof document !== 'undefined' &&
+				createPortal(
+					<div
+						className={styles['mermaid__modal']}
+						onClick={() => setIsExpanded(false)}
+						role="dialog"
+						aria-modal="true"
+					>
+						<div
+							className={styles['mermaid__modal__content']}
+							onClick={e => e.stopPropagation()}
+						>
+							<MermaidControls
+								className={styles['mermaid__modal__controls']}
+								isExpanded={true}
+								onZoomIn={modal.zoomIn}
+								onZoomOut={modal.zoomOut}
+								onReset={modal.reset}
+								onToggleExpand={() => setIsExpanded(false)}
+							/>
+							<MermaidViewport
+								className={styles['mermaid__modal__viewport']}
+								draggingClassName={styles['mermaid__modal__viewport--dragging']}
+								pan={modal}
+								contentRef={modalMermaidReference}
+							/>
+						</div>
+					</div>,
+					document.body
+				)}
 		</div>
 	);
 };

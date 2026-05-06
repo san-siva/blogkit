@@ -16,18 +16,44 @@
 		opacity: 0;
 
 		&__btn {
+			align-items: center;
 			background: none;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: styles.rem(14) styles.rem(14);
 			border: 1px solid styles.$color--grey-medium;
+			border-radius: styles.rem(2);
 			color: styles.$color--dark;
 			cursor: pointer;
-			font-size: styles.$font-size--very-small;
-			font-weight: styles.$font-weight--500;
+			display: inline-flex;
+			height: styles.rem(28);
+			justify-content: center;
 			line-height: 1;
-			padding: styles.rem(4) styles.rem(8);
-			border-radius: styles.rem(2);
+			padding: 0;
+			width: styles.rem(28);
 
 			&:hover {
 				background-color: rgba(0, 0, 0, 0.05);
+			}
+
+			&--zoom-in {
+				background-image: url('../assets/zoom-in.svg');
+			}
+
+			&--zoom-out {
+				background-image: url('../assets/zoom-out.svg');
+			}
+
+			&--reset {
+				background-image: url('../assets/reset.svg');
+			}
+
+			&--expand {
+				background-image: url('../assets/expand.svg');
+			}
+
+			&--collapse {
+				background-image: url('../assets/collapse.svg');
 			}
 		}
 	}
@@ -40,6 +66,48 @@
 
 		&--dragging {
 			cursor: grabbing;
+		}
+	}
+
+	&__modal {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		background-color: rgba(0, 0, 0, 0.7);
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
+
+		&__content {
+			background-color: styles.$color--base;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+		}
+
+		&__controls {
+			display: flex;
+			flex-direction: row;
+			gap: styles.rem(8);
+			justify-content: flex-end;
+			padding: styles.rem(12) styles.rem(16);
+			border-bottom: 1px solid styles.$color--grey-light;
+			flex-shrink: 0;
+		}
+
+		&__viewport {
+			flex: 1;
+			overflow: hidden;
+			cursor: grab;
+			user-select: none;
+			-webkit-user-select: none;
+			padding: styles.rem(16);
+
+			&--dragging {
+				cursor: grabbing;
+			}
 		}
 	}
 
