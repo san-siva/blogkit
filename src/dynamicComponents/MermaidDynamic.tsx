@@ -226,7 +226,6 @@ const Mermaid = ({
 	const mermaidReference = useRef<HTMLDivElement>(null);
 	const modalMermaidReference = useRef<HTMLDivElement>(null);
 	const renderCount = useRef(0);
-	const activeRenderIds = useRef<Set<string>>(new Set());
 
 	const inline = usePanZoom();
 	const modal = usePanZoom();
@@ -235,7 +234,6 @@ const Mermaid = ({
 		async (target: HTMLDivElement | null, prefix: string) => {
 			if (!target || !code) return false;
 			const renderId = `${prefix}-${id}-${++renderCount.current}`;
-			activeRenderIds.current.add(renderId);
 			try {
 				const { svg, bindFunctions } = await mermaid.render(renderId, code);
 				if (!svg) return false;
@@ -247,23 +245,10 @@ const Mermaid = ({
 					err instanceof Error ? err.message : 'Failed to render diagram';
 				setError(message);
 				return false;
-			} finally {
-				document.getElementById(renderId)?.remove();
-				activeRenderIds.current.delete(renderId);
 			}
 		},
 		[code, id]
 	);
-
-	useEffect(() => {
-		const ids = activeRenderIds.current;
-		return () => {
-			ids.forEach(renderId => {
-				document.getElementById(renderId)?.remove();
-			});
-			ids.clear();
-		};
-	}, []);
 
 	useEffect(() => {
 		if (!code) return;
