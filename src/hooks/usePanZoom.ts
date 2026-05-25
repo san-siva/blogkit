@@ -86,6 +86,26 @@ export const usePanZoom = ({
 		}));
 	}, [apply, zoomStep, minScale]);
 
+	const zoomAtPoint = useCallback(
+		(deltaY: number, pointX: number, pointY: number) => {
+			apply(prev => {
+				const factor = deltaY < 0 ? 1 + zoomStep : 1 - zoomStep;
+				const newScale = Math.max(
+					minScale,
+					Math.min(maxScale, prev.scale * factor)
+				);
+				if (newScale === prev.scale) return prev;
+				const ratio = newScale / prev.scale;
+				return {
+					scale: newScale,
+					x: pointX - (pointX - prev.x) * ratio,
+					y: pointY - (pointY - prev.y) * ratio,
+				};
+			});
+		},
+		[apply, zoomStep, minScale, maxScale]
+	);
+
 	const reset = useCallback(() => {
 		apply(() => initialTransform);
 	}, [apply, initialTransform]);
@@ -98,6 +118,7 @@ export const usePanZoom = ({
 		onMouseUp,
 		zoomIn,
 		zoomOut,
+		zoomAtPoint,
 		reset,
 	};
 };
