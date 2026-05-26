@@ -1,6 +1,6 @@
 {
 	"name": "@san-siva/blogkit",
-	"version": "1.1.36",
+	"version": "1.1.37",
 	"description": "A reusable blog component library for React/Next.js applications with code highlighting, diagrams, and rich content features",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.js",
