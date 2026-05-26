@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -17,6 +18,13 @@ interface Properties {
 	code?: string;
 }
 
+const lineNumberStyle = {
+	color: '#95a1b1',
+	fontSize: '0.9em',
+	paddingRight: '1em',
+	marginRight: '8px',
+};
+
 const CodeBlock = ({
 	language = 'javascript',
 	code = '',
@@ -24,6 +32,7 @@ const CodeBlock = ({
 	hasMarginDown = false,
 }: Properties) => {
 	const [isCopyMode, setCopyMode] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(false);
 
 	const copyToClipboard = async () => {
 		try {
@@ -37,12 +46,56 @@ const CodeBlock = ({
 		}
 	};
 
-	const lineNumberStyle = {
-		color: '#95a1b1',
-		fontSize: '0.9em',
-		paddingRight: '1em',
-		marginRight: '8px',
-	};
+	useEffect(() => {
+		if (!isExpanded) return;
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') setIsExpanded(false);
+		};
+		const previousOverflow = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		window.addEventListener('keydown', onKey);
+		return () => {
+			document.body.style.overflow = previousOverflow;
+			window.removeEventListener('keydown', onKey);
+		};
+	}, [isExpanded]);
+
+	const renderHeader = (expanded: boolean) => (
+		<div className={styles['code-block__header']}>
+			<div className={styles['code-block__header__title']}>{language}</div>
+			<div className={styles['code-block__header__actions']}>
+				<div
+					className={`${styles['code-block__header__expand']} ${
+						expanded ? styles['code-block__header__expand--collapse'] : ''
+					}`}
+					onClick={() => setIsExpanded(!expanded)}
+					role="button"
+					aria-label={expanded ? 'Close fullscreen' : 'Expand to fullscreen'}
+					title={expanded ? 'Close fullscreen' : 'Expand to fullscreen'}
+				/>
+				<div
+					className={`${styles['code-block__header__copy']} ${
+						isCopyMode ? styles['code-block__header__copy--active'] : ''
+					}`}
+					onClick={copyToClipboard}
+					role="button"
+					aria-label="Copy code"
+					title="Copy code"
+				/>
+			</div>
+		</div>
+	);
+
+	const renderHighlighter = () => (
+		<SH
+			language={language}
+			style={dracula}
+			showLineNumbers
+			lineNumberStyle={lineNumberStyle}
+		>
+			{code}
+		</SH>
+	);
 
 	return (
 		<div
@@ -50,25 +103,30 @@ const CodeBlock = ({
 				hasMarginDown ? styles['margin-bottom--2'] : ''
 			}`}
 		>
-			<div className={styles['code-block__header']}>
-				<div className={styles['code-block__header__title']}>{language}</div>
-				<div
-					className={`${styles['code-block__header__copy']} ${
-						isCopyMode ? styles['code-block__header__copy--active'] : ''
-					}`}
-					onClick={copyToClipboard}
-				/>
-			</div>
-			<div className={styles['code-block__wrapper']}>
-				<SH
-					language={language}
-					style={dracula}
-					showLineNumbers
-					lineNumberStyle={lineNumberStyle}
-				>
-					{code}
-				</SH>
-			</div>
+			{renderHeader(false)}
+			<div className={styles['code-block__wrapper']}>{renderHighlighter()}</div>
+
+			{isExpanded &&
+				typeof document !== 'undefined' &&
+				createPortal(
+					<div
+						className={styles['code-block__modal']}
+						onClick={() => setIsExpanded(false)}
+						role="dialog"
+						aria-modal="true"
+					>
+						<div
+							className={styles['code-block__modal__content']}
+							onClick={e => e.stopPropagation()}
+						>
+							{renderHeader(true)}
+							<div className={styles['code-block__modal__wrapper']}>
+								{renderHighlighter()}
+							</div>
+						</div>
+					</div>,
+					document.body
+				)}
 		</div>
 	);
 };
