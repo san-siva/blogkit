@@ -151,6 +151,13 @@ $code-block-background-color: #282a36;
 		align-items: stretch;
 		justify-content: stretch;
 
+		code {
+			font-size: unset;
+			font-weight: unset;
+			background-color: unset;
+			padding: unset;
+		}
+
 		&__content {
 			background-color: $code-block-background-color;
 			width: 100%;
