@@ -69,6 +69,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+		// Allow the grid track to shrink below its content's intrinsic width
+		// so wide children (e.g. CodeBlock) scroll internally instead of
+		// overflowing the callout.
+		min-width: 0;
+
+		> * {
+			min-width: 0;
+		}
 	}
 }
 

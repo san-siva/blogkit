@@ -17,6 +17,9 @@ const Table = ({
 	fontSize,
 }: TableProperties) => {
 	const columnCount = headers.length;
+	const hasHeaders = headers.some(
+		header => !(typeof header === 'string' && header.trim() === '') && header != null,
+	);
 
 	return (
 		<div
@@ -27,17 +30,19 @@ const Table = ({
 				gridTemplateColumns: `repeat(${columnCount}, auto)`,
 			}}
 		>
-			<div className={`${styles['table__header']}`}>
-				{headers.map((header, index) => (
-					<div
-						key={typeof header === 'string' ? header : index}
-						className={`${styles['table__header__cell']}`}
-						style={fontSize ? { fontSize } : undefined}
-					>
-						{header}
-					</div>
-				))}
-			</div>
+			{hasHeaders && (
+				<div className={`${styles['table__header']}`}>
+					{headers.map((header, index) => (
+						<div
+							key={typeof header === 'string' ? header : index}
+							className={`${styles['table__header__cell']}`}
+							style={fontSize ? { fontSize } : undefined}
+						>
+							{header}
+						</div>
+					))}
+				</div>
+			)}
 			{rows.map((row, index) => (
 				<div key={index} className={`${styles['table__row']}`}>
 					{row.map((cell, cellIndex) => (
