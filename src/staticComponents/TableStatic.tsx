@@ -9,6 +9,22 @@ interface TableProperties {
 	fontSize?: string;
 }
 
+const isEmptyNode = (node: ReactNode): boolean => {
+	if (node == null || typeof node === 'boolean') {
+		return true;
+	}
+	if (typeof node === 'string') {
+		return node.trim() === '';
+	}
+	if (typeof node === 'number') {
+		return false;
+	}
+	if (Array.isArray(node)) {
+		return node.every(isEmptyNode);
+	}
+	return false;
+};
+
 const Table = ({
 	rows = [],
 	headers = [],
@@ -17,9 +33,7 @@ const Table = ({
 	fontSize,
 }: TableProperties) => {
 	const columnCount = headers.length;
-	const hasHeaders = headers.some(
-		header => !(typeof header === 'string' && header.trim() === '') && header != null,
-	);
+	const hasHeaders = headers.some(header => !isEmptyNode(header));
 
 	return (
 		<div
