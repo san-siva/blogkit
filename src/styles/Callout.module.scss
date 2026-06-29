@@ -2,7 +2,7 @@
 
 .callout {
   display: grid;
-  grid-template-columns: styles.rem(40) 1fr;
+  grid-template-columns: styles.rem(40) minmax(0, 1fr);
   grid-gap: 20px;
 
 	background-color: styles.$color--base-background;
@@ -74,9 +74,12 @@
 		// so wide children (e.g. CodeBlock) scroll internally instead of
 		// overflowing the callout.
 		min-width: 0;
+		max-width: 100%;
+		overflow-x: auto;
 
 		> * {
 			min-width: 0;
+			max-width: 100%;
 		}
 	}
 }
