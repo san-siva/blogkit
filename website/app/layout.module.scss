@@ -1,0 +1,9 @@
+@use '@san-siva/stylekit/styles/utils.module.scss' as utils;
+@use '@san-siva/stylekit/styles/index.module.scss' as styles with (
+	$max-width--page: utils.rem(2042)
+);
+
+.page {
+	@extend .page !optional;
+}
+

@@ -5,11 +5,13 @@ import styles from '../styles/Blog.module.scss';
 interface BlogStaticProperties {
 	children: ReactNode;
 	jsonLd?: WithContext<Thing>;
+	increasedWidthMode?: boolean;
 }
 
-const BlogStatic = ({ children, jsonLd }: BlogStaticProperties) => {
+const BlogStatic = ({ children, jsonLd, increasedWidthMode = false }: BlogStaticProperties) => {
 	return (
-		<div className={styles.blog}>
+		<div className={`${styles.blog} ${increasedWidthMode ? styles['blog--increased-width'] : ''}`}>
+
 			{jsonLd && (
 				<script
 					type="application/ld+json"

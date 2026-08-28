@@ -1,10 +1,18 @@
-@use '@san-siva/stylekit/styles/index.module.scss' as styles;
+@use '@san-siva/stylekit/styles/utils.module.scss' as utils;
+@use '@san-siva/stylekit/styles/index.module.scss' as styles with (
+	$max-width--page-contents: utils.rem(1200)
+);
+
+$sidebar-width: 22rem;
+$content-width: styles.rem(780);
+$total-width: calc(#{$content-width} + #{styles.space(8)} + #{$sidebar-width});
 
 .blog {
 	width: 100%;
-	max-width: 100%;
+	max-width: $total-width;
+	margin: 0 auto;
 	display: grid;
-	grid-template-columns: #{styles.rem(780)} minmax(#{styles.rem(320)}, 1fr);
+	grid-template-columns: $content-width $sidebar-width;
 	grid-gap: styles.space(8);
 
 	&__content {
@@ -23,11 +31,21 @@
 		padding-right: 0;
 		border-radius: styles.$border-radius--1;
 	}
+
+	&--increased-width {
+		max-width: 100%;
+		grid-template-columns: minmax(0, 1fr) $sidebar-width;
+
+		.blog__content {
+			max-width: none;
+			min-width: 0;
+		}
+	}
 }
 
 $breakpoint: calc(
 	#{styles.rem(120)} + #{styles.rem(780)} + #{styles.space(8)} +
-		#{styles.rem(320)} + #{styles.rem(120)}
+		#{$sidebar-width} + #{styles.rem(120)}
 );
 
 @media (max-width: $breakpoint) {

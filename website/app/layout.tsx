@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { JetBrains_Mono, Montserrat, Rubik } from 'next/font/google';
 
 import '@san-siva/stylekit/styles/globals.scss';
-import styles from '@san-siva/stylekit/styles/index.module.scss';
+
+import styles from './layout.module.scss';
 
 import '@san-siva/blogkit/styles.css';
 

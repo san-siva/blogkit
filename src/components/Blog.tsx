@@ -11,12 +11,13 @@ interface BlogProperties {
 	children: ReactNode;
 	title?: string;
 	jsonLd?: WithContext<Thing>;
+	increasedWidthMode?: boolean;
 }
 
-const Blog = ({ children, title = 'In this article', jsonLd }: BlogProperties) => {
+const Blog = ({ children, title = 'In this article', jsonLd, increasedWidthMode = false }: BlogProperties) => {
 	return (
-		<Suspense fallback={<BlogStatic jsonLd={jsonLd}>{children}</BlogStatic>}>
-			<BlogDynamic title={title} jsonLd={jsonLd}>{children}</BlogDynamic>
+		<Suspense fallback={<BlogStatic jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>{children}</BlogStatic>}>
+			<BlogDynamic title={title} jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>{children}</BlogDynamic>
 		</Suspense>
 	);
 };

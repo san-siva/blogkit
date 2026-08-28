@@ -22,6 +22,7 @@ interface BlogProperties {
 	children: ReactNode;
 	title?: string;
 	jsonLd?: WithContext<Thing>;
+	increasedWidthMode?: boolean;
 }
 
 export interface ForwardedReference {
@@ -53,6 +54,7 @@ const Blog = ({
 	children,
 	title = 'In this article',
 	jsonLd,
+	increasedWidthMode = false,
 }: BlogProperties) => {
 	const [visibleTitle, setVisibleTitle] = useState<string | null>(null);
 	const [showTOC, setShowTOC] = useState(false);
@@ -75,7 +77,7 @@ const Blog = ({
 	});
 
 	return (
-		<div className={styles.blog}>
+		<div className={`${styles.blog} ${increasedWidthMode ? styles['blog--increased-width'] : ''}`}>
 			{jsonLd && (
 				<script
 					type="application/ld+json"
