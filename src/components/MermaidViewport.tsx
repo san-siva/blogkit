@@ -6,7 +6,7 @@ interface MermaidViewportProps {
 	className: string;
 	draggingClassName: string;
 	pan: PanZoom;
-	contentRef: React.RefObject<HTMLDivElement>;
+	contentRef: React.RefObject<HTMLDivElement | null>;
 	contentId?: string;
 	hidden?: boolean;
 }

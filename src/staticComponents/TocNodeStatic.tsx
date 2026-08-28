@@ -37,7 +37,7 @@ const TocNode = ({ node, index, visibleTitle, onClick }: TocNodeProperties) => (
 			>
 				{node.children.map((child, i) => (
 					<TocNode
-						key={child.id}
+						key={`${node.id}-${child.id}`}
 						node={child}
 						index={i}
 						visibleTitle={visibleTitle}

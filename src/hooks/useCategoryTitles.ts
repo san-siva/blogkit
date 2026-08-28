@@ -18,7 +18,11 @@ export interface CategoryTitleValue extends SectionReferenceValue {
 
 export type CategoryTitle = Map<string, CategoryTitleValue>;
 
-type SectionReference = Map<string, SectionReferenceValue>;
+interface SectionReferenceEntry extends SectionReferenceValue {
+	baseId: string;
+}
+
+type SectionReference = Map<HTMLElement, SectionReferenceEntry>;
 
 interface Options {
 	visibleTitle: string | null;
@@ -39,8 +43,8 @@ export function useCategoryTitles({
 
 	const sortByDomPosition = useCallback(
 		(
-			[, a]: [string, SectionReferenceValue],
-			[, b]: [string, SectionReferenceValue]
+			[, a]: [HTMLElement, SectionReferenceEntry],
+			[, b]: [HTMLElement, SectionReferenceEntry]
 		) => {
 			const position = a.el.compareDocumentPosition(b.el);
 			if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
@@ -61,7 +65,12 @@ export function useCategoryTitles({
 		sectionsArray.sort(sortByDomPosition);
 
 		let firstSectionId: string | null = null;
-		for (const [id, { title, el, depth }] of sectionsArray) {
+		const baseIdCounts = new Map<string, number>();
+		for (const [, { title, el, depth, baseId }] of sectionsArray) {
+			const occurrence = (baseIdCounts.get(baseId) ?? 0) + 1;
+			baseIdCounts.set(baseId, occurrence);
+			const id = occurrence === 1 ? baseId : `${baseId}-${occurrence}`;
+
 			if (!firstSectionId) {
 				firstSectionId = id;
 			}
@@ -91,20 +100,10 @@ export function useCategoryTitles({
 		}, 200);
 	}, [updateCategoryTitles]);
 
-	const removeStaleRefs = (ref: HTMLDivElement) => {
-		for (const [existingId, { el }] of sectionReferences.current) {
-			if (el !== ref) {
-				continue;
-			}
-			sectionReferences.current.delete(existingId);
-			break;
-		}
-	};
-
 	const handleCategoryTitle = (ref: HTMLDivElement) => {
-		const id = ref.dataset.id;
+		const baseId = ref.dataset.id;
 		const title = ref.dataset.title;
-		if (!id || !title) return;
+		if (!baseId || !title) return;
 
 		let depth = 0;
 		let parent = ref.parentElement;
@@ -113,8 +112,7 @@ export function useCategoryTitles({
 			parent = parent.parentElement;
 		}
 
-		removeStaleRefs(ref);
-		sectionReferences.current.set(id, { el: ref, title, depth });
+		sectionReferences.current.set(ref, { el: ref, title, depth, baseId });
 	};
 
 	const processSection = (element: ForwardedReference) => {
