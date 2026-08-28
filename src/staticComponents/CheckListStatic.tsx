@@ -7,6 +7,7 @@ export interface CheckListItem {
 	id: string;
 	children: ReactElement<HTMLAttributes<HTMLParagraphElement>, 'p'>;
 	isChecked?: boolean;
+	onClick?: () => void;
 }
 
 interface CheckListProperties {
@@ -28,7 +29,7 @@ const CheckListStatic = ({
 		>
 			{items.map((item) => (
 				<div key={item.id} className={styles['check-list__item']} data-id={item.id}>
-					<Checkbox isChecked={item.isChecked} />
+					<Checkbox isChecked={item.isChecked} onClick={item.onClick} />
 					{item.children}
 				</div>
 			))}
