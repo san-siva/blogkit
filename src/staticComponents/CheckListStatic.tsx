@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactElement } from 'react';
 
+import Checkbox from '../components/Checkbox';
 import styles from '../styles/CheckList.module.scss';
 
 export interface CheckListItem {
@@ -27,11 +28,7 @@ const CheckListStatic = ({
 		>
 			{items.map((item) => (
 				<div key={item.id} className={styles['check-list__item']} data-id={item.id}>
-					<div
-						className={`${styles['check-list__item__input']} ${
-							item.isChecked ? styles['check-list__item__input--checked'] : ''
-						}`}
-					/>
+					<Checkbox isChecked={item.isChecked} />
 					{item.children}
 				</div>
 			))}
