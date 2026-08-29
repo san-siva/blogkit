@@ -12,9 +12,24 @@ interface BlogProperties {
 	title?: string;
 	jsonLd?: WithContext<Thing>;
 	increasedWidthMode?: boolean;
+	isTocEnabled?: boolean;
 }
 
-const Blog = ({ children, title = 'In this article', jsonLd, increasedWidthMode = false }: BlogProperties) => {
+const Blog = ({
+	children,
+	title = 'In this article',
+	jsonLd,
+	increasedWidthMode = false,
+	isTocEnabled = true,
+}: BlogProperties) => {
+	if (!isTocEnabled) {
+		return (
+			<BlogStatic jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>
+				{children}
+			</BlogStatic>
+		);
+	}
+
 	return (
 		<Suspense fallback={<BlogStatic jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>{children}</BlogStatic>}>
 			<BlogDynamic title={title} jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>{children}</BlogDynamic>

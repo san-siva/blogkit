@@ -19,6 +19,7 @@
 			margin-right: stylekit.space(1);
 			margin-top: stylekit.rem(6);
 			flex-shrink: 0;
+			cursor: pointer;
 
 			&--checked {
 				height: stylekit.rem(14);
