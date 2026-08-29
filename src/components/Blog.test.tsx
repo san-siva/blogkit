@@ -10,6 +10,7 @@ describe('Blog', () => {
 		const element = Blog({ children: 'hello', isTocEnabled: false } as never);
 		expect(element.type).toBe(BlogStatic);
 		expect(element.props.children).toBe('hello');
+		expect(element.props.isTocEnabled).toBe(false);
 	});
 
 	it('wraps BlogDynamic in a Suspense boundary with a BlogStatic fallback when isTocEnabled is true (default)', () => {

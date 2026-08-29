@@ -6,11 +6,16 @@ interface BlogStaticProperties {
 	children: ReactNode;
 	jsonLd?: WithContext<Thing>;
 	increasedWidthMode?: boolean;
+	isTocEnabled?: boolean;
 }
 
-const BlogStatic = ({ children, jsonLd, increasedWidthMode = false }: BlogStaticProperties) => {
+const BlogStatic = ({ children, jsonLd, increasedWidthMode = false, isTocEnabled = true }: BlogStaticProperties) => {
 	return (
-		<div className={`${styles.blog} ${increasedWidthMode ? styles['blog--increased-width'] : ''}`}>
+		<div
+			className={`${styles.blog} ${increasedWidthMode ? styles['blog--increased-width'] : ''} ${
+				isTocEnabled ? '' : styles['blog--no-toc']
+			}`}
+		>
 
 			{jsonLd && (
 				<script

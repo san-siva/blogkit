@@ -41,6 +41,15 @@ $total-width: calc(#{$content-width} + #{styles.space(8)} + #{$sidebar-width});
 			min-width: 0;
 		}
 	}
+
+	&--no-toc {
+		grid-template-columns: minmax(0, 1fr);
+		max-width: $content-width;
+
+		&.blog--increased-width {
+			max-width: 100%;
+		}
+	}
 }
 
 $breakpoint: calc(

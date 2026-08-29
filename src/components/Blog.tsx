@@ -24,7 +24,7 @@ const Blog = ({
 }: BlogProperties) => {
 	if (!isTocEnabled) {
 		return (
-			<BlogStatic jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>
+			<BlogStatic jsonLd={jsonLd} increasedWidthMode={increasedWidthMode} isTocEnabled={false}>
 				{children}
 			</BlogStatic>
 		);

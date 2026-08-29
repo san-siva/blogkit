@@ -1,6 +1,7 @@
 declare const styles: {
   readonly blog: string;
   readonly 'blog--increased-width': string;
+  readonly 'blog--no-toc': string;
   readonly 'blog__content': string;
   readonly 'blog__sidebar': string;
   readonly 'margin-bottom--3': string;
