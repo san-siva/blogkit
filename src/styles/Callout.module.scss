@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: styles.rem(40) minmax(0, 1fr);
   grid-gap: 20px;
+  width: fit-content;
 
 	background-color: styles.$color--base-background;
 	padding: styles.rem(20) styles.rem(40);
