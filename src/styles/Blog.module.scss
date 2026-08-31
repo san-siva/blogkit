@@ -15,10 +15,6 @@ $total-width: calc(#{$content-width} + #{styles.space(8)} + #{$sidebar-width});
 	grid-template-columns: $content-width $sidebar-width;
 	grid-gap: styles.space(8);
 
-	&__content {
-		max-width: styles.$max-width--page-contents;
-	}
-
 	&__sidebar {
 		position: sticky;
 		height: fit-content;
@@ -43,8 +39,7 @@ $total-width: calc(#{$content-width} + #{styles.space(8)} + #{$sidebar-width});
 	}
 
 	&--no-toc {
-		grid-template-columns: minmax(0, 1fr);
-		max-width: 100%;
+		grid-template-columns: 100%;
 	}
 }
 
