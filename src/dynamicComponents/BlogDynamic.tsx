@@ -74,6 +74,9 @@ const Blog = ({
 		setVisibleTitle,
 	});
 
+	const tocTree = buildTocTree([...categoryTitles]);
+	const hasCollapsibleRoot = tocTree.some(node => node.children.length > 0);
+
 	const sidebarStyle = useSpring({
 		opacity: showTOC ? 1 : 0,
 		transform: showTOC ? 'translateX(0)' : 'translateX(40px)',
@@ -102,7 +105,7 @@ const Blog = ({
 				>
 					{title}
 				</p>
-				{buildTocTree([...categoryTitles]).map((node, i) => (
+				{tocTree.map((node, i) => (
 					<TocNodeStatic
 						key={node.id}
 						node={node}
@@ -111,7 +114,7 @@ const Blog = ({
 						onClick={handleClickCategoryTitle}
 						expandOverrides={expandOverrides}
 						onToggle={toggleExpanded}
-						showToggleColumn
+						showToggleColumn={hasCollapsibleRoot}
 					/>
 				))}
 			</animated.div>
