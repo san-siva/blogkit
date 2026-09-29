@@ -34,15 +34,6 @@ $toggle-gap: styles.space(0);
 		&--active {
 			color: styles.$color--primary;
 		}
-
-		&--sub {
-			font-size: styles.$font-size--very-small;
-		}
-
-		&--sub-sub {
-			font-size: styles.$font-size--very-small;
-			font-weight: styles.$font-weight--400;
-		}
 	}
 
 	&__toggle,

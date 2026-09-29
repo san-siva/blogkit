@@ -5,8 +5,6 @@ declare const styles: {
   readonly 'toc-node__toggle--expanded': string;
   readonly 'toc-node__toggle-spacer': string;
   readonly 'toc-node__title--active': string;
-  readonly 'toc-node__title--sub': string;
-  readonly 'toc-node__title--sub-sub': string;
   readonly 'toc-node__children': string;
 };
 

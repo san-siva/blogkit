@@ -71,8 +71,6 @@ const TocNode = ({
 					className={[
 						styles['toc-node__title'],
 						node.id === visibleTitle ? styles['toc-node__title--active'] : '',
-						node.depth === 1 ? styles['toc-node__title--sub'] : '',
-						node.depth === 2 ? styles['toc-node__title--sub-sub'] : '',
 					].join(' ')}
 					onClick={onClick}
 				>
