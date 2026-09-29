@@ -1,3 +1,5 @@
+'use client';
+
 // Components
 export { default as Blog } from './components/Blog';
 export { default as BlogHeader } from './components/BlogHeader';
