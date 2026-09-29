@@ -1,5 +1,3 @@
-'use client';
-
 import { lazy, Suspense } from 'react';
 import type { ReactNode } from 'react';
 import type { Thing, WithContext } from 'schema-dts';
