@@ -1,9 +1,23 @@
 @use '@san-siva/stylekit/styles/index.module.scss' as styles;
 
+$toggle-size: 1.25rem;
+$toggle-gap: styles.space(0);
+
 .toc-node {
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: $toggle-gap;
+		margin-bottom: styles.space(1);
+
+		&:not(:last-child) {
+			margin-bottom: 0;
+		}
+	}
+
 	&__title {
 		display: block;
-		margin-bottom: styles.space(1);
+		margin: 0;
 		font-size: styles.$font-size--small;
 		font-weight: styles.$font-weight--500;
 		cursor: pointer;
@@ -29,21 +43,49 @@
 			font-size: styles.$font-size--very-small;
 			font-weight: styles.$font-weight--400;
 		}
+	}
 
-		&:not(:last-child) {
-			margin-bottom: 0;
+	&__toggle,
+	&__toggle-spacer {
+		flex-shrink: 0;
+		width: $toggle-size;
+		height: $toggle-size;
+	}
+
+	&__toggle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: none;
+		background: none;
+		color: styles.$color--dark;
+		cursor: pointer;
+
+		svg {
+			opacity: 0.4;
+			transition:
+				transform 0.2s ease-in-out,
+				opacity 0.2s ease-in-out;
+		}
+
+		&--expanded svg {
+			transform: rotate(90deg);
+		}
+
+		&:hover,
+		&:focus-visible {
+			color: styles.$color--primary;
+
+			svg {
+				opacity: 1;
+			}
 		}
 	}
 
+	// Nested rows are indented past the parent's text.
 	&__children {
-		&--sub-sub,
-		&--sub {
-			padding: styles.space(1) styles.space(2);
-			margin: styles.space(1);
-			border-left: 1px solid styles.$color--border;
-		}
-
-		&--sub-sub {
-		}
+		margin-top: styles.space(1);
+		padding-left: calc(#{$toggle-size} + #{$toggle-gap} + #{styles.space(2)});
 	}
 }

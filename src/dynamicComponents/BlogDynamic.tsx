@@ -58,6 +58,10 @@ const Blog = ({
 }: BlogProperties) => {
 	const [visibleTitle, setVisibleTitle] = useState<string | null>(null);
 	const [showTOC, setShowTOC] = useState(false);
+	const [expandOverrides, setExpandOverrides] = useState<Record<string, boolean>>({});
+
+	const toggleExpanded = (id: string, isExpanded: boolean) =>
+		setExpandOverrides(overrides => ({ ...overrides, [id]: !isExpanded }));
 
 	const { categoryTitles, handleSectionReference } = useCategoryTitles({
 		visibleTitle,
@@ -105,6 +109,9 @@ const Blog = ({
 						index={i}
 						visibleTitle={visibleTitle}
 						onClick={handleClickCategoryTitle}
+						expandOverrides={expandOverrides}
+						onToggle={toggleExpanded}
+						showToggleColumn
 					/>
 				))}
 			</animated.div>
