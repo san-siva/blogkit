@@ -21,7 +21,8 @@
 
 		&__btn {
 			align-items: center;
-			background: none;
+			// solid so the diagram underneath doesn't show through
+			background-color: styles.$color--base;
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: styles.rem(14) styles.rem(14);
@@ -37,7 +38,7 @@
 			width: styles.rem(28);
 
 			&:hover {
-				background-color: rgba(0, 0, 0, 0.05);
+				background-color: styles.$color--surface;
 			}
 
 			&--zoom-in {
