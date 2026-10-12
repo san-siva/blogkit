@@ -2,6 +2,7 @@
 
 .mermaid {
 	display: block;
+	position: relative;
 
 	> * {
 		background-color: unset;
@@ -11,9 +12,12 @@
 		display: flex;
 		flex-direction: row;
 		gap: styles.rem(4);
-		justify-content: flex-end;
-		margin-bottom: styles.rem(6);
 		opacity: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: max-content;
+		z-index: 1;
 
 		&__btn {
 			align-items: center;
@@ -64,6 +68,11 @@
 		user-select: none;
 		-webkit-user-select: none;
 
+		// diagramPadding is 0, so node strokes on the edge sit half outside the svg
+		svg {
+			overflow: visible;
+		}
+
 		&--dragging {
 			cursor: grabbing;
 		}
@@ -90,11 +99,12 @@
 		&__controls {
 			display: flex;
 			flex-direction: row;
-			gap: styles.rem(8);
-			justify-content: flex-end;
-			padding: styles.rem(12) styles.rem(16);
-			border-bottom: 1px solid styles.$color--grey-light;
-			flex-shrink: 0;
+			gap: styles.rem(4);
+			position: absolute;
+			right: styles.rem(16);
+			top: styles.rem(12);
+			width: max-content;
+			z-index: 1;
 		}
 
 		&__viewport {
@@ -104,6 +114,10 @@
 			user-select: none;
 			-webkit-user-select: none;
 			padding: styles.rem(16);
+
+			svg {
+				overflow: visible;
+			}
 
 			&--dragging {
 				cursor: grabbing;
