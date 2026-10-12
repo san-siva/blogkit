@@ -25,6 +25,11 @@ const lineNumberStyle = {
 	marginRight: '8px',
 };
 
+// the dracula theme sets an inline margin on <pre>, which css can't override
+const preStyle = {
+	margin: 0,
+};
+
 const CodeBlock = ({
 	language = 'javascript',
 	code = '',
@@ -92,6 +97,7 @@ const CodeBlock = ({
 			style={dracula}
 			showLineNumbers
 			lineNumberStyle={lineNumberStyle}
+			customStyle={preStyle}
 		>
 			{code}
 		</SH>
