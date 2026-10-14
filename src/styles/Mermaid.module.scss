@@ -72,6 +72,7 @@
 		// diagramPadding is 0, so node strokes on the edge sit half outside the svg
 		svg {
 			overflow: visible;
+			padding: 2px;
 		}
 
 		&--dragging {
@@ -118,6 +119,7 @@
 
 			svg {
 				overflow: visible;
+				padding: 2px;
 			}
 
 			&--dragging {
