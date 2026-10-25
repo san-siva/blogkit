@@ -8,10 +8,18 @@
 	grid-auto-columns: styles.rem(28);
 	gap: styles.rem(4);
 	width: max-content;
+	opacity: 0;
+
+	&--visible {
+		opacity: 1;
+	}
+
+	&--inert {
+		pointer-events: none;
+	}
 
 	&__btn {
 		align-items: center;
-		position: relative;
 		// solid so the content underneath doesn't show through
 		background-color: styles.$color--base;
 		background-position: center;
@@ -52,28 +60,13 @@
 			background-image: url('../assets/collapse.svg');
 		}
 
-		// copy icons are light grey for dark code blocks; invert them for this light button
-		&--copy::before,
-		&--copied::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: styles.rem(14) styles.rem(14);
-			filter: invert(1);
-		}
-
-		&--copy::before {
+		&--copy {
 			background-image: url('../assets/copy.svg');
 		}
 
 		&--copied {
+			background-image: url('../assets/done_copying.svg');
 			pointer-events: none;
-
-			&::before {
-				background-image: url('../assets/done_copying.svg');
-			}
 		}
 	}
 }

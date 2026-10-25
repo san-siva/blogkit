@@ -1,4 +1,10 @@
-import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import {
+	type CSSProperties,
+	type RefObject,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 
 // Matches the 8px padding that bridges the gap between an outside toolbar and its host
 const OUTSIDE_GAP = 8;
@@ -20,15 +26,17 @@ const insideStyle: CSSProperties = {
  * The outside position is computed from the host's rect rather than measured
  * off the toolbar, so the check stays valid while the toolbar is inside.
  */
-export const useInsideWhenClipped = (enabled: boolean) => {
-	const toolbarReference = useRef<HTMLDivElement>(null);
+export const useInsideWhenClipped = (
+	toolbarReference: RefObject<HTMLElement | null>,
+	hostReference?: RefObject<HTMLElement | null>
+) => {
+	const enabled = hostReference !== undefined;
 	const [isInside, setIsInside] = useState(false);
 
 	const measure = useCallback(() => {
 		const toolbar = toolbarReference.current;
-		const host = toolbar?.parentElement;
-		// Zero width means the toolbar isn't displayed (e.g. on touch devices)
-		if (!toolbar || !host || toolbar.offsetWidth === 0) return;
+		const host = hostReference?.current;
+		if (!toolbar || !host) return;
 
 		const width = toolbar.offsetWidth + (isInside ? OUTSIDE_GAP : 0);
 		const outsideLeft = host.getBoundingClientRect().left - width;
@@ -41,12 +49,12 @@ export const useInsideWhenClipped = (enabled: boolean) => {
 		}
 
 		setIsInside(outsideLeft < clipLeft - 0.5);
-	}, [isInside]);
+	}, [isInside, toolbarReference, hostReference]);
 
 	useEffect(() => {
 		if (!enabled) return;
 		measure();
-		const host = toolbarReference.current?.parentElement;
+		const host = hostReference?.current;
 		const observer = host ? new ResizeObserver(measure) : undefined;
 		if (host) observer?.observe(host);
 		window.addEventListener('resize', measure);
@@ -56,8 +64,5 @@ export const useInsideWhenClipped = (enabled: boolean) => {
 		};
 	}, [enabled, measure]);
 
-	return {
-		toolbarReference,
-		style: enabled && isInside ? insideStyle : undefined,
-	};
+	return enabled && isInside ? insideStyle : undefined;
 };

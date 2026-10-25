@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -39,6 +39,7 @@ const CodeBlock = ({
 	hasMarginUp = false,
 	hasMarginDown = false,
 }: Properties) => {
+	const hostReference = useRef<HTMLDivElement>(null);
 	const [isExpanded, setIsExpanded] = useState(false);
 	const { isCopied, copy } = useCopyToClipboard();
 
@@ -65,13 +66,14 @@ const CodeBlock = ({
 
 	return (
 		<div
+			ref={hostReference}
 			className={`${styles['code-block']} ${hasMarginUp ? styles['margin-top--1'] : ''} ${
 				hasMarginDown ? styles['margin-bottom--2'] : ''
 			}`}
 		>
 			<ContentToolbar
 				className={styles['code-block__toolbar']}
-				autoInside
+				host={hostReference}
 				isExpanded={false}
 				isCopied={isCopied}
 				onCopy={() => copy(code)}

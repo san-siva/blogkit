@@ -73,7 +73,7 @@ const Table = ({
 		>
 			<ContentToolbar
 				className={styles['table-container__toolbar']}
-				autoInside
+				host={containerReference}
 				isExpanded={false}
 				isCopied={isCopied}
 				onCopy={onCopy}

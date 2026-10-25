@@ -1,5 +1,7 @@
 declare const styles: {
   readonly toolbar: string;
+  readonly 'toolbar--visible': string;
+  readonly 'toolbar--inert': string;
   readonly 'toolbar__btn': string;
   readonly 'toolbar__btn--zoom-in': string;
   readonly 'toolbar__btn--zoom-out': string;

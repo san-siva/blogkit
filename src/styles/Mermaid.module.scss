@@ -9,7 +9,6 @@
 	}
 
 	&__controls {
-		opacity: 0;
 		position: absolute;
 		// outside the component, anchored by its right edge since the toolbar's width
 		// varies; the 8px padding bridges the gap so the pointer stays "inside" the
@@ -18,21 +17,6 @@
 		top: 0;
 		padding-right: 8px;
 		z-index: 3;
-
-		&:focus-within {
-			opacity: 1;
-		}
-
-		// no toolbar on touch devices (phones, tablets)
-		@media (hover: none), (pointer: coarse) {
-			display: none;
-		}
-	}
-
-	&:hover {
-		.mermaid__controls {
-			opacity: 1;
-		}
 	}
 
 	&__viewport {
@@ -71,19 +55,12 @@
 		}
 
 		&__controls {
-			opacity: 0;
 			position: absolute;
 			// 8px padding enlarges the hotspot; the offsets keep the buttons at 16px / 12px
 			padding: styles.rem(8);
 			right: styles.rem(8);
 			top: styles.rem(4);
 			z-index: 3;
-
-			// revealed by moving the pointer to the top-right corner
-			&:hover,
-			&:focus-within {
-				opacity: 1;
-			}
 		}
 
 		&__viewport {
@@ -104,7 +81,6 @@
 			}
 		}
 	}
-
 }
 
 .margin-top--1 {

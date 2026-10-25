@@ -1,4 +1,7 @@
+import { type RefObject, useRef } from 'react';
+
 import { useInsideWhenClipped } from '../hooks/useInsideWhenClipped';
+import { useToolbarVisibility } from '../hooks/useToolbarVisibility';
 import styles from '../styles/ContentToolbar.module.scss';
 
 type ButtonModifier =
@@ -13,8 +16,13 @@ type ButtonModifier =
 interface ContentToolbarProps {
 	/** Positioning/visibility is up to the host component. */
 	className?: string;
-	/** For a toolbar positioned outside its host: fall back to inside top-left when it would be clipped. */
-	autoInside?: boolean;
+	/**
+	 * The component this toolbar belongs to, for a toolbar positioned outside
+	 * it. The toolbar is shown while the host is hovered (tapped on touch
+	 * devices) and falls back to inside top-left when it would be clipped.
+	 * Omit it for a fullscreen toolbar, which is shown on hovering the toolbar.
+	 */
+	host?: RefObject<HTMLElement | null>;
 	isExpanded: boolean;
 	isCopied: boolean;
 	onCopy: () => void;
@@ -27,7 +35,7 @@ interface ContentToolbarProps {
 
 const ContentToolbar = ({
 	className = '',
-	autoInside = false,
+	host,
 	isExpanded,
 	isCopied,
 	onCopy,
@@ -36,7 +44,12 @@ const ContentToolbar = ({
 	onZoomOut,
 	onReset,
 }: ContentToolbarProps) => {
-	const { toolbarReference, style } = useInsideWhenClipped(autoInside);
+	const toolbarReference = useRef<HTMLDivElement>(null);
+	const placementStyle = useInsideWhenClipped(toolbarReference, host);
+	const { isVisible, isInert, handlers } = useToolbarVisibility(
+		toolbarReference,
+		host
+	);
 	const expandLabel = isExpanded ? 'Close fullscreen' : 'Expand to fullscreen';
 	const hasZoom = onZoomIn && onZoomOut && onReset;
 	const button = (modifier: ButtonModifier) =>
@@ -45,8 +58,14 @@ const ContentToolbar = ({
 	return (
 		<div
 			ref={toolbarReference}
-			className={`${styles['toolbar']} ${className}`}
-			style={style}
+			className={[
+				styles['toolbar'],
+				isVisible ? styles['toolbar--visible'] : '',
+				isInert ? styles['toolbar--inert'] : '',
+				className,
+			].join(' ')}
+			style={placementStyle}
+			{...handlers}
 		>
 			{hasZoom && (
 				<>

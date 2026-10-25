@@ -47,6 +47,7 @@ const Mermaid = ({
 	const [error, setError] = useState<string | null>(null);
 	const [isExpanded, setIsExpanded] = useState(false);
 
+	const hostReference = useRef<HTMLDivElement>(null);
 	const mermaidReference = useRef<HTMLDivElement>(null);
 	const modalMermaidReference = useRef<HTMLDivElement>(null);
 	const renderCount = useRef(0);
@@ -101,6 +102,7 @@ const Mermaid = ({
 
 	return (
 		<div
+			ref={hostReference}
 			className={`${styles.mermaid}
 				${hasMarginUp ? styles['margin-top--1'] : ''}
 				${hasMarginDown ? styles['margin-bottom--2'] : ''}`}
@@ -118,7 +120,7 @@ const Mermaid = ({
 			) : (
 				<ContentToolbar
 					className={styles['mermaid__controls']}
-					autoInside
+					host={hostReference}
 					isExpanded={false}
 					isCopied={isCopied}
 					onCopy={() => copy(code)}

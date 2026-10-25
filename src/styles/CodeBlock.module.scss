@@ -18,7 +18,6 @@ $code-block-background-color: #282a36;
 	position: relative;
 
 	&__toolbar {
-		opacity: 0;
 		position: absolute;
 		// outside the component, anchored by its right edge since the toolbar's width
 		// varies; the 8px padding bridges the gap so the pointer stays "inside" the
@@ -27,21 +26,6 @@ $code-block-background-color: #282a36;
 		top: 0;
 		padding-right: 8px;
 		z-index: 3;
-
-		&:focus-within {
-			opacity: 1;
-		}
-
-		// no toolbar on touch devices (phones, tablets)
-		@media (hover: none), (pointer: coarse) {
-			display: none;
-		}
-	}
-
-	&:hover {
-		.code-block__toolbar {
-			opacity: 1;
-		}
 	}
 
 	&--margin-up {
@@ -133,19 +117,12 @@ $code-block-background-color: #282a36;
 		}
 
 		&__toolbar {
-			opacity: 0;
 			position: absolute;
 			// 8px padding enlarges the hotspot; the offsets keep the buttons at 16px / 12px
 			padding: stylekit.rem(8);
 			right: stylekit.rem(8);
 			top: stylekit.rem(4);
 			z-index: 3;
-
-			// revealed by moving the pointer to the top-right corner
-			&:hover,
-			&:focus-within {
-				opacity: 1;
-			}
 		}
 
 		&__content {
