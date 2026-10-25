@@ -18,7 +18,7 @@ import { CODE_EXAMPLES } from './codeExamples';
 
 const BlogkitDocumentation: NextPage = () => {
 	return (
-		<Blog>
+		<Blog increasedWidthMode>
 			<BlogHeader
 				title={['Blogkit']}
 				desc={[
