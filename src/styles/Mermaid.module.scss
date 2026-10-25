@@ -21,6 +21,8 @@
 
 	&__viewport {
 		overflow: hidden;
+		// room for the node strokes that overflow the svg, so the viewport doesn't clip them
+		padding: 2px;
 		cursor: grab;
 		user-select: none;
 		-webkit-user-select: none;
@@ -28,7 +30,6 @@
 		// diagramPadding is 0, so node strokes on the edge sit half outside the svg
 		svg {
 			overflow: visible;
-			padding: 2px;
 		}
 
 		&--dragging {
@@ -73,7 +74,6 @@
 
 			svg {
 				overflow: visible;
-				padding: 2px;
 			}
 
 			&--dragging {
