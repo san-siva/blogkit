@@ -5,8 +5,10 @@ import { createPortal } from 'react-dom';
 
 import mermaid from 'mermaid';
 
-import MermaidControls from '../components/MermaidControls';
+import ContentToolbar from '../components/ContentToolbar';
 import MermaidViewport from '../components/MermaidViewport';
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard';
+import { useFullscreenModal } from '../hooks/useFullscreenModal';
 import { usePanZoom } from '../hooks/usePanZoom';
 import CalloutStatic from '../staticComponents/CalloutStatic';
 import styles from '../styles/Mermaid.module.scss';
@@ -48,6 +50,10 @@ const Mermaid = ({
 	const mermaidReference = useRef<HTMLDivElement>(null);
 	const modalMermaidReference = useRef<HTMLDivElement>(null);
 	const renderCount = useRef(0);
+
+	const { isCopied, copy } = useCopyToClipboard();
+	const closeModal = useCallback(() => setIsExpanded(false), []);
+	useFullscreenModal(isExpanded, closeModal);
 
 	const inline = usePanZoom();
 	const modal = usePanZoom();
@@ -93,20 +99,6 @@ const Mermaid = ({
 		return () => clearTimeout(timer);
 	}, [isExpanded, renderInto, modal.reset]);
 
-	useEffect(() => {
-		if (!isExpanded) return;
-		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') setIsExpanded(false);
-		};
-		const previousOverflow = document.body.style.overflow;
-		document.body.style.overflow = 'hidden';
-		window.addEventListener('keydown', onKey);
-		return () => {
-			document.body.style.overflow = previousOverflow;
-			window.removeEventListener('keydown', onKey);
-		};
-	}, [isExpanded]);
-
 	return (
 		<div
 			className={`${styles.mermaid}
@@ -124,9 +116,12 @@ const Mermaid = ({
 					<p>Rendering diagram...</p>
 				</CalloutStatic>
 			) : (
-				<MermaidControls
+				<ContentToolbar
 					className={styles['mermaid__controls']}
+					autoInside
 					isExpanded={false}
+					isCopied={isCopied}
+					onCopy={() => copy(code)}
 					onZoomIn={inline.zoomIn}
 					onZoomOut={inline.zoomOut}
 					onReset={inline.reset}
@@ -155,9 +150,11 @@ const Mermaid = ({
 							className={styles['mermaid__modal__content']}
 							onClick={e => e.stopPropagation()}
 						>
-							<MermaidControls
+							<ContentToolbar
 								className={styles['mermaid__modal__controls']}
 								isExpanded={true}
+								isCopied={isCopied}
+								onCopy={() => copy(code)}
 								onZoomIn={modal.zoomIn}
 								onZoomOut={modal.zoomOut}
 								onReset={modal.reset}

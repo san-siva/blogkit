@@ -1,5 +1,9 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { lazy, ReactNode, Suspense } from 'react';
 import TableStatic from '../staticComponents/TableStatic';
+
+const TableDynamic = lazy(() => import('../dynamicComponents/TableDynamic'));
 
 interface TableProperties {
 	rows?: ReactNode[][];
@@ -17,13 +21,25 @@ const Table = ({
 	fontSize,
 }: TableProperties) => {
 	return (
-		<TableStatic
-			rows={rows}
-			headers={headers}
-			hasMarginUp={hasMarginUp}
-			hasMarginDown={hasMarginDown}
-			fontSize={fontSize}
-		/>
+		<Suspense
+			fallback={
+				<TableStatic
+					rows={rows}
+					headers={headers}
+					hasMarginUp={hasMarginUp}
+					hasMarginDown={hasMarginDown}
+					fontSize={fontSize}
+				/>
+			}
+		>
+			<TableDynamic
+				rows={rows}
+				headers={headers}
+				hasMarginUp={hasMarginUp}
+				hasMarginDown={hasMarginDown}
+				fontSize={fontSize}
+			/>
+		</Suspense>
 	);
 };
 

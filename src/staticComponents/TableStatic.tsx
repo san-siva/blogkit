@@ -45,7 +45,7 @@ const Table = ({
 			}}
 		>
 			{hasHeaders && (
-				<div className={`${styles['table__header']}`}>
+				<div className={`${styles['table__header']}`} data-table-row="header">
 					{headers.map((header, index) => (
 						<div
 							key={typeof header === 'string' ? header : index}
@@ -58,7 +58,7 @@ const Table = ({
 				</div>
 			)}
 			{rows.map((row, index) => (
-				<div key={index} className={`${styles['table__row']}`}>
+				<div key={index} className={`${styles['table__row']}`} data-table-row="body">
 					{row.map((cell, cellIndex) => (
 						<div
 							key={typeof cell === 'string' ? cell : cellIndex}

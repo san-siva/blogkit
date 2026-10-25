@@ -6,7 +6,8 @@ $toggle-gap: styles.space(0);
 .toc-node {
 	&__row {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
+		justify-content: flex-start;
 		gap: $toggle-gap;
 		margin-bottom: styles.space(1);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -9,6 +9,9 @@ import 'prismjs/themes/prism-tomorrow.css';
 
 const SH = SyntaxHighlighter as any;
 
+import ContentToolbar from '../components/ContentToolbar';
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard';
+import { useFullscreenModal } from '../hooks/useFullscreenModal';
 import styles from '../styles/CodeBlock.module.scss';
 
 interface Properties {
@@ -36,58 +39,15 @@ const CodeBlock = ({
 	hasMarginUp = false,
 	hasMarginDown = false,
 }: Properties) => {
-	const [isCopyMode, setCopyMode] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(false);
+	const { isCopied, copy } = useCopyToClipboard();
 
-	const copyToClipboard = async () => {
-		try {
-			await navigator.clipboard.writeText(code);
-			setCopyMode(true);
-			setTimeout(() => {
-				setCopyMode(false);
-			}, 1000);
-		} catch (error) {
-			console.error('Failed to copy:', error);
-		}
-	};
+	const closeModal = useCallback(() => setIsExpanded(false), []);
+	useFullscreenModal(isExpanded, closeModal);
 
-	useEffect(() => {
-		if (!isExpanded) return;
-		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') setIsExpanded(false);
-		};
-		const previousOverflow = document.body.style.overflow;
-		document.body.style.overflow = 'hidden';
-		window.addEventListener('keydown', onKey);
-		return () => {
-			document.body.style.overflow = previousOverflow;
-			window.removeEventListener('keydown', onKey);
-		};
-	}, [isExpanded]);
-
-	const renderHeader = (expanded: boolean) => (
+	const renderHeader = () => (
 		<div className={styles['code-block__header']}>
 			<div className={styles['code-block__header__title']}>{language}</div>
-			<div className={styles['code-block__header__actions']}>
-				<div
-					className={`${styles['code-block__header__expand']} ${
-						expanded ? styles['code-block__header__expand--collapse'] : ''
-					}`}
-					onClick={() => setIsExpanded(!expanded)}
-					role="button"
-					aria-label={expanded ? 'Close fullscreen' : 'Expand to fullscreen'}
-					title={expanded ? 'Close fullscreen' : 'Expand to fullscreen'}
-				/>
-				<div
-					className={`${styles['code-block__header__copy']} ${
-						isCopyMode ? styles['code-block__header__copy--active'] : ''
-					}`}
-					onClick={copyToClipboard}
-					role="button"
-					aria-label="Copy code"
-					title="Copy code"
-				/>
-			</div>
 		</div>
 	);
 
@@ -109,7 +69,15 @@ const CodeBlock = ({
 				hasMarginDown ? styles['margin-bottom--2'] : ''
 			}`}
 		>
-			{renderHeader(false)}
+			<ContentToolbar
+				className={styles['code-block__toolbar']}
+				autoInside
+				isExpanded={false}
+				isCopied={isCopied}
+				onCopy={() => copy(code)}
+				onToggleExpand={() => setIsExpanded(true)}
+			/>
+			{renderHeader()}
 			<div className={styles['code-block__wrapper']}>{renderHighlighter()}</div>
 
 			{isExpanded &&
@@ -117,7 +85,7 @@ const CodeBlock = ({
 				createPortal(
 					<div
 						className={styles['code-block__modal']}
-						onClick={() => setIsExpanded(false)}
+						onClick={closeModal}
 						role="dialog"
 						aria-modal="true"
 					>
@@ -125,7 +93,14 @@ const CodeBlock = ({
 							className={styles['code-block__modal__content']}
 							onClick={e => e.stopPropagation()}
 						>
-							{renderHeader(true)}
+							<ContentToolbar
+								className={styles['code-block__modal__toolbar']}
+								isExpanded={true}
+								isCopied={isCopied}
+								onCopy={() => copy(code)}
+								onToggleExpand={closeModal}
+							/>
+							{renderHeader()}
 							<div className={styles['code-block__modal__wrapper']}>
 								{renderHighlighter()}
 							</div>

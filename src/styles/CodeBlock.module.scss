@@ -10,12 +10,36 @@ $code-block-background-color: #282a36;
 		padding: unset;
 	}
 
+	width: fit-content;
+	max-width: 100%;
 	background-color: $code-block-background-color !important;
-	filter: stylekit.$color--shadow-dark;
 	border-radius: stylekit.$border-radius;
 
+	position: relative;
+
+	&__toolbar {
+		opacity: 0;
+		position: absolute;
+		// outside the component, anchored by its right edge since the toolbar's width
+		// varies; the 8px padding bridges the gap so the pointer stays "inside" the
+		// component while moving onto the toolbar
+		right: 100%;
+		top: 0;
+		padding-right: 8px;
+		z-index: 3;
+
+		&:focus-within {
+			opacity: 1;
+		}
+
+		// no toolbar on touch devices (phones, tablets)
+		@media (hover: none), (pointer: coarse) {
+			display: none;
+		}
+	}
+
 	&:hover {
-		.code-block__header__actions {
+		.code-block__toolbar {
 			opacity: 1;
 		}
 	}
@@ -56,7 +80,8 @@ $code-block-background-color: #282a36;
 		padding-bottom: stylekit.rem(18);
 		padding-left: stylekit.rem(18);
 
-		width: calc(100% - #{stylekit.rem(36)});
+		width: fit-content;
+		max-width: calc(100% - #{stylekit.rem(36)});
 		tab-size: 2;
 
 		> pre {
@@ -89,52 +114,6 @@ $code-block-background-color: #282a36;
 			font-size: stylekit.$font-size--very-small;
 			color: stylekit.$color--code;
 		}
-
-		&__actions {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			opacity: 0;
-		}
-
-		&__expand {
-			position: relative;
-			height: stylekit.rem(32);
-			width: stylekit.rem(32);
-			cursor: pointer;
-			transition: all 0.2s ease-in-out;
-
-			&::before {
-				content: '';
-				position: absolute;
-				inset: 0;
-				background-image: url('../assets/expand.svg');
-				background-size: stylekit.rem(14) stylekit.rem(14);
-				background-position: center;
-				background-repeat: no-repeat;
-				filter: invert(1);
-			}
-
-			&--collapse::before {
-				background-image: url('../assets/collapse.svg');
-			}
-		}
-
-		&__copy {
-			height: stylekit.rem(32);
-			width: stylekit.rem(32);
-			background-image: url('../assets/copy.svg');
-			background-size: stylekit.rem(14) stylekit.rem(14);
-			background-position: center;
-			background-repeat: no-repeat;
-			cursor: pointer;
-			transition: all 0.2s ease-in-out;
-
-			&--active {
-				background-image: url('../assets/done_copying.svg');
-				pointer-events: none;
-			}
-		}
 	}
 
 	&__modal {
@@ -146,15 +125,27 @@ $code-block-background-color: #282a36;
 		align-items: stretch;
 		justify-content: stretch;
 
-		.code-block__header__actions {
-			opacity: 1;
-		}
-
 		code {
 			font-size: unset;
 			font-weight: unset;
 			background-color: unset;
 			padding: unset;
+		}
+
+		&__toolbar {
+			opacity: 0;
+			position: absolute;
+			// 8px padding enlarges the hotspot; the offsets keep the buttons at 16px / 12px
+			padding: stylekit.rem(8);
+			right: stylekit.rem(8);
+			top: stylekit.rem(4);
+			z-index: 3;
+
+			// revealed by moving the pointer to the top-right corner
+			&:hover,
+			&:focus-within {
+				opacity: 1;
+			}
 		}
 
 		&__content {
