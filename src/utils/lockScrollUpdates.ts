@@ -1,5 +1,7 @@
 import type { MutableRefObject } from 'react';
 
+import { setSectionInUrl } from '.';
+
 const lockScrollUpdates = (
 	id: string,
 	isClickScrolling: MutableRefObject<boolean>,
@@ -16,9 +18,7 @@ const lockScrollUpdates = (
 		isClickScrolling.current = false;
 		scrollEndHandlerRef.current = null;
 		setVisibleTitle(id);
-		const url = new URL(window.location.href);
-		url.searchParams.set('section', id);
-		window.history.replaceState({}, '', url.toString());
+		setSectionInUrl(id);
 	};
 
 	document.body.addEventListener('scrollend', scrollEndHandlerRef.current, {

@@ -67,6 +67,8 @@
 		&__viewport {
 			flex: 1;
 			overflow: hidden;
+			// hand drags and pinches to the pan/zoom handlers instead of scrolling or zooming the page
+			touch-action: none;
 			cursor: grab;
 			user-select: none;
 			-webkit-user-select: none;

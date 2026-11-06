@@ -26,10 +26,12 @@
 			font-family: inherit;
 		}
 
-		&:hover {
+		// override the global link hover underline
+		&:hover,
+		&:hover > p,
+		&:hover > p > * {
 			color: stylekit.$color--dark;
-			text-decoration: underline;
-			text-decoration-color: stylekit.$color--primary;
+			text-decoration: none;
 		}
 	}
 

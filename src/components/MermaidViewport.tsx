@@ -9,6 +9,8 @@ interface MermaidViewportProps {
 	contentRef: React.RefObject<HTMLDivElement | null>;
 	contentId?: string;
 	hidden?: boolean;
+	// pan and pinch with touch; the viewport's CSS must also set `touch-action: none`
+	touchGestures?: boolean;
 }
 
 const MermaidViewport = ({
@@ -18,6 +20,7 @@ const MermaidViewport = ({
 	contentRef,
 	contentId,
 	hidden,
+	touchGestures = false,
 }: MermaidViewportProps) => {
 	const viewportRef = useRef<HTMLDivElement>(null);
 	const { zoomAtPoint } = pan;
@@ -40,10 +43,14 @@ const MermaidViewport = ({
 			ref={viewportRef}
 			className={`${className} ${pan.isDragging ? draggingClassName : ''}`}
 			style={hidden ? { display: 'none' } : undefined}
-			onMouseDown={pan.onMouseDown}
-			onMouseMove={pan.onMouseMove}
-			onMouseUp={pan.onMouseUp}
-			onMouseLeave={pan.onMouseUp}
+			onPointerDown={e => {
+				// inline, a touch scrolls the page; only the fullscreen viewport takes touch gestures
+				if (e.pointerType === 'touch' && !touchGestures) return;
+				pan.onPointerDown(e);
+			}}
+			onPointerMove={pan.onPointerMove}
+			onPointerUp={pan.onPointerUp}
+			onPointerCancel={pan.onPointerUp}
 		>
 			<div
 				style={{

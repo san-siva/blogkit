@@ -678,7 +678,7 @@ const BlogkitDocumentation: NextPage = () => {
 						rows={[
 							[
 								'Deep Linking',
-								'Sections generate shareable ?section= URLs with scroll-aware TOC highlighting that activates only after user interaction',
+								'Sections generate shareable #section URLs with scroll-aware TOC highlighting that activates only after user interaction',
 							],
 							[
 								'SSR & Hydration Safe',

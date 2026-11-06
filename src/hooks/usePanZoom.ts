@@ -18,6 +18,51 @@ const DEFAULT_MIN_SCALE = 0.5;
 const DEFAULT_MAX_SCALE = 4;
 const DEFAULT_ZOOM_STEP = 0.15;
 
+export interface Point {
+	x: number;
+	y: number;
+}
+
+export interface GestureStart {
+	transform: Transform;
+	center: Point;
+	distance: number;
+}
+
+const toLocal = (e: React.PointerEvent<HTMLElement>): Point => {
+	const rect = e.currentTarget.getBoundingClientRect();
+	return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+};
+
+// center and spread of the pointers; spread is 0 for a single pointer
+export const measure = (points: Point[]): [Point, number] => {
+	const [a, b] = points;
+	if (!a) return [{ x: 0, y: 0 }, 0];
+	if (!b) return [a, 0];
+	return [{ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, Math.hypot(a.x - b.x, a.y - b.y)];
+};
+
+// one pointer pans; two pointers also scale by how far apart they moved, keeping the
+// content point under the gesture's starting center under its current center
+export const gestureTransform = (
+	start: GestureStart,
+	center: Point,
+	distance: number,
+	minScale: number,
+	maxScale: number
+): Transform => {
+	const scale =
+		start.distance > 0 && distance > 0
+			? Math.max(minScale, Math.min(maxScale, start.transform.scale * (distance / start.distance)))
+			: start.transform.scale;
+	const ratio = scale / start.transform.scale;
+	return {
+		scale,
+		x: center.x - (start.center.x - start.transform.x) * ratio,
+		y: center.y - (start.center.y - start.transform.y) * ratio,
+	};
+};
+
 export const usePanZoom = ({
 	initialTransform = DEFAULT_INITIAL_TRANSFORM,
 	minScale = DEFAULT_MIN_SCALE,
@@ -27,12 +72,13 @@ export const usePanZoom = ({
 	const [transform, setTransform] = useState<Transform>(initialTransform);
 	const [isDragging, setIsDragging] = useState(false);
 	const transformRef = useRef<Transform>(initialTransform);
-	const isDraggingRef = useRef(false);
-	const dragStart = useRef({
-		mouseX: 0,
-		mouseY: 0,
-		transformX: 0,
-		transformY: 0,
+	// active pointers, in viewport-relative coordinates
+	const pointers = useRef(new Map<number, Point>());
+	// the gesture (one-finger pan or two-finger pinch) as it was when it started
+	const gestureStart = useRef<GestureStart>({
+		transform: initialTransform,
+		center: { x: 0, y: 0 },
+		distance: 0,
 	});
 
 	const apply = useCallback((updater: (prev: Transform) => Transform) => {
@@ -41,36 +87,46 @@ export const usePanZoom = ({
 		setTransform(next);
 	}, []);
 
-	const onMouseDown = useCallback((e: React.MouseEvent) => {
-		e.preventDefault();
-		isDraggingRef.current = true;
-		setIsDragging(true);
-		dragStart.current = {
-			mouseX: e.clientX,
-			mouseY: e.clientY,
-			transformX: transformRef.current.x,
-			transformY: transformRef.current.y,
-		};
+	// restart the gesture from the current pointers, so adding or lifting a finger doesn't jump
+	const beginGesture = useCallback(() => {
+		const [center, distance] = measure([...pointers.current.values()]);
+		gestureStart.current = { transform: transformRef.current, center, distance };
 	}, []);
 
-	const onMouseMove = useCallback(
-		(e: React.MouseEvent) => {
-			if (!isDraggingRef.current) return;
-			apply(prev => ({
-				...prev,
-				x:
-					dragStart.current.transformX + (e.clientX - dragStart.current.mouseX),
-				y:
-					dragStart.current.transformY + (e.clientY - dragStart.current.mouseY),
-			}));
+	const onPointerDown = useCallback(
+		(e: React.PointerEvent<HTMLElement>) => {
+			if (e.pointerType === 'mouse' && e.button !== 0) return;
+			if (pointers.current.size >= 2) return;
+			e.preventDefault();
+			e.currentTarget.setPointerCapture?.(e.pointerId);
+			pointers.current.set(e.pointerId, toLocal(e));
+			beginGesture();
+			setIsDragging(true);
 		},
-		[apply]
+		[beginGesture]
 	);
 
-	const onMouseUp = useCallback(() => {
-		isDraggingRef.current = false;
-		setIsDragging(false);
-	}, []);
+	const onPointerMove = useCallback(
+		(e: React.PointerEvent<HTMLElement>) => {
+			if (!pointers.current.has(e.pointerId)) return;
+			pointers.current.set(e.pointerId, toLocal(e));
+			const [center, distance] = measure([...pointers.current.values()]);
+			apply(() => gestureTransform(gestureStart.current, center, distance, minScale, maxScale));
+		},
+		[apply, minScale, maxScale]
+	);
+
+	const onPointerUp = useCallback(
+		(e: React.PointerEvent<HTMLElement>) => {
+			if (!pointers.current.delete(e.pointerId)) return;
+			if (pointers.current.size > 0) {
+				beginGesture();
+				return;
+			}
+			setIsDragging(false);
+		},
+		[beginGesture]
+	);
 
 	const zoomIn = useCallback(() => {
 		apply(prev => ({
@@ -113,9 +169,9 @@ export const usePanZoom = ({
 	return {
 		transform,
 		isDragging,
-		onMouseDown,
-		onMouseMove,
-		onMouseUp,
+		onPointerDown,
+		onPointerMove,
+		onPointerUp,
 		zoomIn,
 		zoomOut,
 		zoomAtPoint,

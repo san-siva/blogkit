@@ -167,6 +167,7 @@ const Mermaid = ({
 								draggingClassName={styles['mermaid__modal__viewport--dragging']}
 								pan={modal}
 								contentRef={modalMermaidReference}
+								touchGestures
 							/>
 						</div>
 					</div>,
